@@ -2,45 +2,53 @@ body {
     background: url('https://source.unsplash.com/1600x900/?music,vinyl') no-repeat center center fixed;
     background-size: cover;
     font-family: 'Montserrat', sans-serif;
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    height: 100vh; 
+    color: #fff;
+    height: 100vh;
     margin: 0;
     padding: 0;
-    color: #fff;
+    position: relative; 
 }
 
-.login-container {
-    width: 100%; 
-    max-width: 600px;
+.card {
     background-color: rgba(0, 0, 0, 0.7);
-    padding: 30px;
+    border: none;
     border-radius: 8px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    margin-bottom: 30%;
 }
 
-.login-header {
+.card-header {
+    background-color: rgba(255, 69, 0, 0.4);
+    border-bottom: none;
+    padding: 40px 40px;
     text-align: center;
+    border-radius: 4px 4px 0 0;
+}
+
+.card-header h4 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.card-body {
+    padding: 40px;
+}
+
+.form-group {
     margin-bottom: 30px;
 }
 
-.login-header h1 {
-    font-size: 28px;
-    font-weight: 700;
-}
-
-.login-header p {
-    font-size: 16px;
-    font-weight: 400;
-}
-
-.form-control {
+.form-control, .btn-primary {
     background-color: rgba(255, 255, 255, 0.2);
     border: none;
-    border-radius: 0;
     color: #fff;
-    margin-bottom: 20px;
+    border-radius: 4px;
+    height: 50px;
 }
 
 .form-control::placeholder {
@@ -49,11 +57,11 @@ body {
 
 .btn-primary {
     background-color: #ff4500;
-    border: none;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
-    padding: 10px 20px;
+    padding: 12px 20px;
     border-radius: 4px;
+    width: 100%;
 }
 
 .btn-primary:hover {
@@ -67,3 +75,6 @@ body {
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
     background-color: #ff4500;
 }
+
+
+
