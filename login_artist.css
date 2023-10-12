@@ -1,0 +1,62 @@
+body {
+    background: url('https://source.unsplash.com/1600x900/?music,vinyl') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 8px;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.login-header p {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.form-control {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 0;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.form-control::placeholder {
+    color: #aaa;
+}
+
+.btn-primary {
+    background-color: #ff4500;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
+.btn-primary:hover {
+    background-color: #ff5500;
+}
+
+.custom-control-label::before, .custom-control-label::after {
+    border-color: #aaa;
+}
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+    background-color: #ff4500;
+}
