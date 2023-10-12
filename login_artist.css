@@ -2,15 +2,22 @@ body {
     background: url('https://source.unsplash.com/1600x900/?music,vinyl') no-repeat center center fixed;
     background-size: cover;
     font-family: 'Montserrat', sans-serif;
+    display: flex; /* Añadido */
+    align-items: center; /* Añadido */
+    justify-content: center; /* Añadido */
+    height: 100vh; /* Asegurarse de que el body ocupe toda la altura de la ventana */
+    margin: 0;
+    padding: 0;
     color: #fff;
 }
 
 .login-container {
-    max-width: 400px;
-    margin: 100px auto;
+    width: 100%; /* Asegurarse de que ocupe todo el ancho disponible */
+    max-width: 600px; /* Establecer un ancho máximo para que no sea demasiado grande en pantallas grandes */
     background-color: rgba(0, 0, 0, 0.7);
     padding: 30px;
     border-radius: 8px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Añadir una sombra para darle un poco de profundidad */
 }
 
 .login-header {

@@ -1,6 +1,7 @@
 body {
     font-family: 'Arial', sans-serif;
     background: url('https://source.unsplash.com/1600x900/?music,vinyl') no-repeat center center fixed;
+    background-size: cover;
     margin: 0;
     padding: 0;
     height: 100vh;
