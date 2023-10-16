@@ -10,7 +10,7 @@ body{
     justify-content: center;
     align-items: center;
     position: relative; /*para que el contenedor se ajuste al tamaño de los elementos*/
-    background-color: #acdfe0;
+    background-color: #e1e4e4;
 	font-family: 'Roboto', sans-serif;
 }
 
@@ -274,4 +274,17 @@ header {
     border-radius: 50px;
     font-size: 1.5rem;
     font-weight: bold;
+}
+
+.btn-custom {
+    background-color: #f79336;
+    color: #141e28;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.btn-custom:hover {
+    background-color: #ad6827;
 }
