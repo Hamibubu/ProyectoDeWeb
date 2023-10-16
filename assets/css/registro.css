@@ -6,34 +6,35 @@ body {
     height: 100vh;
     margin: 0;
     padding: 0;
-    position: relative; 
+    position: relative;
 }
 
 .card {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.8);
     border: none;
     border-radius: 8px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     overflow: hidden;
-    top: 50%; 
-    left: 50%; 
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
-    margin-bottom: 30%;
     max-width: 600px;
+    margin-bottom: 30px;
 }
 
 .card-header {
     background-color: #f79336;
     border-bottom: none;
-    padding: 40px 40px;
+    padding: 20px 40px;
     text-align: center;
     border-radius: 4px 4px 0 0;
 }
 
 .card-header h4 {
-    font-size: 28px;
-    font-weight: 700;
+    font-size: 24px;
+    font-weight: 600;
     margin: 0;
+    color: #fff;
 }
 
 .card-body {
@@ -41,7 +42,7 @@ body {
 }
 
 .form-group {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .form-control, .btn-primary {
@@ -53,7 +54,7 @@ body {
 }
 
 .form-control:focus, .btn-primary:hover {
-    border-color: #f79336; 
+    border-color: #f79336;
     background-color: #acdfe0;
     color: #fff;
     border-radius: 4px;
