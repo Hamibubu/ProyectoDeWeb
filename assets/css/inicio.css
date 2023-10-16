@@ -175,3 +175,78 @@ header {
 .btn-custom {
     animation-delay: 0.3s;
 }
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 18px;
+}
+
+.rating-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f79336; /* Color de fondo del círculo */
+    width: 80px; /* Tamaño del círculo */
+    height: 80px;
+    border-radius: 50%; /* Hace que el contenedor sea un círculo */
+    position: absolute; /* Posiciona el círculo en la esquina superior derecha de la tarjeta */
+    top: 15px;
+    right: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+    z-index: 1; /* Asegura que el círculo esté por encima de otros elementos */
+}
+
+.rating {
+    font-size: 24px; /* Tamaño del texto de la calificación */
+    font-weight: bold; /* Texto en negrita */
+    color: #fff; /* Color del texto */
+}
+
+.card-body {
+    padding-right: 100px; /* Espacio adicional en la parte derecha */
+    position: relative; /* Establece un contexto de posicionamiento para los elementos internos */
+}
+
+.card-title, .card-text {
+    z-index: 0; /* Asegura que el texto esté debajo del rating */
+}
+
+
+.rating-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    padding: 20px; /* Espacio interno para el contenido */
+}
+
+.rating-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1; /* Asegura que el rating esté encima del contenido */
+    background-color: #f79336;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
