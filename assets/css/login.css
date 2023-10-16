@@ -9,15 +9,41 @@ body {
     align-items: center;
     justify-content: center;
 }
+
 .card {
     border: none;
+    background-color: #141e28;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
+    background-origin: 5px;
+    border-radius: 20px;
 }
+
 .btn-primary {
-    background-color: #333;
+    background-color: #f79336;
     border: none;
 }
+
 .btn-primary:hover {
-    background-color: #555;
+    background-color: #ad6827;
+}
+
+.form-control:focus {
+    border-color: #f79336; 
+    background-color: #acdfe0;
+    outline: none
+}
+
+.form-control {
+    border-color: #f79336; 
+    background-color: #fff;
+    outline: none;
+}
+
+.form-check-label {
+    color: #fff;
+}
+
+#q {
+    color: #acdfe0;
 }
