@@ -22,6 +22,10 @@ header{
     background-color: #141e28; 
 }
 
+navbar{
+    position: sticky;
+}
+
 .dropdown-menu{
     list-style: none;
 }
