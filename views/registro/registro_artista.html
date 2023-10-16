@@ -7,7 +7,7 @@
     <title>Registro - Cybermusik</title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/registro.css">
+    <link rel="stylesheet" href="../../assets/css/registro_artista.css">
 </head>
 
 <body>
@@ -17,29 +17,27 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-header text-center">
-                        <h4>Registro de Usuarios</h4>
+                        <h4>Registro de artistas</h4>
                     </div>
                     <div class="card-body">
                         <form>
                             <div class="form-group">
-                                <label for="nombre">Nombre:</label>
+                                <label for="nombre">Nombre artístico:</label>
                                 <input type="text" class="form-control" id="nombre" placeholder="Nombre" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="apellido">Apellido:</label>
-                                <input type="text" class="form-control" id="apellido" placeholder="Apellido" required>
                             </div>
                             <div class="form-group">
                                 <label for="username">Nombre de Usuario:</label>
                                 <input type="text" class="form-control" id="username" placeholder="Username" required>
                             </div>
                             <div class="form-group">
-                                <label for="generos">Géneros Favoritos:</label>
-                                <input type="text" class="form-control" id="generos" placeholder="Rock, Pop, Jazz..." required>
-                            </div>
-                            <div class="form-group">
-                                <label for="album">Álbum Favorito:</label>
-                                <input type="text" class="form-control" id="album" placeholder="Álbum Favorito" required>
+                                <label for="genre">Género Musical:</label>
+                                <select class="form-control" id="genre">
+                                    <option>Rock</option>
+                                    <option>Pop</option>
+                                    <option>Reggaeton</option>
+                                    <option>Jazz</option>
+                                    <option>Clásico</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="email">Correo Electrónico:</label>
@@ -54,12 +52,17 @@
                                 <input type="password" class="form-control" id="password" placeholder="Contraseña" required>
                             </div>
                             <div class="form-group">
-                                <label for="telefono">Teléfono:</label>
-                                <input type="tel" class="form-control" id="telefono" placeholder="Teléfono" required>
+                                <label for="description">Descripción:</label>
+                                <textarea class="form-control" id="description" rows="3" placeholder="Describe al artista"></textarea>
                             </div>
-                            <a href="registro_artista.html" class="btn btn-link" id="q">¿Eres artista?</a>
-                            <br>
-                            <br>
+                            <div class="form-group">
+                                <label for="Influencias">Influencias:</label>
+                                <textarea class="form-control" id="influences" rows="3" placeholder="Influencias"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="Influencias">Influencias:</label>
+                                <textarea class="form-control" id="influences" rows="3" placeholder="Influencias"></textarea>
+                            </div>
                             <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
                         </form>
                     </div>
@@ -67,7 +70,6 @@
             </div>
         </div>
     </div>
-
     <!-- Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
