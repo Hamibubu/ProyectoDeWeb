@@ -1,0 +1,155 @@
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box; /*para que el tamaño de los elementos no se modifique*/
+}
+
+body{
+    margin:0;
+    display: block; /*permite que los elementos se acomoden en varias lineas*/
+    justify-content: center;
+    align-items: center;
+    position: relative; /*para que el contenedor se ajuste al tamaño de los elementos*/
+    background-color: #e1e4e4;
+	font-family: 'Roboto', sans-serif;
+}
+
+/* Animación de aparición */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(3px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+*{
+    opacity: 1;
+    animation-name: fadeInUp;
+    animation-duration: .6s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+header {
+    animation-delay: 0.1s;
+}
+
+.contact-form {
+    animation-delay: 0.2s;
+}
+
+.btn-custom {
+    animation-delay: 0.3s;
+}
+
+.navbar-expand-lg{
+    background-color: #141e28; 
+}
+
+navbar{
+    position: absolute;
+}
+
+.dropdown-menu{
+    list-style: none;
+}
+
+.container-fluid{
+    color: white;
+}
+
+.btn-custom {
+    background-color: #f79336;
+    color: #141e28;
+    padding: 5px 20px;
+    border-radius: 20px;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.btn-custom:hover {
+    background-color: #ad6827;
+}
+
+.tarjeta{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    font-family: 'Roboto', sans-serif;
+    padding: 0px;
+    border-radius: 20px;
+}
+
+.tarjeta-imagen{
+    display:flex;
+    width: 600px;
+    height: auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 1px 1px 4px 2px rgba(0,0,0,.2);
+}
+
+.header{
+    border-right: 1px solid white;;
+}
+
+.descripcion{
+    background: white;
+}
+
+.header .descripcion{
+    padding: 20px;
+    text-align: center;
+}
+
+.header a{
+    position: relative;
+    display: block;
+}
+
+.header img{
+    border-radius: 2px;
+    box-shadow: 0 0 0 8px rgba(0,0,0,.06);
+    margin: 20px 30px;
+    transition: .2s;
+    height: 200px;
+    width: 200px;
+}
+
+.header a:hover img{
+    box-shadow: 0 0 0 12px rgba(0,0,0,.1);
+}
+
+.header h2{
+    margin-left: 10px;
+    color: orangered;
+    text-align: center;
+    font-size: 40px;
+}
+
+.header h4{
+    margin-left: 10px;
+    margin-bottom: 20px;
+    font-style: oblique;
+    text-align: center;
+    font-size: 20px;
+}
+
+.descripcion{
+    position: relative;
+    text-align: center;
+    align-items: center;
+    border-radius: 20px;
+}
+
+.descripcion p{
+    margin: 20px 30px;
+    text-align: justify;
+    align-items: center;
+    border-radius: 20px;
+}
