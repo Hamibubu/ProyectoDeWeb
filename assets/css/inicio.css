@@ -219,7 +219,6 @@ header {
 }
 
 .card-body {
-    padding-right: 100px; /* Espacio adicional en la parte derecha */
     position: relative; /* Establece un contexto de posicionamiento para los elementos internos */
 }
 
@@ -238,12 +237,38 @@ header {
     padding: 20px; /* Espacio interno para el contenido */
 }
 
-.rating-badge {
+.rating-badge-yellow {
     position: absolute;
     top: 10px;
     right: 10px;
     z-index: 1; /* Asegura que el rating esté encima del contenido */
     background-color: #f79336;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.rating-badge-red {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1; /* Asegura que el rating esté encima del contenido */
+    background-color: red;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.rating-badge-green {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1; /* Asegura que el rating esté encima del contenido */
+    background-color: green;
     color: #fff;
     padding: 10px 20px;
     border-radius: 50px;
