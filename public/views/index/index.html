@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="../../assets/css/inicio.css">
+  <link rel="shortcut icon" href="../../assets/img/1.gif">
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="../../assets/img/logomovible.gif" heights="100px" width="100px"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+          aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../artistas/artistas.html">Artistas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../generos/generos.html">Géneros</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">¡Suscribete!</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../contacto/contactanos.html">Contáctanos</a>
+            </li>
+          </ul>
+          <div class="btn-group dropstart" style="margin-right: 20px;">
+            <button class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"> Mi
+              Perfil</button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="../logins/login.html">Log In</a></li>
+              <li><a class="dropdown-item" href="../registro/registro.html">¡Registrate!</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <h1 class="text-center mt-5"><i class="fas fa-fire" style="color: #f78036;"></i> Álbumes en Tendencia</h1>
+  <p class="text-center">Estos son los álbumes en tendencia global:</p>
+  <div class="slider">
+    <input type="radio" name="testimonial" id="t-1" checked>
+    <input type="radio" name="testimonial" id="t-2">
+    <input type="radio" name="testimonial" id="t-3">
+    <input type="radio" name="testimonial" id="t-4">
+    <input type="radio" name="testimonial" id="t-5">
+    <div class="testimonials">
+      <label class="item" for="t-1">
+        <img class="albumesC" src="../../assets/img/albumes/rep.jpg">
+      </label>
+      <label class="item" for="t-2">
+        <img class="albumesC" src="../../assets/img/albumes/cambios.jpg">
+      </label>
+      <label class="item" for="t-3">
+        <img class="albumesC" src="../../assets/img/albumes/sinmiedo.png">
+      </label>
+      <label class="item" for="t-4">
+        <img class="albumesC" src="../../assets/img/albumes/uvst.png">
+      </label>
+      <label class="item" for="t-5">
+        <img class="albumesC" src="../../assets/img/albumes/hp.jpg">
+      </label>
+    </div>
+    <br />
+    <!-- Los 'dots' son los puntos con los que nos deslizamos por el carrusel -->
+    <div class="dots">
+      <label for="t-1"></label>
+      <label for="t-2"></label>
+      <label for="t-3"></label>
+      <label for="t-4"></label>
+      <label for="t-5"></label>
+    </div>
+  </div>
+
+  <h1 class="text-center mt-5"><i class="fas fa-fire" style="color: #f78036;"></i> Ratings en Tendencia</h1>
+  <p class="text-center">Califica y enterate de lo que opinan los criticos y oyentes de los ultimos álbumes en tendencia:</p>
+  <div class="container mt-5">
+    <div class="row">
+        <!-- Primera tarjeta de crítica -->
+        <div class="col mb-4">
+            <div class="card ">
+                <div class="card-content">
+                  <div class="card-image-container">
+                    <img src="../../assets/img/albumes/rep.jpg" class="card-img-top card-image" alt="Imagen Crítica 1">
+                  </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Reputation</h5>
+                        <p class="card-text">"A lo largo de cada pista se puede sentir un brillo electro armonioso, aunque algo frío, dónde la vibra predominante es el escapismo romántico..." <br>- Karla Michelle Miramontes Aguayo.</p>
+                        <a href="#" class="btn btn-custom">Leer más</a>
+                    </div>
+                </div>
+                <div class="rating-badge-green">9.5</div>
+            </div>
+        </div>
+        <!-- Segunda tarjeta de crítica -->
+        <div class="col mb-4">
+            <div class="card ">
+                <div class="card-content">
+                  <div class="card-image-container">
+                    <img src="../../assets/img/albumes/hdwgsd.jpg" class="card-img-top" alt="Imagen Crítica 2">
+                  </div>
+                    <div class="card-body">
+                        <h5 class="card-title">How Did We Get So Dark?</h5>
+                        <p class="card-text">"Hay temas que al escucharlos he tenido la sensación de estar escuchando a varias bandas míticas del rock..." <br>- Dod magazine</p>
+                        <a href="#" class="btn btn-custom">Leer más</a>
+                    </div>
+                </div>
+                <div class="rating-badge-green">9.5</div>
+            </div>
+        </div>
+        <!-- Tercera tarjeta de crítica -->
+        <div class="col mb-4">
+            <div class="card ">
+                <div class="card-content">
+                  <div class="card-image-container">
+                    <img src="../../assets/img/albumes/nadiesabe.png" class="card-img-top" alt="Imagen Crítica 3">
+                  </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Nadie Sabe Lo Que Va a Pasar Mañana</h5>
+                        <p class="card-text">"No es su peor disco -ya que todos sabemos que ese fue “Oasis”-, con Base y Fundamento tengo que declarar que “Nadie sabe lo que va a pasar mañana” es un sufrimiento de disco que bien pudo titularse “Las densas lágrimas de un billonario”." <br>- El Calce</p>
+                        <a href="#" class="btn btn-custom">Leer más</a>
+                    </div>
+                </div>
+                <div class="rating-badge-yellow">7.0</div>
+            </div>
+        </div>
+        <!-- Cuarta tarjeta de crítica -->
+        <div class="col mb-4">
+          <div class="card ">
+              <div class="card-content">
+                <div class="card-image-container">
+                  <img src="../../assets/img/albumes/bocanada.jpeg" class="card-img-top" alt="Imagen Crítica 4">
+                </div>
+                  <div class="card-body">
+                      <h5 class="card-title">Bocanada</h5>
+                      <p class="card-text">"Bocanada de gustavo cerati, es un viaje a una combinacion de elementos musicales, se notan las influencias de todo el desarrollo del rock en argentina, es sin dudas una obra cumbre." <br>- Abraham</p>
+                      <a href="#" class="btn btn-custom">Leer más</a>
+                  </div>
+              </div>
+              <div class="rating-badge-green">9.7</div>
+          </div>
+      </div>
+    </div>
+</div>
+
+
+  <h2 class="text-center mt-5"><i class="fas fa-comments"></i> Foros que te podrían interesar</h2>
+  <p class="text-center">Discute, enterate y comparte opiniones en los siguientes foros:</p>
+  <div class="container mt-5">
+    <div class="row">
+      <!-- Primera tarjeta de crítica -->
+      <div class="col mb-4">
+        <div class="card">
+          <img src="../../assets/img/artistas/pesopluma.jpg" class="card-img-top" alt="Imagen Crítica 1">
+          <div class="card-body">
+            <h5 class="card-title">Trending México</h5>
+            <p class="card-text">Todas las novedades en tendencias México</p>
+            <a href="#" class="btn btn-custom">Entrar</a>
+          </div>
+        </div>
+      </div>
+      <!-- Segunda tarjeta de crítica -->
+      <div class="col mb-4">
+        <div class="card">
+          <img src="../../assets/img/artistas/badbunny.jpg" class="card-img-top" alt="Imagen Crítica 2">
+          <div class="card-body">
+            <h5 class="card-title">Bad Bunny</h5>
+            <p class="card-text">Foro oficial de Bad Bunny</p>
+            <a href="#" class="btn btn-custom">Entrar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="../../assets/js/inicio.js"></script>
+</body>
+
+</html>

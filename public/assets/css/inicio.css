@@ -1,0 +1,294 @@
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box; /*para que el tamaño de los elementos no se modifique*/
+}
+
+body{
+    margin:0;
+    display: block; /*permite que los elementos se acomoden en varias lineas*/
+    justify-content: center;
+    align-items: center;
+    position: relative; /*para que el contenedor se ajuste al tamaño de los elementos*/
+    background-color: #e1e4e4;
+	font-family: 'Roboto', sans-serif;
+}
+
+header{
+    color: white;
+}
+
+.navbar-expand-lg{
+    background-color: #141e28; 
+}
+
+navbar{
+    position: sticky;
+}
+
+.dropdown-menu{
+    list-style: none;
+}
+
+.container-fluid{
+    color: white;
+}
+
+
+/* Fotos del Carrusel */
+.albumesC{
+    height: 300px;
+    width: 300px;
+}
+
+/* Creditos al carrusel: https://m-softtech.in/index.php/2022/10/16/how-to-make-card-slider-in-html-css-owl-carousel/ */
+.slider{width: 100%}
+.slider input{display: none;}
+.testimonials{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	min-height: 300px;
+	perspective: 1000px;
+	overflow: hidden;
+}
+.testimonials .item{
+	width: 300px;
+	padding: 30px;
+	border-radius: 5px;
+	position: absolute;
+	top: 0;
+	box-sizing: border-box;
+	text-align: center;
+	transition: transform 0.4s;
+	user-select: none;
+	cursor: pointer;
+}
+.testimonials .item h1{font-size: 114px; color: white;}
+.dots{display: flex; justify-content: center;align-items: center;}
+.dots label{
+	height: 5px;
+	width: 5px;
+	border-radius: 50%;
+	cursor: pointer;
+	background-color: orangered;
+	margin: 7px;
+	transition-duration: 0.2s;
+}
+
+/* Momento en el que se selecciona alguna de las fotos */
+#t-1:checked ~ .dots label[for="t-1"],
+#t-2:checked ~ .dots label[for="t-2"],
+#t-3:checked ~ .dots label[for="t-3"],
+#t-4:checked ~ .dots label[for="t-4"],
+#t-5:checked ~ .dots label[for="t-5"]{
+	transform: scale(2);
+	background-color: #141e28; /* Es el color del punto al momento en el que la foto es seleccionada */
+	box-shadow: 0px 0px 0px 3px #dddddd24;
+}
+
+#t-1:checked ~ .dots label[for="t-2"],
+#t-2:checked ~ .dots label[for="t-1"],
+#t-2:checked ~ .dots label[for="t-3"],
+#t-3:checked ~ .dots label[for="t-2"],
+#t-3:checked ~ .dots label[for="t-4"],
+#t-4:checked ~ .dots label[for="t-3"],
+#t-4:checked ~ .dots label[for="t-5"],
+#t-5:checked ~ .dots label[for="t-4"]{
+	transform: scale(1.5);
+}
+
+#t-1:checked ~ .testimonials label[for="t-3"],
+#t-2:checked ~ .testimonials label[for="t-4"],
+#t-3:checked ~ .testimonials label[for="t-5"],
+#t-4:checked ~ .testimonials label[for="t-1"],
+#t-5:checked ~ .testimonials label[for="t-2"]{
+	transform: translate3d(600px, 0, -180px) rotateY(-25deg);
+	z-index: 2;
+}
+
+#t-1:checked ~ .testimonials label[for="t-2"],
+#t-2:checked ~ .testimonials label[for="t-3"],
+#t-3:checked ~ .testimonials label[for="t-4"],
+#t-4:checked ~ .testimonials label[for="t-5"],
+#t-5:checked ~ .testimonials label[for="t-1"]{
+	transform: translate3d(300px, 0, -90px) rotateY(-15deg);
+	z-index: 3;
+}
+
+#t-2:checked ~ .testimonials label[for="t-1"],
+#t-3:checked ~ .testimonials label[for="t-2"],
+#t-4:checked ~ .testimonials label[for="t-3"],
+#t-5:checked ~ .testimonials label[for="t-4"],
+#t-1:checked ~ .testimonials label[for="t-5"]{
+	transform: translate3d(-300px, 0, -90px) rotateY(15deg);
+	z-index: 3;
+}
+
+#t-3:checked ~ .testimonials label[for="t-1"],
+#t-4:checked ~ .testimonials label[for="t-2"],
+#t-5:checked ~ .testimonials label[for="t-3"],
+#t-2:checked ~ .testimonials label[for="t-5"],
+#t-1:checked ~ .testimonials label[for="t-4"]{
+	transform: translate3d(-600px, 0, -180px) rotateY(25deg);	
+}
+
+#t-1:checked ~ .testimonials label[for="t-1"],
+#t-2:checked ~ .testimonials label[for="t-2"],
+#t-3:checked ~ .testimonials label[for="t-3"],
+#t-4:checked ~ .testimonials label[for="t-4"],
+#t-5:checked ~ .testimonials label[for="t-4"],
+#t-5:checked ~ .testimonials label[for="t-5"]{
+	z-index: 4;
+}
+
+/* Animación de aparición */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(3px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+*{
+    opacity: 1;
+    animation-name: fadeInUp;
+    animation-duration: .6s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+.slider, .slider * {
+    animation: none !important;
+    opacity: 1 !important; /* Asegúrate de que sean completamente visibles */
+}
+
+header {
+    animation-delay: 0.1s;
+}
+
+.contact-form {
+    animation-delay: 0.2s;
+}
+
+.btn-custom {
+    animation-delay: 0.3s;
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 18px;
+}
+
+.rating-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f79336; /* Color de fondo del círculo */
+    width: 80px; /* Tamaño del círculo */
+    height: 80px;
+    border-radius: 50%; /* Hace que el contenedor sea un círculo */
+    position: absolute; /* Posiciona el círculo en la esquina superior derecha de la tarjeta */
+    top: 15px;
+    right: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+    z-index: 1; /* Asegura que el círculo esté por encima de otros elementos */
+}
+
+.rating {
+    font-size: 24px; /* Tamaño del texto de la calificación */
+    font-weight: bold; /* Texto en negrita */
+    color: #fff; /* Color del texto */
+}
+
+.card-body {
+    position: relative; /* Establece un contexto de posicionamiento para los elementos internos */
+}
+
+.card-title, .card-text {
+    z-index: 0; /* Asegura que el texto esté debajo del rating */
+}
+
+
+.rating-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    padding: 20px; /* Espacio interno para el contenido */
+}
+
+.rating-badge-yellow {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1; /* Asegura que el rating esté encima del contenido */
+    background-color: #f79336;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.rating-badge-red {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1; /* Asegura que el rating esté encima del contenido */
+    background-color: red;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.rating-badge-green {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1; /* Asegura que el rating esté encima del contenido */
+    background-color: green;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.btn-custom {
+    background-color: #f79336;
+    color: #141e28;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.btn-custom:hover {
+    background-color: #ad6827;
+}

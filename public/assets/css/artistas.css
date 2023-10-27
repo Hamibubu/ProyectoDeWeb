@@ -1,0 +1,134 @@
+
+
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box; 
+}
+
+header{
+    color:white
+}
+
+body{
+    margin:0;
+    display: block; 
+    justify-content: center;
+    align-items: center;
+    position: relative; 
+    background-color: #e1e4e4;
+    color: #fff;
+}
+
+p{
+    color: #141e28;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+h2{
+    text-shadow:
+        -1px -1px 0 #141e2862,  
+        1px -1px 0 #141e2862, 
+        -1px 1px 0 #141e2862,  
+        1px 1px 0 #141e2862;    
+    color: #f79336;
+    font-size: 50px;
+    font-weight: 350;
+}
+
+
+
+
+.navbar-expand-lg{
+    background-color: #141e28; 
+}
+
+.dropdown-menu{
+    list-style: none;
+}
+
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Animación de aparición */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(3px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+*{
+    opacity: 1;
+    animation-name: fadeInUp;
+    animation-duration: .6s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+header {
+    animation-delay: 0.1s;
+}
+
+.contact-form {
+    animation-delay: 0.2s;
+}
+
+.btn-custom {
+    animation-delay: 0.3s;
+}
+
+.artist-image {
+    width: 300px;  /* Ancho de la imagen */
+    height: 300px; /* Alto de la imagen */
+    border-radius: 50%; /* Hace que la imagen sea circular */
+    object-fit: cover;  /* Asegura que la imagen cubra el espacio sin deformarse */
+}
+
+.artist-image-container {
+    display: flex;        /* Habilita el diseño flexible */
+    justify-content: center; /* Centra los elementos hijos horizontalmente */
+    align-items: center;     /* Centra los elementos hijos verticalmente */
+    height: 300px;          /* Altura del contenedor de la imagen */
+}
+
+.btn-custom {
+    background-color: #f79336;
+    color: #141e28;
+    padding: 5px 20px;
+    border-radius: 20px;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.btn-custom:hover {
+    background-color: #ad6827;
+}
+
+.card{
+    border-radius: 20px;
+    background-color: #141e28;
+    color: #fff;
+}
+
+.card-title{
+    font-size: 35px;
+}
+
+.card-text{
+    color: #fff;
+    font-weight: 200;
+    font-size: 18px;
+}
+
+h1 {
+    color: #141e28;  /* Color del texto */
+    font-weight: bold;  /* Grosor del texto */
+}
