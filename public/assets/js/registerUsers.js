@@ -17,7 +17,14 @@ $(document).ready(() => {
         };
         for (let key in userData) {
             if (userData[key] === '') {
-                alert('Por favor, llena todos los campos antes de registrarte.');
+                Swal.fire({
+                    toast: true,
+                    position: 'top-right',
+                    icon: 'error',
+                    title: 'Por favor, llena todos los campos antes de registrarte.',
+                    showConfirmButton: false,
+                    timer: 4000
+                })
                 return;
             }
         }
