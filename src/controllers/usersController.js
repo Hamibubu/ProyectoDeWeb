@@ -7,8 +7,14 @@ class UsersController {
         res.send('Página usuario');
     }
 
-    crearusuario(req,res) {
-        res.send('Crear usuario');
+    async crearusuario(req,res) {
+        const user = new Usuario(req.body);
+        try{
+            await user.save();
+            res.status(201).send(user);
+        } catch(err) {
+            res.status(500).send(err);
+        }
     }
 
     eliminarusuario(req,res) {

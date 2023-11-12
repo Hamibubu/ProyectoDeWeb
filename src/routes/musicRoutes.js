@@ -8,7 +8,7 @@ router.get('/music/:musicId',musicController.vermusic);
 router.post('/music',musicController.crearmusic );
 
 // Editar
-router.patch('/music/edit',musicController.editarmusic);
+router.patch('/music/edit/:musicId',musicController.editarmusic);
 
 // Eliminar
 router.delete('/music/delete',musicController.eliminarmusic);

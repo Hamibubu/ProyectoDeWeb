@@ -10,9 +10,15 @@ const usersRoutes = require('./src/routes/usersRoutes');
 
 const app = express();
 
+const corsOptions = {
+    origin: '*', // Esto permite accesos desde cualquier origen, úsalo solo para pruebas
+    optionsSuccessStatus: 200 // Algunos navegadores legacy fallan con 204
+  };
+  
+  app.use(cors(corsOptions));
+
 app.use(express.json());
 
-app.use(cors());
 app.use('/', adminRoutes);
 app.use('/', artistRoutes);
 app.use('/', commentRoutes);
