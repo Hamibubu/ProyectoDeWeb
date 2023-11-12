@@ -1,13 +1,23 @@
 const Usuario = require('./../models/usersModel');
 const { response } = require('express');
+const bcrypt = require('bcryptjs');
 
 class UsersController {
 
-    verusuarios(req,res) {
+    verusuarios(req, res) {
         res.send('Página usuario');
     }
 
     async crearusuario(req, res) {
+        try {
+            // Encriptar la contraseña
+            const salt = await bcrypt.genSalt(10);
+            // Crear el objeto de usuario con la contraseña encriptada
+            const hashedPassword = await bcrypt.hash(req.body.password, salt);
+            req.body.password = hashedPassword;
+        } catch (err) {
+            res.status(500).send('Hubo un error al registrarlo. Inténtalo de nuevo.');
+        }
         const user = new Usuario(req.body);
         try {
             await user.save();
@@ -21,16 +31,16 @@ class UsersController {
         }
     }
 
-    eliminarusuario(req,res) {
+    eliminarusuario(req, res) {
         res.send('Eliminar usuario');
     }
 
     // NO USAR MÉTODO INSEGURO
-    putusuario(req,res) {
+    putusuario(req, res) {
         res.send('');
     }
 
-    editarusuario(req,res) {
+    editarusuario(req, res) {
         res.send('Editar artista');
     }
 
@@ -40,18 +50,14 @@ class UsersController {
         if (!user) {
             return res.status(400).send({ message: 'El email no está registrado' });
         }
-
-        // Comparar la contraseña proporcionada con la almacenada en la base de datos
-        // const isMatch = await compare(req.body.pwd, user.pwd);
-        // if (!isMatch) {
-        //     return res.status(400).send({ message: 'Contraseña incorrecta' });
-        // }
-        if (req.body.pwd !== user.password) {
+        //Comparar la contraseña proporcionada con la almacenada en la base de datos METODO ENCRIPTADO
+        const isMatch = await bcrypt.compare(req.body.password, user.password);
+        if (!isMatch) {
             return res.status(400).send({ message: 'Contraseña incorrecta' });
+        }else {
+            // Si todo está bien, responder con success
+            return res.status(200).send();
         }
-
-        // Si todo está bien, responder con el usuario
-        res.send(user);
     }
 
 }

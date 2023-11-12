@@ -4,7 +4,7 @@ $(document).ready(() => {
         if (!event.currentTarget.checkValidity()) {
             event.stopPropagation();
         }
-        
+
         const userData = {
             name: $('#nombre').val(),
             apellido: $('#apellido').val(),
@@ -12,7 +12,7 @@ $(document).ready(() => {
             genres: $('#generos').val(),
             albumfav: $('#album').val(),
             email: $('#email').val(),
-            password: $('#password').val(),
+            password: $('#password').val(), 
             phone: $('#telefono').val()
         };
         for (let key in userData) {
@@ -64,4 +64,3 @@ $(document).ready(() => {
         $(this).addClass('was-validated');
     });
 });
-
