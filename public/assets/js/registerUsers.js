@@ -27,9 +27,28 @@ $(document).ready(() => {
             data: JSON.stringify(userData),
             contentType: 'application/json',
             success: function(datos){
-                alert("Usuario Registrado exitosamente será redirigido ahora a la pestaña de login");
-                window.location.href = "./../logins/login.html";
-                $("form")[0].reset();
+                setTimeout(() => {
+                    let timerInterval
+                    Swal.fire({
+                        title: 'Usuario registrado exitosamente',
+                        html: 'Redireccionando ...',
+                        timer: 1000,
+                        timerProgressBar: true,
+                        didOpen: () => {
+                            Swal.showLoading()
+                            const b = Swal.getHtmlContainer().querySelector('b')
+                            timerInterval = setInterval(() => {
+                            }, 1000)
+                        },
+                        willClose: () => {
+                            clearInterval(timerInterval)
+                        }
+                    }).then((result) => {
+                        if (result.dismiss === Swal.DismissReason.timer) {
+                            window.location = './../logins/login.html';
+                        }
+                    })
+                }, 1000);
             },
             error: function(xhr, status, err) {
                 console.error('Error:', err);
