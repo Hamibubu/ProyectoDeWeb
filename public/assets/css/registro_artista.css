@@ -23,7 +23,7 @@ body {
 }
 
 .card-header {
-    background-color: #f79336;
+    background-color: #f78036;
     border-bottom: none;
     padding: 20px 40px;
     text-align: center;
@@ -54,7 +54,7 @@ body {
 }
 
 .form-control:focus, .btn-primary:hover {
-    border-color: #f79336;
+    border-color: #f78036;
     background-color: #acdfe0;
     color: #fff;
     border-radius: 4px;
@@ -66,7 +66,7 @@ body {
 }
 
 .btn-primary {
-    background-color: #f79336;
+    background-color: #f78036;
     font-size: 18px;
     font-weight: 600;
     padding: 12px 20px;
