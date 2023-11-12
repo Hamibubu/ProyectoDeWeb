@@ -1,6 +1,7 @@
 const Usuario = require('./../models/usersModel');
 const { response } = require('express');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 class UsersController {
 
@@ -21,10 +22,10 @@ class UsersController {
         const user = new Usuario(req.body);
         try {
             await user.save();
-            res.status(201).send(user); 
+            res.status(201).send("Usuario creado exitosamente"); 
         } catch (err) {
             if (err.code === 11000) {
-                return res.status(400).json({ error: "El email ya existe en la base" });
+                return res.status(400).json({ error: "El email o username ya existe en la base" });
             } else {
                 res.status(500).send("Error interno");
             }
@@ -45,18 +46,23 @@ class UsersController {
     }
 
     async iniciarsesion(req, res) {
-        // Buscar al usuario por email
-        const user = await Usuario.findOne({ email: req.body.email });
-        if (!user) {
-            return res.status(400).send({ message: 'El email no está registrado' });
-        }
-        //Comparar la contraseña proporcionada con la almacenada en la base de datos METODO ENCRIPTADO
-        const isMatch = await bcrypt.compare(req.body.password, user.password);
-        if (!isMatch) {
-            return res.status(400).send({ message: 'Contraseña incorrecta' });
-        }else {
-            // Si todo está bien, responder con success
-            return res.status(200).send();
+        try{
+            // Buscar al usuario por email
+            const user = await Usuario.findOne({ email: req.body.email });
+            if (!user) {
+                return res.status(400).send({ message: 'El email no está registrado' });
+            }
+            //Comparar la contraseña proporcionada con la almacenada en la base de datos METODO ENCRIPTADO
+            const isMatch = await bcrypt.compare(req.body.password, user.password);
+            if (!isMatch) {
+                return res.status(400).send({ message: 'Contraseña incorrecta' });
+            }
+            const { password, email } = user; // Extrae el _id y email del objeto user
+            const token = jwt.sign({ password, email }, process.env.SECRET_KEY, { expiresIn: '1h' });
+            res.send({ token });
+        } catch (err) {
+            console.error('Login error: ', err);
+            res.sendStatus(500).send("Error interno"); 
         }
     }
 
