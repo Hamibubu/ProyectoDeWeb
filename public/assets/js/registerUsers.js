@@ -21,7 +21,6 @@ $(document).ready(() => {
                 return;
             }
         }
-        console.log(userData); //borrar
         $.ajax({
             type: "POST",
             url: "http://localhost:3000/register/user",
@@ -32,9 +31,14 @@ $(document).ready(() => {
                 window.location.href = "./../logins/login.html";
                 $("form")[0].reset();
             },
-            error: function(error) {
-                console.error('Error:', error);
-                alert('Hubo un error al registrarlo. Inténtalo de nuevo.');
+            error: function(xhr, status, err) {
+                console.error('Error:', err);
+                var response = JSON.parse(xhr.responseText);
+                if (xhr.status === 400 && response.error === "El email ya existe en la base") {
+                    alert('El email ya está registrado. Por favor, usa un email diferente.');
+                } else {
+                    alert('Hubo un error al registrarlo. Inténtalo de nuevo.');
+                }
             }
         })
 
