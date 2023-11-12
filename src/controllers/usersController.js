@@ -10,19 +10,10 @@ class UsersController {
     async crearusuario(req,res) {
         const user = new Usuario(req.body);
         try{
-            await user.save((err) => {
-                if (err) {
-                    if (err.code === 11000) {
-                        res.status(400).send("El email ya existe en la base");
-                    } else {
-                        res.status(500).send("Error interno");
-                    }
-                  } else {
-                    res.status(201).send(user);
-                  }
-            });
+            await user.save();
+            res.status(201).send(user);
         } catch(err) {
-            res.status(500).send("Error interno");
+            res.status(500).send(err);
         }
     }
 
@@ -39,8 +30,24 @@ class UsersController {
         res.send('Editar artista');
     }
 
-    iniciarsesion(res,req) {
-        res.send('Inicia sesión');
+    async iniciarsesion(req, res) {
+        // Buscar al usuario por email
+        const user = await Usuario.findOne({ email: req.body.email });
+        if (!user) {
+            return res.status(400).send({ message: 'El email no está registrado' });
+        }
+
+        // Comparar la contraseña proporcionada con la almacenada en la base de datos
+        // const isMatch = await compare(req.body.pwd, user.pwd);
+        // if (!isMatch) {
+        //     return res.status(400).send({ message: 'Contraseña incorrecta' });
+        // }
+        if (req.body.pwd !== user.password) {
+            return res.status(400).send({ message: 'Contraseña incorrecta' });
+        }
+
+        // Si todo está bien, responder con el usuario
+        res.send(user);
     }
 
 }
