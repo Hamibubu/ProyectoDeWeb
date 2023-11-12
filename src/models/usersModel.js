@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
     genres: { type: String, required: true },
     albumfav: { type: String, required: true },
     email: { type: String, required: true },
+    email: { type: String, unique: true, required: true },
     password: { type:String, required: true },
     phone: { type:String, required: true }
 });
