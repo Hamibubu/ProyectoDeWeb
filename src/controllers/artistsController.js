@@ -7,8 +7,14 @@ class ArtistController {
         res.send('Página artista');
     }
 
-    creartist(req,res) {
-        res.send('Crear artista');
+    async creartist(req,res) {
+        const artist = new Artist(req.body);
+        try{
+            await artist.save();
+            res.status(201).send(artist);
+        } catch(err) {
+            res.status(500).send(err);
+        }
     }
 
     eliminartist(req,res) {
