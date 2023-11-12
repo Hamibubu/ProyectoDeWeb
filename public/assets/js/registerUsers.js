@@ -15,7 +15,13 @@ $(document).ready(() => {
             password: $('#password').val(),
             phone: $('#telefono').val()
         };
-        
+        for (let key in userData) {
+            if (userData[key] === '') {
+                alert('Por favor, llena todos los campos antes de registrarte.');
+                return;
+            }
+        }
+        console.log(userData); //borrar
         $.ajax({
             type: "POST",
             url: "http://localhost:3000/register/user",

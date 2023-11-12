@@ -42,8 +42,24 @@ class UsersController {
         res.send('Editar artista');
     }
 
-    iniciarsesion(res,req) {
-        res.send('Inicia sesión');
+    async iniciarsesion(req, res) {
+        // Buscar al usuario por email
+        const user = await Usuario.findOne({ email: req.body.email });
+        if (!user) {
+            return res.status(400).send({ message: 'El email no está registrado' });
+        }
+
+        // Comparar la contraseña proporcionada con la almacenada en la base de datos
+        // const isMatch = await compare(req.body.pwd, user.pwd);
+        // if (!isMatch) {
+        //     return res.status(400).send({ message: 'Contraseña incorrecta' });
+        // }
+        if (req.body.pwd !== user.password) {
+            return res.status(400).send({ message: 'Contraseña incorrecta' });
+        }
+
+        // Si todo está bien, responder con el usuario
+        res.send(user);
     }
 
 }
