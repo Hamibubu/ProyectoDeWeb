@@ -54,9 +54,23 @@ $(document).ready(() => {
                 console.error('Error:', err);
                 var response = JSON.parse(xhr.responseText);
                 if (xhr.status === 400 && response.error === "El email ya existe en la base") {
-                    alert('El email ya está registrado. Por favor, usa un email diferente.');
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-right',
+                        icon: 'error',
+                        title: 'El email ya está registrado. Por favor, usa un email diferente.',
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
                 } else {
-                    alert('Hubo un error al registrarlo. Inténtalo de nuevo.');
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-right',
+                        icon: 'error',
+                        title: 'Hubo un error al registrarlo. Inténtalo de nuevo.',
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
                 }
             }
         })
