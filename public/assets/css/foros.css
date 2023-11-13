@@ -18,11 +18,44 @@ header{
     color: white;
 }
 
+
+.voto{
+    border-radius: 20px;
+    width: 20%;
+    height: 40px;
+    font-size: medium;
+}
+
+.comentario{
+    background-color: #e1e4e4;
+    width: 300px;
+    height: 40px;
+}
+
+.btn-comentar {
+    font-size: medium;
+    width: 50%;
+    height: 40px;
+    text-align: center;
+    background-color: white;
+    border-color: #e1e4e4;
+    color: #141e28;
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+    animation-delay: 0.3s;
+}
+
+
+.btn-comentar:hover {
+    background-color: #e1e4e4;
+}
+
 .navbar-expand-lg{
     background-color: #141e28; 
 }
 
-navbar{
+.navbar{
     position: sticky;
 }
 
@@ -34,114 +67,6 @@ navbar{
     color: white;
 }
 
-
-/* Fotos del Carrusel */
-.albumesC{
-    height: 300px;
-    width: 300px;
-}
-
-/* Creditos al carrusel: https://m-softtech.in/index.php/2022/10/16/how-to-make-card-slider-in-html-css-owl-carousel/ */
-.slider{width: 100%}
-.slider input{display: none;}
-.testimonials{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: relative;
-	min-height: 300px;
-	perspective: 1000px;
-	overflow: hidden;
-}
-.testimonials .item{
-	width: 300px;
-	padding: 30px;
-	border-radius: 5px;
-	position: absolute;
-	top: 0;
-	box-sizing: border-box;
-	text-align: center;
-	transition: transform 0.4s;
-	user-select: none;
-	cursor: pointer;
-}
-.testimonials .item h1{font-size: 114px; color: white;}
-.dots{display: flex; justify-content: center;align-items: center;}
-.dots label{
-	height: 5px;
-	width: 5px;
-	border-radius: 50%;
-	cursor: pointer;
-	background-color: orangered;
-	margin: 7px;
-	transition-duration: 0.2s;
-}
-
-/* Momento en el que se selecciona alguna de las fotos */
-#t-1:checked ~ .dots label[for="t-1"],
-#t-2:checked ~ .dots label[for="t-2"],
-#t-3:checked ~ .dots label[for="t-3"],
-#t-4:checked ~ .dots label[for="t-4"],
-#t-5:checked ~ .dots label[for="t-5"]{
-	transform: scale(2);
-	background-color: #141e28; /* Es el color del punto al momento en el que la foto es seleccionada */
-	box-shadow: 0px 0px 0px 3px #dddddd24;
-}
-
-#t-1:checked ~ .dots label[for="t-2"],
-#t-2:checked ~ .dots label[for="t-1"],
-#t-2:checked ~ .dots label[for="t-3"],
-#t-3:checked ~ .dots label[for="t-2"],
-#t-3:checked ~ .dots label[for="t-4"],
-#t-4:checked ~ .dots label[for="t-3"],
-#t-4:checked ~ .dots label[for="t-5"],
-#t-5:checked ~ .dots label[for="t-4"]{
-	transform: scale(1.5);
-}
-
-#t-1:checked ~ .testimonials label[for="t-3"],
-#t-2:checked ~ .testimonials label[for="t-4"],
-#t-3:checked ~ .testimonials label[for="t-5"],
-#t-4:checked ~ .testimonials label[for="t-1"],
-#t-5:checked ~ .testimonials label[for="t-2"]{
-	transform: translate3d(600px, 0, -180px) rotateY(-25deg);
-	z-index: 2;
-}
-
-#t-1:checked ~ .testimonials label[for="t-2"],
-#t-2:checked ~ .testimonials label[for="t-3"],
-#t-3:checked ~ .testimonials label[for="t-4"],
-#t-4:checked ~ .testimonials label[for="t-5"],
-#t-5:checked ~ .testimonials label[for="t-1"]{
-	transform: translate3d(300px, 0, -90px) rotateY(-15deg);
-	z-index: 3;
-}
-
-#t-2:checked ~ .testimonials label[for="t-1"],
-#t-3:checked ~ .testimonials label[for="t-2"],
-#t-4:checked ~ .testimonials label[for="t-3"],
-#t-5:checked ~ .testimonials label[for="t-4"],
-#t-1:checked ~ .testimonials label[for="t-5"]{
-	transform: translate3d(-300px, 0, -90px) rotateY(15deg);
-	z-index: 3;
-}
-
-#t-3:checked ~ .testimonials label[for="t-1"],
-#t-4:checked ~ .testimonials label[for="t-2"],
-#t-5:checked ~ .testimonials label[for="t-3"],
-#t-2:checked ~ .testimonials label[for="t-5"],
-#t-1:checked ~ .testimonials label[for="t-4"]{
-	transform: translate3d(-600px, 0, -180px) rotateY(25deg);	
-}
-
-#t-1:checked ~ .testimonials label[for="t-1"],
-#t-2:checked ~ .testimonials label[for="t-2"],
-#t-3:checked ~ .testimonials label[for="t-3"],
-#t-4:checked ~ .testimonials label[for="t-4"],
-#t-5:checked ~ .testimonials label[for="t-4"],
-#t-5:checked ~ .testimonials label[for="t-5"]{
-	z-index: 4;
-}
 
 /* Animación de aparición */
 @keyframes fadeInUp {
@@ -180,15 +105,26 @@ header {
     animation-delay: 0.3s;
 }
 
+.card-header > a{
+    text-decoration: none;
+    color: #141e28;
+}
+
+.card-header > a > img{
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
 .card {
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-img-top {
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    height: 300px;
+    border-radius: 0;
+    height: auto;
     object-fit: cover;
 }
 
@@ -293,22 +229,7 @@ header {
     background-color: #ad6827;
 }
 
-.card{
+.bg-card{
     background-color: #141e28;
     color: white;
-}
-
-.bienvenidap {
-    top: -20%;
-    left: 50%; 
-    transform: translateX(-50%); 
-    position: fixed; 
-}
-
-.bienvenidat {
-    font-size: 24px;
-}
-
-.bienvenidac {
-    font-size: 18px;
 }

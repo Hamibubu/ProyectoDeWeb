@@ -86,4 +86,3 @@ $(document).ready(() => {
         $(this).addClass('was-validated');
     });
 });
-
