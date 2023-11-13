@@ -292,3 +292,18 @@ header {
 .btn-custom:hover {
     background-color: #ad6827;
 }
+
+.bienvenidap {
+    top: -20%;
+    left: 50%; 
+    transform: translateX(-50%); 
+    position: fixed; 
+}
+
+.bienvenidat {
+    font-size: 24px;
+}
+
+.bienvenidac {
+    font-size: 18px;
+}

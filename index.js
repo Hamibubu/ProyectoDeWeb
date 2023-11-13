@@ -2,7 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv').config();
 const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const path = require('path');
 const adminRoutes = require('./src/routes/adminsRoutes');
 const artistRoutes = require('./src/routes/artistsRoutes');
 const commentRoutes = require('./src/routes/commentsRoutes');
@@ -21,11 +22,11 @@ const corsOptions = {
 
 app.use(express.json());
 
-app.use('/', adminRoutes);
-app.use('/', artistRoutes);
-app.use('/', commentRoutes);
-app.use('/', musicRoutes);
-app.use('/', usersRoutes);
+app.use('/api', adminRoutes);
+app.use('/api', artistRoutes);
+app.use('/api', commentRoutes);
+app.use('/api', musicRoutes);
+app.use('/api', usersRoutes);
 
 const MONGO = {
     DB_HOST: process.env.DB_HOST,
@@ -51,3 +52,10 @@ mongoose.connect(mongoUrl).then(() => {
 }).catch(err => {
     console.log('No se pudo conectar...', err);
 });
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/views/index/index.html'));
+  });
+

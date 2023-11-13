@@ -30,11 +30,10 @@ $(document).ready(() => {
         }
         $.ajax({
             type: "POST",
-            url: "http://localhost:3000/register/user",
+            url: "http://localhost:3000/api/register/user",
             data: JSON.stringify(userData),
             contentType: 'application/json',
             success: function(datos){
-                
                 setTimeout(() => {
                     let timerInterval
                     Swal.fire({

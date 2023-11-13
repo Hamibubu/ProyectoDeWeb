@@ -30,7 +30,7 @@ $(document).ready(() => {
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:3000/register/artist",
+            url: "http://localhost:3000/api/register/artist",
             data: JSON.stringify(artistData),
             contentType: 'application/json',
             success: function (datos) {

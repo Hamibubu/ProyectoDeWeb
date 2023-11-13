@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             $.ajax({
                 type: "POST",
-                url: "http://localhost:3000/login/user",
+                url: "http://localhost:3000/api/login/user",
                 data: JSON.stringify(userData),
                 contentType: 'application/json',
                 success: function(datos){

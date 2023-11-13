@@ -6,7 +6,8 @@ const jwt = require('jsonwebtoken');
 class UsersController {
 
     verusuarios(req, res) {
-        res.send('Página usuario');
+        const username = req.user.username;
+        res.send(`Bienvenido, ${username} (Usuario)`);
     }
 
     async crearusuario(req, res) {
@@ -57,8 +58,14 @@ class UsersController {
             if (!isMatch) {
                 return res.status(400).send({ message: 'Contraseña incorrecta' });
             }
-            const { password, email } = user; // Extrae el _id y email del objeto user
-            const token = jwt.sign({ password, email }, process.env.SECRET_KEY, { expiresIn: '1h' });
+            const { password, username } = user; // Extrae el _id y email del objeto user
+            const userType = "user"
+            const tokenPayload = {
+                userType,
+                password,
+                username
+            }
+            const token = jwt.sign(tokenPayload, process.env.SECRET_KEY, { expiresIn: '1h' });
             res.send({ token });
         } catch (err) {
             console.error('Login error: ', err);
