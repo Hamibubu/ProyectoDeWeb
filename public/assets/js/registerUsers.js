@@ -34,6 +34,7 @@ $(document).ready(() => {
             data: JSON.stringify(userData),
             contentType: 'application/json',
             success: function(datos){
+                
                 setTimeout(() => {
                     let timerInterval
                     Swal.fire({

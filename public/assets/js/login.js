@@ -4,6 +4,7 @@ const pwd = document.querySelector('#pwd');
 
 const erroremail = document.querySelector('#erroremail');
 const errorpwd = document.querySelector('#errorpwd');
+console.log(errorpwd)
 
 document.addEventListener('DOMContentLoaded', function() {
     formulario.addEventListener('submit', function(e) {
@@ -25,6 +26,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 data: JSON.stringify(userData),
                 contentType: 'application/json',
                 success: function(datos){
+                    const now = new Date();
+                    const expiration = new Date(now.getTime() + 60 * 60 * 1000);
+                    const expirationString = expiration.toUTCString();
+                    document.cookie = `authToken=${datos.token}; expires=${expirationString}; path=/`;
                     Swal.fire({
                         toast: true,
                         position: 'top-right',
@@ -51,10 +56,10 @@ document.addEventListener('DOMContentLoaded', function() {
                             }
                         }).then((result) => {
                             if (result.dismiss === Swal.DismissReason.timer) {
-                                window.location = 'http://localhost/cybermusik/public/views/index/index.html';
+                                window.location = './../../views/index/index.html';
                             }
                         })
-                    }, 1000);
+                    }, 100);
                     $("form")[0].reset();
                 },
                 error: function(error) {

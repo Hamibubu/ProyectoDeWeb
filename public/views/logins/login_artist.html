@@ -19,12 +19,14 @@
             <h1>Login de Artistas</h1>
             <p>Accede a tu espacio musical</p>
         </div>
-        <form>
+        <form id="formulario">
             <div class="form-group">
                 <input type="email" class="form-control" id="email" placeholder="Correo Electrónico" required>
+                <span id="erroremail" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" id="pwd" placeholder="Contraseña" required>
+                <span id="errorpwd" class="text-danger"></span>
             </div>
             <div class="custom-control custom-checkbox mb-3">
                 <input type="checkbox" class="custom-control-input" id="rememberMe">
@@ -38,6 +40,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.all.min.js"></script>
+    <script src="./../../assets/js/loginArtists.js"></script>
+    </body>
 
 </html>

@@ -13,8 +13,8 @@ const Usuario = require('./src/models/usersModel');
 const app = express();
 
 const corsOptions = {
-    origin: '*', // Esto permite accesos desde cualquier origen, úsalo solo para pruebas
-    optionsSuccessStatus: 200 // Algunos navegadores legacy fallan con 204
+    origin: '*', 
+    optionsSuccessStatus: 200
   };
   
   app.use(cors(corsOptions));
