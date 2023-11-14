@@ -1,0 +1,61 @@
+/* Estilos para el contenedor principal del perfil de usuario */
+.user-profile {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-radius: 15px; /* Bordes más curvados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f0f6fd; /* Color de fondo azul pastel */
+}
+
+/* Estilos para la foto de perfil */
+.profile-photo img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+    border: 1px solid #e3a680; /* Borde naranja pastel alrededor de la foto */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para los detalles del usuario en la tabla */
+.user-details table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    color: #333; /* Color del texto de detalles */
+}
+
+.user-details table td {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+
+.user-details table td:first-child {
+    font-weight: bold;
+    width: 30%;
+    text-align: right;
+}
+
+/* Estilos para el nombre del usuario */
+.user-name {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333; /* Color del texto del nombre */
+}
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+#user-profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

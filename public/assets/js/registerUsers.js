@@ -5,18 +5,24 @@ $(document).ready(() => {
             event.stopPropagation();
         }
 
-        const userData = {
-            name: $('#nombre').val(),
-            apellido: $('#apellido').val(),
-            username: $('#username').val(),
-            genres: $('#generos').val(),
-            albumfav: $('#album').val(),
-            email: $('#email').val(),
-            password: $('#password').val(), 
-            phone: $('#telefono').val()
-        };
-        for (let key in userData) {
-            if (userData[key] === '') {
+        const formData = new FormData(); // Crea un objeto FormData
+
+        // Agrega los campos de texto al objeto FormData
+        formData.append('name', $('#name').val());
+        formData.append('apellido', $('#apellido').val());
+        formData.append('username', $('#username').val());
+        formData.append('genres', $('#generos').val());
+        formData.append('albumfav', $('#album').val());
+        formData.append('email', $('#email').val());
+        formData.append('password', $('#password').val());
+        formData.append('phone', $('#telefono').val());
+        const archivoInput = $('#fotoPerfil')[0]; // Asegúrate de que el ID del input sea 'archivo'
+        if (archivoInput.files.length > 0) {
+            formData.append('profilePhoto', archivoInput.files[0]);
+        }
+
+        for (let pair of formData.entries()) {
+            if (pair[1] === '') {
                 Swal.fire({
                     toast: true,
                     position: 'top-right',
@@ -24,15 +30,16 @@ $(document).ready(() => {
                     title: 'Por favor, llena todos los campos antes de registrarte.',
                     showConfirmButton: false,
                     timer: 4000
-                })
+                });
                 return;
             }
         }
         $.ajax({
             type: "POST",
             url: "http://localhost:3000/api/register/user",
-            data: JSON.stringify(userData),
-            contentType: 'application/json',
+            data: formData,
+            contentType: false,
+            processData: false,
             success: function(datos){
                 setTimeout(() => {
                     let timerInterval

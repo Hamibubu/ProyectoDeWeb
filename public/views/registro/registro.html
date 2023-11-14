@@ -22,10 +22,10 @@
                         <span>Es rápido y fácil.</span>
                     </div>
                     <div class="card-body">
-                        <form id="UserForm" novalidate>
+                        <form id="UserForm" enctype="multipart/form-data" novalidate>
                             <div class="form-group">
                                 <label for="nombre">Nombre:</label>
-                                <input type="text" class="form-control" id="nombre" placeholder="Nombre" required>
+                                <input type="text" class="form-control" id="name" placeholder="Nombre" required>
                             </div>
                             <div class="form-group">
                                 <label for="apellido">Apellido:</label>
@@ -55,6 +55,10 @@
                                 <label for="telefono">Teléfono:</label>
                                 <input type="tel" class="form-control" id="telefono" placeholder="Teléfono" required>
                             </div>
+                            <div class="form-group">
+                                <label for="fotoPerfil">Sube tu foto de perfil:</label>
+                                <input type="file" class="form-control" id="fotoPerfil" accept="image/*" required>
+                            </div>                            
                             <a href="registro_artista.html" class="btn btn-link" id="q">¿Eres artista?</a>
                             <br>
                             <br>

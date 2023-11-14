@@ -18,10 +18,11 @@ const corsOptions = {
     optionsSuccessStatus: 200
   };
   
-  app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api', adminRoutes);
 app.use('/api', artistRoutes);
 app.use('/api', commentRoutes);
