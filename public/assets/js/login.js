@@ -37,28 +37,28 @@ document.addEventListener('DOMContentLoaded', function() {
                         showConfirmButton: false,
                         timer: 1000
                     })
-                    // setTimeout(() => {
-                    //     let timerInterval
-                    //     Swal.fire({
-                    //         title: 'BIENVENIDO',
-                    //         html: 'Redireccionando ...',
-                    //         timer: 1000,
-                    //         timerProgressBar: true,
-                    //         didOpen: () => {
-                    //             Swal.showLoading()
-                    //             const b = Swal.getHtmlContainer().querySelector('b')
-                    //             timerInterval = setInterval(() => {
-                    //             }, 1000)
-                    //         },
-                    //         willClose: () => {
-                    //             clearInterval(timerInterval)
-                    //         }
-                    //     }).then((result) => {
-                    //         if (result.dismiss === Swal.DismissReason.timer) {
-                    //             window.location = './../../views/index/index.html';
-                    //         }
-                    //     })
-                    // }, 1000);
+                    setTimeout(() => {
+                        let timerInterval
+                        Swal.fire({
+                            title: 'BIENVENIDO',
+                            html: 'Redireccionando ...',
+                            timer: 1000,
+                            timerProgressBar: true,
+                            didOpen: () => {
+                                Swal.showLoading()
+                                const b = Swal.getHtmlContainer().querySelector('b')
+                                timerInterval = setInterval(() => {
+                                }, 1000)
+                            },
+                            willClose: () => {
+                                clearInterval(timerInterval)
+                            }
+                        }).then((result) => {
+                            if (result.dismiss === Swal.DismissReason.timer) {
+                                window.location = './../../views/index/index.html';
+                            }
+                        })
+                    }, 1000);
                     $("form")[0].reset();
                 },
                 error: function(error) {
