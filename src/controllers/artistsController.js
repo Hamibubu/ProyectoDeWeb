@@ -7,15 +7,29 @@ const fs = require('fs');
 
 class ArtistController {
 
+    welcome(req, res) {
+        const username = req.user.username;
+        const userType = req.user.userType;
+        res.send(`Bienvenido, ${username} (${userType})`);
+    }
+
     async profile(req, res){
         try {
-            const artist = await Artist.findOne({ username: req.artist.username });
+            const artist = await Artist.findOne({ username: req.user.username });
             
-            if (!user) {
+            if (!artist) {
                 return res.status(404).json({ error: '¿Estás generando una cookie?' });
             }
-            console.log(artist)
-            res.json();
+            const userData = {
+                name: artist.name,
+                username: artist.username,
+                genre: artist.genre,
+                description: artist.description,
+                Influences: artist.Influences,
+                profilePhoto: artist.profilePhoto,
+                userType: req.user.userType
+            };
+            res.json(userData);
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Error interno del servidor' });
@@ -23,6 +37,7 @@ class ArtistController {
     }
 
     async creartist(req,res) {
+        
         try {
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -45,7 +60,7 @@ class ArtistController {
             if (err.code === 11000) {
                 return res.status(400).json({ error: "El email o username ya existe en la base" });
             } else {
-                res.status(500).send("Error interno");
+                res.status(503).send(err);
             }
         }
     }
@@ -65,6 +80,7 @@ class ArtistController {
 
     async iniciarsesion(req,res) {
         try{
+            console.log(req.body)
             const artist = await Artist.findOne({ email: req.body.email });
             if (!artist) {
                 return res.status(400).send({ message: 'El email no está registrado' });
@@ -73,11 +89,12 @@ class ArtistController {
             if (!isMatch) {
                 return res.status(400).send({ message: 'Contraseña incorrecta' });
             }
-            const userType = "artist"
+            const userType = "artist";
+            const { email, username } = artist;
             const tokenPayload = {
                 userType,
-                password,
-                username
+                username,
+                email
             }
             const token = jwt.sign(tokenPayload, process.env.SECRET_KEY, { expiresIn: '1h' });
             res.send({ token });

@@ -53,9 +53,77 @@ body {
 }
 
 #user-profile-container {
-    max-width: 600px;
+    max-width: 90%;
     margin: 0 auto;
     background-color: #ffffff;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 5%;
+}
+
+.artist-profile-container {
+    max-width: 100000px; /* Ancho más grande para perfiles de artistas */
+}
+
+/* Estilos Generales para el Tema Oscuro */
+.artist-profile {
+    background-color: #181818; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+    max-width: 100%; /* Ajusta esto según tus preferencias */
+    margin: 20px auto; /* Centra la tarjeta y agrega espacio alrededor */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Sombra para dar profundidad */
+}
+
+.artist-profile .card-body {
+    padding: 40px;
+}
+
+/* Estilo para la Imagen de Perfil */
+.artist-profile .img-thumbnail {
+    background-color: #181818;
+    border: none;
+    border-radius: 50%;
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Títulos y Subtítulos */
+.artist-profile h1 {
+    font-size: 2.5em;
+    font-weight: 700;
+    margin-top: 20px;
+}
+
+.artist-profile h2 {
+    font-size: 1.2em;
+    color: #ccc;
+    font-weight: 500;
+}
+
+/* Estilos para las Secciones del Perfil */
+.artist-profile .bio, 
+.artist-profile .genre, 
+.artist-profile .influences {
+    margin-top: 20px;
+}
+
+.artist-profile h3 {
+    color: #1db954; /* Color verde de Spotify */
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.artist-profile p {
+    font-size: 1em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .artist-profile .img-thumbnail {
+        width: 150px;
+        height: 150px;
+    }
 }

@@ -9,10 +9,11 @@ $(document).ready(() => {
 
         formData.append('name', $('#name').val());
         formData.append('username', $('#username').val());
-        formData.append('genres', $('#generos').val());
+        formData.append('genre', $('#genre').val());
         formData.append('email', $('#email').val());
         formData.append('password', $('#password').val());
-        formData.append('influences', $('#Influences').val());
+        formData.append('description', $('#description').val());
+        formData.append('Influences', $('#influences').val());
         const archivoInput = $('#fotoPerfil')[0];
         if (archivoInput.files.length > 0) {
             formData.append('profilePhoto', archivoInput.files[0]);

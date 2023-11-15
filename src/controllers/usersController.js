@@ -9,7 +9,8 @@ class UsersController {
 
     welcome(req, res) {
         const username = req.user.username;
-        res.send(`Bienvenido, ${username} (Usuario)`);
+        const userType = req.user.userType;
+        res.send(`Bienvenido, ${username} (${userType})`);
     }
 
     async profile(req, res){
@@ -27,7 +28,8 @@ class UsersController {
                 phone: user.phone,
                 genres: user.genres,
                 username: user.username,
-                apellido: user.apellido
+                apellido: user.apellido,
+                userType: req.user.userType
             };
             res.json(userData);
         } catch (error) {
@@ -92,12 +94,12 @@ class UsersController {
             if (!isMatch) {
                 return res.status(400).send({ message: 'Contraseña incorrecta' });
             }
-            const { password, username } = user; // Extrae el _id y email del objeto user
+            const { email, username } = user; // Extrae el _id y email del objeto user
             const userType = "user"
             const tokenPayload = {
                 userType,
-                password,
-                username
+                username,
+                email
             }
             const token = jwt.sign(tokenPayload, process.env.SECRET_KEY, { expiresIn: '1h' });
             res.send({ token });
