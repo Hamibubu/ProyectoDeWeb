@@ -7,7 +7,8 @@ const artistSchema = new mongoose.Schema({
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
     description: { type: String, required: true },
-    Influences: { type:String, required: true }
+    Influences: { type:String, required: true },
+    profilePhoto: { type: String, required: true}
 });
 
 module.exports = mongoose.model('Artist', artistSchema);

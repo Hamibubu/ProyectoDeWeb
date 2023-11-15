@@ -4,7 +4,6 @@ const pwd = document.querySelector('#pwd');
 
 const erroremail = document.querySelector('#erroremail');
 const errorpwd = document.querySelector('#errorpwd');
-console.log(errorpwd)
 
 document.addEventListener('DOMContentLoaded', function() {
     formulario.addEventListener('submit', function(e) {

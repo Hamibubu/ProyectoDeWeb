@@ -5,17 +5,21 @@ $(document).ready(() => {
             event.stopPropagation();
         }
 
-        const artistData = {
-            name: $('#nombre').val(),
-            username: $('#username').val(),
-            genre: $('#genre').val(),
-            email: $('#email').val(),
-            password: $('#password').val(),
-            description: $('#description').val(),
-            Influences: $('#influences').val()
-        };
-        for (let key in artistData) {
-            if (artistData[key] === '') {
+        const formData = new FormData();
+
+        formData.append('name', $('#name').val());
+        formData.append('username', $('#username').val());
+        formData.append('genres', $('#generos').val());
+        formData.append('email', $('#email').val());
+        formData.append('password', $('#password').val());
+        formData.append('influences', $('#Influences').val());
+        const archivoInput = $('#fotoPerfil')[0];
+        if (archivoInput.files.length > 0) {
+            formData.append('profilePhoto', archivoInput.files[0]);
+        }
+
+        for (let pair of formData.entries()) {
+            if (pair[1] === '') {
                 Swal.fire({
                     toast: true,
                     position: 'top-right',
@@ -23,7 +27,7 @@ $(document).ready(() => {
                     title: 'Por favor, llena todos los campos antes de registrarte.',
                     showConfirmButton: false,
                     timer: 4000
-                })
+                });
                 return;
             }
         }
@@ -31,13 +35,14 @@ $(document).ready(() => {
         $.ajax({
             type: "POST",
             url: "http://localhost:3000/api/register/artist",
-            data: JSON.stringify(artistData),
-            contentType: 'application/json',
-            success: function (datos) {
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(datos){
                 setTimeout(() => {
                     let timerInterval
                     Swal.fire({
-                        title: 'Usuario registrado exitosamente',
+                        title: 'Artista registrado exitosamente',
                         html: 'Redireccionando ...',
                         timer: 1000,
                         timerProgressBar: true,
@@ -56,17 +61,16 @@ $(document).ready(() => {
                         }
                     })
                 }, 1000);
-                $("form")[0].reset();
             },
-            error: function (xhr, status, err) {
+            error: function(xhr, status, err) {
                 console.error('Error:', err);
                 var response = JSON.parse(xhr.responseText);
-                if (xhr.status === 400 && response.error === "El email ya existe en la base") {
+                if (xhr.status === 400 && response.error === "El email o username ya existe en la base") {
                     Swal.fire({
                         toast: true,
                         position: 'top-right',
                         icon: 'error',
-                        title: 'El email ya está registrado. Por favor, usa un email diferente.',
+                        title: 'El email o username ya está registrado. Por favor, usa un email diferente.',
                         showConfirmButton: false,
                         timer: 4000
                     })

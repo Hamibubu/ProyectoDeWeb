@@ -22,10 +22,10 @@
                         <span>Es rápido y fácil.</span>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form id="ArtistForm" enctype="multipart/form-data" novalidate>
                             <div class="form-group">
                                 <label for="nombre">Nombre artístico:</label>
-                                <input type="text" class="form-control" id="nombre" placeholder="Nombre" required>
+                                <input type="text" class="form-control" id="name" placeholder="Nombre" required>
                             </div>
                             <div class="form-group">
                                 <label for="username">Nombre de Usuario:</label>
@@ -33,13 +33,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="genre">Género Musical:</label>
-                                <select class="form-control" id="genre">
-                                    <option>Rock</option>
-                                    <option>Pop</option>
-                                    <option>Reggaeton</option>
-                                    <option>Jazz</option>
-                                    <option>Clásico</option>
-                                </select>
+                                <input type="text" class="form-control" id="genre" placeholder="genre" required>
                             </div>
                             <div class="form-group">
                                 <label for="email">Correo Electrónico:</label>
@@ -56,6 +50,10 @@
                             <div class="form-group">
                                 <label for="Influencias">Influencias:</label>
                                 <textarea class="form-control" id="influences" rows="3" placeholder="Influencias"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="fotoPerfil">Sube tu foto de perfil:</label>
+                                <input type="file" class="form-control" id="fotoPerfil" accept="image/*" required>
                             </div>
                             <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
                         </form>

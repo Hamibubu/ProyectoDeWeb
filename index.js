@@ -9,6 +9,7 @@ const artistRoutes = require('./src/routes/artistsRoutes');
 const commentRoutes = require('./src/routes/commentsRoutes');
 const musicRoutes = require('./src/routes/musicRoutes');
 const usersRoutes = require('./src/routes/usersRoutes');
+const usersartistRoutes = require('./src/routes/artists&usersRoutes');
 const Usuario = require('./src/models/usersModel');
 
 const app = express();
@@ -23,6 +24,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/api', usersartistRoutes)
 app.use('/api', adminRoutes);
 app.use('/api', artistRoutes);
 app.use('/api', commentRoutes);
