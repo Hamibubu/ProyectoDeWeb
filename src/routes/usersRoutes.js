@@ -8,11 +8,6 @@ const file = require('./../middlewares/file')
 router.post('/login/user', usersController.iniciarsesion);
 router.post('/register/user', file.single('profilePhoto'),usersController.crearusuario);
 
-// Editar
-router.patch('/user/mod/:id',usersController.editarusuario);
-
-router.delete('/user/:userId',usersController.eliminarusuario);
-
 // Se omite usar el put
 
 module.exports = router;

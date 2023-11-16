@@ -69,8 +69,18 @@ class UsersController {
         }
     }
 
-    eliminarusuario(req, res) {
-        res.send('Eliminar usuario');
+    async eliminarusuario(req, res) {
+        try {
+            const username = req.user.username;
+            const usuarioEliminado = await User.findOneAndDelete({ username: username });
+            if(!usuarioEliminado){
+                return res.status(404).send('Usuario no encontrado');
+            }
+            res.send({ message: 'Usuario eliminado correctamente' });
+        } catch (error) {
+            console.error('Delete error: ', err);
+            res.sendStatus(500).send("Error interno"); 
+        }
     }
 
     // NO USAR MÉTODO INSEGURO
@@ -78,23 +88,35 @@ class UsersController {
         res.send('');
     }
 
-    editarusuario(req, res) {
-        res.send('Editar artista');
+    async editarusuario(req, res) {
+        try {
+            const username = req.user.username;
+            const datosActualizacion = req.body;
+            const usuarioActualizado = await Usuario.findOneAndUpdate(
+                { username: username },
+                datosActualizacion,
+                { new: true }
+            );
+            if (!usuarioActualizado) {
+                return res.status(404).send('Usuario no encontrado');
+            }
+            res.send(usuarioActualizado);
+        } catch (error) {
+            res.status(500).send('Error al actualizar el usuario');
+        }
     }
 
     async iniciarsesion(req, res) {
         try{
-            // Buscar al usuario por email
             const user = await Usuario.findOne({ email: req.body.email });
             if (!user) {
                 return res.status(400).send({ message: 'El email no está registrado' });
             }
-            //Comparar la contraseña proporcionada con la almacenada en la base de datos METODO ENCRIPTADO
             const isMatch = await bcrypt.compare(req.body.password, user.password);
             if (!isMatch) {
                 return res.status(400).send({ message: 'Contraseña incorrecta' });
             }
-            const { email, username } = user; // Extrae el _id y email del objeto user
+            const { email, username } = user;
             const userType = "user"
             const tokenPayload = {
                 userType,
