@@ -5,26 +5,86 @@ document.addEventListener('DOMContentLoaded', function() {
         success: function(userData) {
             var userProfileContainer = $("#user-profile-container");
             if (userData.userType == "user"){
-                userProfileContainer.addClass("user-profile");
-                var userProfileHTML = `
-                    <div class="card user-profile">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-4 text-center">
-                                    <img src="/uploads/${userData.profilePhoto}" alt="Foto de perfil" class="img-thumbnail">
-                                </div>
-                                <div class="col-md-8">
-                                    <h3 class="card-title">${userData.name} ${userData.apellido}</h3>
-                                    <p><strong>Email:</strong> ${userData.email}</p>
-                                    <p><strong>Géneros:</strong> ${userData.genres}</p>
-                                    <p><strong>Álbum Favorito:</strong> ${userData.albumfav}</p>
-                                    <p><strong>Teléfono:</strong> ${userData.phone}</p>
-                                    <p><strong>Nombre de Usuario:</strong> ${userData.username}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
-                userProfileContainer.html(userProfileHTML);
+                $('.main-body .card-body img').attr('src', `/uploads/${userData.profilePhoto}`);
+                $('.main-body .card-body h4').text(userData.name + ' ' + userData.apellido);
+                $('.main-body .card-body .text-secondary.mb-1:has(i.fas.fa-envelope)').html('<i class="fas fa-envelope"></i> ' + userData.email);
+                $('.main-body .card-body .text-secondary.mb-1:has(i.fas.fa-phone)').html('<i class="fas fa-phone"></i> ' + userData.phone);
+                $('.main-body .card-body .text-muted.font-size-sm:has(i.fas.fa-album)').html('<strong>&#9835;</strong> Album favorito: ' + userData.albumfav);
+                $('.main-body .card-body .text-secondary.mb-1:has(i.fas.fa-genre)').html('<strong>&#119070;</strong> Género favorito: ' + userData.genres);
+                $('.main-body .card-body h5:has(i.fas.fa-role)').html('<strong>&#128100;</strong> ' + userData.userType);
+                $('.main-body .card-body p:has(i.fas.fa-usname)').html('<i class="fas fa-usname"></i> @' + userData.username);
+                $('#name').val(userData.name);
+                $('#apellido').val(userData.apellido);
+                $('#email').val(userData.email);
+                $('#phone').val(userData.phone);
+                $('#genres').val(userData.genres);
+                $('#albumfav').val(userData.albumfav);
+                $('#changePasswordCheckbox').change(function() {
+                    if ($(this).is(':checked')) {
+                        $('#passwordFields').slideDown();
+                    } else {
+                        $('#passwordFields').slideUp();
+                    }
+                });
+                $('#formularioPerfil').submit(function() {
+                    var cambiarContraseña = $('#changePasswordCheckbox').is(':checked');
+                    var formData = new FormData(this); 
+                    formData.append('username', userData.username);
+                    if (!cambiarContraseña) {
+                        formData.delete('claveActual');
+                        formData.delete('password');
+                    }
+                    $.ajax({
+                        url: '/api/edit',
+                        type: 'PATCH',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            setTimeout(() => {
+                                let timerInterval
+                                Swal.fire({
+                                    title: 'Datos cambiados exitosamente',
+                                    html: 'Redireccionando ...',
+                                    timer: 1000,
+                                    timerProgressBar: true,
+                                    didOpen: () => {
+                                        Swal.showLoading()
+                                        const b = Swal.getHtmlContainer().querySelector('b')
+                                        timerInterval = setInterval(() => {
+                                        }, 1000)
+                                    },
+                                    willClose: () => {
+                                        clearInterval(timerInterval)
+                                    }
+                                }).then((result) => {
+                                    if (result.dismiss === Swal.DismissReason.timer) {
+                                        window.location.reload();
+                                    }
+                                })
+                            }, 500);
+                        },
+                        error: function(xhr, textStatus, errorThrown) {
+                            if (xhr.status === 401) {
+                                Swal.fire({
+                                toast: true,
+                                position: 'top-right',
+                                icon: 'error',
+                                title: 'Contraseña incorrecta!',
+                                showConfirmButton: false,
+                                timer: 4000
+                            })}else{
+                                Swal.fire({
+                                toast: true,
+                                position: 'top-right',
+                                icon: 'error',
+                                title: 'Hubo un error al modificar su información.',
+                                showConfirmButton: false,
+                                timer: 4000
+                            })}
+                        }
+                    });
+                });
             }else if (userData.userType == 'artist'){
                 userProfileContainer.addClass("artist-profile");
                 var artistProfileHTML = `
@@ -61,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 showConfirmButton: false,
                 timer: 3000
             })
+            window.location = './../../views/index/index.html';
         }
       });
 });

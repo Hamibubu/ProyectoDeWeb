@@ -9,7 +9,17 @@ const storage = multer.diskStorage({
     filename: (req, file, cb) => {
         const extension = file.originalname.split('.').pop();
         const time = new Date().getTime();
-        const name = `${req.body.username}_${time}.${extension}`;
+        let name;
+
+        if (req.body.username) {
+            name = `${req.body.username}_${time}.${extension}`;
+        } else if (req.user && req.user.username) {
+            name = `${req.user.username}_${time}.${extension}`;
+        } else {
+            // Si no hay req.body.username ni req.user.username, usa un nombre predeterminado
+            name = `default_${time}.${extension}`;
+        }
+
         cb(null, name);
     }
 });

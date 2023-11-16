@@ -29,7 +29,7 @@ const deleteRouteHandlers = {
 
 router.get('/welcome',auth,roles(rolesList,welcomeRouteHandlers));
 router.get('/profile',auth,roles(rolesList,profileRouteHandlers))
-router.patch('/edit',auth,roles(rolesList,editRouteHandlers));
+router.patch('/edit',auth,file.single('profilePhoto'),roles(rolesList,editRouteHandlers));
 router.delete('/del',auth,roles(rolesList,deleteRouteHandlers));
 
 module.exports = router;

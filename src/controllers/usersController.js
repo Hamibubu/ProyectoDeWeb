@@ -40,9 +40,7 @@ class UsersController {
 
     async crearusuario(req, res) {
         try {
-            // Encriptar la contraseña
             const salt = await bcrypt.genSalt(10);
-            // Crear el objeto de usuario con la contraseña encriptada
             const hashedPassword = await bcrypt.hash(req.body.password, salt);
             req.body.password = hashedPassword;
         } catch (err) {
@@ -91,17 +89,43 @@ class UsersController {
     async editarusuario(req, res) {
         try {
             const username = req.user.username;
-            const datosActualizacion = req.body;
+            let datosActualizacion = req.body;
+            const usuarioExistente = await Usuario.findOne({ username: username });
+            
+            if (!usuarioExistente) {
+                return res.status(404).send('Usuario no encontrado');
+            }
+
+            if (req.body.password && req.body.claveActual){
+                const isMatch = await bcrypt.compare(req.body.claveActual, usuarioExistente.password);
+                if (!isMatch) {
+                    return res.status(401).send({ message: 'Contraseña incorrecta' });
+                }
+                const salt = await bcrypt.genSalt(10);
+                const hashedPassword = await bcrypt.hash(req.body.password, salt);
+                req.body.password = hashedPassword;
+            }
+            if (req.file) {
+                if (usuarioExistente.profilePhoto) {
+                    const rutaActual = path.join(__dirname, '..', '..', 'uploads', usuarioExistente.profilePhoto);
+                    if (fs.existsSync(rutaActual)) {
+                        fs.unlinkSync(rutaActual);
+                    } else {
+                        console.log("Archivo no encontrado en: ", rutaActual);
+                    }
+                }
+                datosActualizacion.profilePhoto = req.file.filename;
+            } else {
+                delete datosActualizacion.profilePhoto;
+            }
             const usuarioActualizado = await Usuario.findOneAndUpdate(
                 { username: username },
                 datosActualizacion,
                 { new: true }
             );
-            if (!usuarioActualizado) {
-                return res.status(404).send('Usuario no encontrado');
-            }
-            res.send(usuarioActualizado);
+            res.send("Usuario modificado exitosamente");
         } catch (error) {
+            console.log(error);
             res.status(500).send('Error al actualizar el usuario');
         }
     }

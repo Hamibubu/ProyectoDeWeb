@@ -9,12 +9,4 @@ const artistsController = require('./../controllers/artistsController');
 router.post('/login/artist',artistController.iniciarsesion);
 router.post('/register/artist',file.single('profilePhoto'),artistController.creartist);
 
-// Editar 
-router.patch('/artist/mod/:id',artistController.editartist);
-
-// Se utiliza delete
-router.delete('/artist/:artistId',artistController.eliminartist);
-
-// Se omite usar el put
-
 module.exports = router;
