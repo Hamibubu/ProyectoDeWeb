@@ -1,129 +1,239 @@
-/* Estilos para el contenedor principal del perfil de usuario */
-.user-profile {
-    display: flex;
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box; /*para que el tamaño de los elementos no se modifique*/
+}
+
+body{
+    margin:0;
+    display: block; /*permite que los elementos se acomoden en varias lineas*/
+    justify-content: center;
     align-items: center;
-    padding: 20px;
-    border-radius: 15px; /* Bordes más curvados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #f0f6fd; /* Color de fondo azul pastel */
+    position: relative; /*para que el contenedor se ajuste al tamaño de los elementos*/
+    background-color: #e1e4e4;
+	font-family: 'Roboto', sans-serif;
 }
 
-/* Estilos para la foto de perfil */
-.profile-photo img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 20px;
-    border: 1px solid #e3a680; /* Borde naranja pastel alrededor de la foto */
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+header{
+    color: white;
 }
 
-/* Estilos para los detalles del usuario en la tabla */
-.user-details table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 16px;
-    color: #333; /* Color del texto de detalles */
+
+.voto{
+    border-radius: 20px;
+    width: 20%;
+    height: 40px;
+    font-size: medium;
 }
 
-.user-details table td {
-    padding: 8px;
-    border-bottom: 1px solid #ccc;
+.comentario{
+    background-color: #e1e4e4;
+    width: 300px;
+    height: 40px;
 }
 
-.user-details table td:first-child {
-    font-weight: bold;
-    width: 30%;
-    text-align: right;
+.btn-comentar {
+    font-size: medium;
+    width: 50%;
+    height: 40px;
+    text-align: center;
+    background-color: white;
+    border-color: #e1e4e4;
+    color: #141e28;
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+    animation-delay: 0.3s;
 }
 
-/* Estilos para el nombre del usuario */
-.user-name {
-    font-size: 24px;
-    margin-bottom: 10px;
-    color: #333; /* Color del texto del nombre */
+
+.btn-comentar:hover {
+    background-color: #e1e4e4;
 }
 
-/* Estilos generales */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
+.navbar-expand-lg{
+    background-color: #141e28; 
 }
 
-#user-profile-container {
-    max-width: 90%;
-    margin: 0 auto;
-    background-color: #ffffff;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 5%;
+.navbar{
+    position: sticky;
 }
 
-.artist-profile-container {
-    max-width: 100000px; /* Ancho más grande para perfiles de artistas */
+.dropdown-menu{
+    list-style: none;
 }
 
-/* Estilos Generales para el Tema Oscuro */
-.artist-profile {
-    background-color: #181818; /* Fondo oscuro */
-    color: #fff; /* Texto blanco */
-    max-width: 100%; /* Ajusta esto según tus preferencias */
-    margin: 20px auto; /* Centra la tarjeta y agrega espacio alrededor */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Sombra para dar profundidad */
+.container-fluid{
+    color: white;
 }
 
-.artist-profile .card-body {
-    padding: 40px;
+hr {
+    border-style: inset;
 }
 
-/* Estilo para la Imagen de Perfil */
-.artist-profile .img-thumbnail {
-    background-color: #181818;
-    border: none;
-    border-radius: 50%;
-    width: 220px;
-    height: 220px;
-    object-fit: cover;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-}
 
-/* Títulos y Subtítulos */
-.artist-profile h1 {
-    font-size: 2.5em;
-    font-weight: 700;
-    margin-top: 20px;
-}
-
-.artist-profile h2 {
-    font-size: 1.2em;
-    color: #ccc;
-    font-weight: 500;
-}
-
-/* Estilos para las Secciones del Perfil */
-.artist-profile .bio, 
-.artist-profile .genre, 
-.artist-profile .influences {
-    margin-top: 20px;
-}
-
-.artist-profile h3 {
-    color: #1db954; /* Color verde de Spotify */
-    font-size: 1.5em;
-    margin-bottom: 10px;
-}
-
-.artist-profile p {
-    font-size: 1em;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .artist-profile .img-thumbnail {
-        width: 150px;
-        height: 150px;
+/* Animación de aparición */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(3px);
     }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+*{
+    opacity: 1;
+    animation-name: fadeInUp;
+    animation-duration: .6s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+.slider, .slider * {
+    animation: none !important;
+    opacity: 1 !important; /* Asegúrate de que sean completamente visibles */
+}
+
+header {
+    animation-delay: 0.1s;
+}
+
+.contact-form {
+    animation-delay: 0.2s;
+}
+
+.btn-custom {
+    animation-delay: 0.3s;
+}
+
+.card-header > a{
+    text-decoration: none;
+    color: #141e28;
+}
+
+.card-header > a > img{
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    border-radius: 0;
+    height: auto;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 18px;
+}
+
+.rating-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f79336; /* Color de fondo del círculo */
+    width: 80px; /* Tamaño del círculo */
+    height: 80px;
+    border-radius: 50%; /* Hace que el contenedor sea un círculo */
+    position: absolute; /* Posiciona el círculo en la esquina superior derecha de la tarjeta */
+    top: 15px;
+    right: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+    z-index: 1; /* Asegura que el círculo esté por encima de otros elementos */
+}
+
+.rating {
+    font-size: 24px; /* Tamaño del texto de la calificación */
+    font-weight: bold; /* Texto en negrita */
+    color: #fff; /* Color del texto */
+}
+
+.card-body {
+    position: relative; /* Establece un contexto de posicionamiento para los elementos internos */
+}
+
+.card-title, .card-text {
+    z-index: 0; /* Asegura que el texto esté debajo del rating */
+}
+
+
+.rating-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    padding: 20px; /* Espacio interno para el contenido */
+}
+
+.rating-badge-yellow {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1; /* Asegura que el rating esté encima del contenido */
+    background-color: #f79336;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.rating-badge-red {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1; /* Asegura que el rating esté encima del contenido */
+    background-color: red;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.rating-badge-green {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1; /* Asegura que el rating esté encima del contenido */
+    background-color: green;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.btn-custom {
+    background-color: #f79336;
+    color: #141e28;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.btn-custom:hover {
+    background-color: #ad6827;
+}
+
+.bg-card{
+    background-color: #141e28;
+    color: white;
 }
