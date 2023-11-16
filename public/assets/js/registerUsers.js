@@ -32,7 +32,7 @@ $(document).ready(() => {
                     timer: 4000
                 });
                 return;
-            }
+            } 
         }
         $.ajax({
             type: "POST",

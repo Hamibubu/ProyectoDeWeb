@@ -17,7 +17,19 @@ const welcomeRouteHandlers = {
     'artist': artistController.welcome
 };
 
+const editRouteHandlers = {
+    'user': usersController.editarusuario,
+    'artist': artistController.editartist
+}
+
+const deleteRouteHandlers = {
+    'user': usersController.eliminarusuario,
+    'artist': artistController.eliminartist
+}
+
 router.get('/welcome',auth,roles(rolesList,welcomeRouteHandlers));
 router.get('/profile',auth,roles(rolesList,profileRouteHandlers))
+router.patch('/edit',auth,roles(rolesList,editRouteHandlers));
+router.delete('/del',auth,roles(rolesList,deleteRouteHandlers));
 
 module.exports = router;

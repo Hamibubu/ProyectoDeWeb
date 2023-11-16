@@ -65,8 +65,18 @@ class ArtistController {
         }
     }
 
-    eliminartist(req,res) {
-        res.send('Eliminar artista');
+    async eliminarartist(req, res) {
+        try {
+            const username = req.user.username;
+            const atistEliminado = await Artist.findOneAndDelete({ username: username });
+            if(!artistEliminado){
+                return res.status(404).send('Usuario no encontrado');
+            }
+            res.send({ message: 'Artist eliminado correctamente' });
+        } catch (error) {
+            console.error('Delete error: ', err);
+            res.sendStatus(500).send("Error interno"); 
+        }
     }
 
     // NO USAR MÉTODO INSEGURO
@@ -74,13 +84,26 @@ class ArtistController {
         res.send('');
     }
 
-    editartist(req,res) {
-        res.send('Editar artista');
+    async editarartist(req, res) {
+        try {
+            const username = req.user.username;
+            const datosActualizacion = req.body;
+            const artistActualizado = await Artist.findOneAndUpdate(
+                { username: username },
+                datosActualizacion,
+                { new: true }
+            );
+            if (!artistActualizado) {
+                return res.status(404).send('Usuario no encontrado');
+            }
+            res.send(artistActualizado);
+        } catch (error) {
+            res.status(500).send('Error al actualizar el usuario');
+        }
     }
 
     async iniciarsesion(req,res) {
         try{
-            console.log(req.body)
             const artist = await Artist.findOne({ email: req.body.email });
             if (!artist) {
                 return res.status(400).send({ message: 'El email no está registrado' });
