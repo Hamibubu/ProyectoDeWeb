@@ -1,32 +1,43 @@
-*{
-    padding:0;
-    margin:0;
-    box-sizing: border-box; /*para que el tamaño de los elementos no se modifique*/
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    /*para que el tamaño de los elementos no se modifique*/
 }
 
-body{
-    margin:0;
-    display: block; /*permite que los elementos se acomoden en varias lineas*/
+
+body {
+    margin: 0;
+    display: block;
+    /*permite que los elementos se acomoden en varias lineas*/
     justify-content: center;
     align-items: center;
-    position: relative; /*para que el contenedor se ajuste al tamaño de los elementos*/
+    position: relative;
+    /*para que el contenedor se ajuste al tamaño de los elementos*/
     background-color: #e1e4e4;
-	font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
-header{
+header {
     color: white;
 }
 
 
-.voto{
+.voto {
     border-radius: 20px;
     width: 20%;
     height: 40px;
     font-size: medium;
 }
 
-.comentario{
+.voto-comentario {
+    border-radius: 20px;
+    width: 15%;
+    height: 35px;
+    font-size: smaller;
+}
+
+.comentario {
     background-color: #e1e4e4;
     width: 300px;
     height: 40px;
@@ -51,19 +62,19 @@ header{
     background-color: #e1e4e4;
 }
 
-.navbar-expand-lg{
-    background-color: #141e28; 
+.navbar-expand-lg {
+    background-color: #141e28;
 }
 
-.navbar{
+.navbar {
     position: sticky;
 }
 
-.dropdown-menu{
+.dropdown-menu {
     list-style: none;
 }
 
-.container-fluid{
+.container-fluid {
     color: white;
 }
 
@@ -74,6 +85,7 @@ header{
         opacity: 0;
         transform: translateY(3px);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0);
@@ -85,13 +97,20 @@ header{
     animation-name: fadeInUp;
     animation-duration: .6s;
     animation-timing-function: ease-out;
-    animation-fill-mode: forwards;
 }
 
-.slider, .slider * {
+
+.slider,
+.slider * {
     animation: none !important;
-    opacity: 1 !important; /* Asegúrate de que sean completamente visibles */
+    opacity: 1 !important;
+    /* Asegúrate de que sean completamente visibles */
 }
+
+.btn-custom {
+    animation-delay: 0.3s;
+}
+
 
 header {
     animation-delay: 0.1s;
@@ -101,16 +120,23 @@ header {
     animation-delay: 0.2s;
 }
 
-.btn-custom {
-    animation-delay: 0.3s;
+
+.modal, .modal * {
+    animation-name: none !important;
 }
 
-.card-header > a{
+.ck{
+    animation: none !important;
+}
+
+
+
+.card-header>a {
     text-decoration: none;
     color: #141e28;
 }
 
-.card-header > a > img{
+.card-header>a>img {
     border-radius: 20px;
     width: 40px;
     height: 40px;
@@ -141,29 +167,41 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f79336; /* Color de fondo del círculo */
-    width: 80px; /* Tamaño del círculo */
+    background-color: #f79336;
+    /* Color de fondo del círculo */
+    width: 80px;
+    /* Tamaño del círculo */
     height: 80px;
-    border-radius: 50%; /* Hace que el contenedor sea un círculo */
-    position: absolute; /* Posiciona el círculo en la esquina superior derecha de la tarjeta */
+    border-radius: 50%;
+    /* Hace que el contenedor sea un círculo */
+    position: absolute;
+    /* Posiciona el círculo en la esquina superior derecha de la tarjeta */
     top: 15px;
     right: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
-    z-index: 1; /* Asegura que el círculo esté por encima de otros elementos */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra para darle profundidad */
+    z-index: 1;
+    /* Asegura que el círculo esté por encima de otros elementos */
 }
 
 .rating {
-    font-size: 24px; /* Tamaño del texto de la calificación */
-    font-weight: bold; /* Texto en negrita */
-    color: #fff; /* Color del texto */
+    font-size: 24px;
+    /* Tamaño del texto de la calificación */
+    font-weight: bold;
+    /* Texto en negrita */
+    color: #fff;
+    /* Color del texto */
 }
 
 .card-body {
-    position: relative; /* Establece un contexto de posicionamiento para los elementos internos */
+    position: relative;
+    /* Establece un contexto de posicionamiento para los elementos internos */
 }
 
-.card-title, .card-text {
-    z-index: 0; /* Asegura que el texto esté debajo del rating */
+.card-title,
+.card-text {
+    z-index: 0;
+    /* Asegura que el texto esté debajo del rating */
 }
 
 
@@ -174,14 +212,16 @@ header {
     right: 0;
     bottom: 0;
     text-align: center;
-    padding: 20px; /* Espacio interno para el contenido */
+    padding: 20px;
+    /* Espacio interno para el contenido */
 }
 
 .rating-badge-yellow {
     position: absolute;
     top: 10px;
     right: 10px;
-    z-index: 1; /* Asegura que el rating esté encima del contenido */
+    z-index: 1;
+    /* Asegura que el rating esté encima del contenido */
     background-color: #f79336;
     color: #fff;
     padding: 10px 20px;
@@ -194,7 +234,8 @@ header {
     position: absolute;
     top: 10px;
     right: 10px;
-    z-index: 1; /* Asegura que el rating esté encima del contenido */
+    z-index: 1;
+    /* Asegura que el rating esté encima del contenido */
     background-color: red;
     color: #fff;
     padding: 10px 20px;
@@ -207,7 +248,8 @@ header {
     position: absolute;
     top: 10px;
     right: 10px;
-    z-index: 1; /* Asegura que el rating esté encima del contenido */
+    z-index: 1;
+    /* Asegura que el rating esté encima del contenido */
     background-color: green;
     color: #fff;
     padding: 10px 20px;
@@ -219,17 +261,39 @@ header {
 .btn-custom {
     background-color: #f79336;
     color: #141e28;
-    padding: 10px 20px;
+    padding: 5px 20px;
     border-radius: 20px;
     border: none;
     transition: background-color 0.3s;
+    height: 34px;
 }
 
 .btn-custom:hover {
     background-color: #ad6827;
 }
 
-.bg-card{
+.bg-card {
     background-color: #141e28;
     color: white;
+}
+
+#input {
+    color: #141e28;
+}
+
+#realizapublicacion {
+    font-size: 20px;
+}
+
+#fotoperfil {
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.img-comentario{
+    width: 70%;
+    height: 70%;
 }
