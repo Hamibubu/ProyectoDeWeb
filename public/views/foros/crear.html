@@ -68,7 +68,7 @@
 
                 <form id="foroForm">
                     <div class="form-group mb-3">
-                        <label for="nombre">Nombre del foro:</label>
+                        <label for="nombre">Nombre del foro: <span class="text-custom">*</span></label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-list"></i></span>
                             <input type="text" class="form-control" id="nombreForo" placeholder="Nombre del foro"
@@ -76,15 +76,15 @@
                         </div>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="apellido">Descripción del foro:</label>
+                        <label for="apellido">Descripción del foro: <span class="text-custom">*</span></label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-list"></i></span>
                         <input type="text" class="form-control" id="descripcionForo" placeholder="Descripción" required>
                     </div>
                 </div>
                     <div class="form-group mb-3">
-                        <label for="username">Imagen del foro:</label>
-                        <input type="file" class="form-control" id="imagenForo" placeholder="Imagen">
+                        <label for="username">Imagen del foro: </label>
+                        <input type="file" class="form-control" id="imagenForo" accept="image/*">
                     </div>
                     <div class="form-group mb-3">
                         <div class="d-flex align-items-center">
@@ -97,56 +97,56 @@
                         <div class="col-md-12">
                             <div class="btn-group-toggle mb-1" data-toggle="buttons">
                                 <label class="btn btn-outline-primary mb-2">
-                                    <input type="checkbox" value=""> Rock
+                                    <input type="checkbox" class="listaEtiquetas" value="Rock"> Rock
                                 </label>
                                 <label class="btn btn-outline-primary mb-2">
-                                    <input type="checkbox" value=""> Memes
+                                    <input type="checkbox" class="listaEtiquetas" value="Memes"> Memes
                                 </label>
                                 <label class="btn btn-outline-primary mb-2">
-                                    <input type="checkbox" value=""> Rap/Hip-Hop
+                                    <input type="checkbox" class="listaEtiquetas" value="Rap/Hip-Hop"> Rap/Hip-Hop
                                 </label>
                                 <label class="btn btn-outline-primary mb-2">
-                                    <input type="checkbox" value=""> México
+                                    <input type="checkbox" class="listaEtiquetas" value="México"> México
+                                </label> 
+                                <label class="btn btn-outline-primary mb-2">
+                                    <input type="checkbox" class="listaEtiquetas" value="Pop"> Pop
                                 </label>
                                 <label class="btn btn-outline-primary mb-2">
-                                    <input type="checkbox" value=""> Pop
+                                    <input type="checkbox" class="listaEtiquetas" value="Tik Tok"> Tik Tok
                                 </label>
                                 <label class="btn btn-outline-primary mb-2">
-                                    <input type="checkbox" value=""> Tik Tok
+                                    <input type="checkbox" class="listaEtiquetas" value="Critica"> Critica
                                 </label>
                                 <label class="btn btn-outline-primary mb-2">
-                                    <input type="checkbox" value=""> Critica
+                                    <input type="checkbox" class="listaEtiquetas" value="Artistas"> Artistas
                                 </label>
                                 <label class="btn btn-outline-primary mb-2">
-                                    <input type="checkbox" value=""> Artistas
+                                    <input type="checkbox" class="listaEtiquetas" value="80's"> 80's
                                 </label>
                                 <label class="btn btn-outline-primary mb-2">
-                                    <input type="checkbox" value=""> 80's
+                                    <input type="checkbox" class="listaEtiquetas" value="K-pop"> K-pop
                                 </label>
                                 <label class="btn btn-outline-primary mb-2">
-                                    <input type="checkbox" value=""> K-pop
+                                    <input type="checkbox" class="listaEtiquetas" value="Videojuegos"> Videojuegos
                                 </label>
                                 <label class="btn btn-outline-primary mb-2">
-                                    <input type="checkbox" value=""> Videojuegos
+                                    <input type="checkbox" class="listaEtiquetas" value="Peliculas"> Peliculas
                                 </label>
                                 <label class="btn btn-outline-primary mb-2">
-                                    <input type="checkbox" value=""> Peliculas
+                                    <input type="checkbox" class="listaEtiquetas" value="Anime"> Anime
                                 </label>
                                 <label class="btn btn-outline-primary mb-2">
-                                    <input type="checkbox" value=""> Anime
+                                    <input type="checkbox" class="listaEtiquetas" value="Inglés"> Inglés
                                 </label>
                                 <label class="btn btn-outline-primary mb-2">
-                                    <input type="checkbox" value=""> Inglés
-                                </label>
-                                <label class="btn btn-outline-primary mb-2">
-                                    <input type="checkbox" value=""> Argentina
+                                    <input type="checkbox" class="listaEtiquetas" value="Argentina"> Argentina
                                 </label>
                             </div>
                         </div>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-end">
-                        <button id="botonPublicar" type="submit" class="btn btn-custom "
+                        <button type="submit" class="btn btn-custom "
                             style="width: 80px; height: 34px; padding: 5px 10px; font-size: 16px;">Crear</button>
                     </div>
                 </form>

@@ -1,39 +1,62 @@
-const publicar = document.querySelector('#publicar');
-const botonPublicar = document.querySelector('#botonPublicar');
+const foroForm = document.querySelector('#foroForm');
+const nombreForo = document.querySelector('#nombreForo');
+const descripcionForo = document.querySelector('#descripcionForo');
+const buscarEtiqueta = document.querySelector('#buscarEtiqueta');
+const listaCheck = document.querySelectorAll('.listaEtiquetas');
+let etiquetasSeleccionadas = [];
 
 
 
 document.addEventListener('DOMContentLoaded', function () {
 
     // crear post
-    botonPublicar.addEventListener('click', function (e) {
+    foroForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        if (window.publicar.getData() == '') {
-            alertaPersonalizada('warning', 'PUBLICACIÓN VACIA');
+        if (!e.currentTarget.checkValidity()) {
+            e.stopPropagation();
+        }
+
+        const formData = new FormData(); // Crea un objeto FormData
+
+        if (nombreForo.value == '') {
+            alertaPersonalizada('warning', 'Debe ingresar un nombre para el foro');
+            return;
+        }else if(descripcionForo.value == ''){
+            alertaPersonalizada('warning', 'Debe ingresar una descripcion para el foro');
             return;
         } else {
-            const content = {
-                content: window.publicar.getData(),
-                foroID: 'aqui va el id del foro'
-            };
+
+            formData.append('name', $('#nombreForo').val());
+            formData.append('description', $('#descripcionForo').val());
+            const archivoInput = $('#imagenForo')[0];
+            if (archivoInput.files.length > 0) {
+                formData.append('img', archivoInput.files[0]);
+            }
+            listaCheck.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    etiquetasSeleccionadas.push(checkbox.value);
+                }
+            });
+            formData.append('flags', etiquetasSeleccionadas.join(','));
             $.ajax({
                 type: "POST",
-                url: 'http://127.0.0.1:3000/api/post',
-                data: JSON.stringify(content),
-                contentType: 'application/json',
+                url: 'http://127.0.0.1:3000/api/foro',
+                data: formData,
+                contentType: false,
+                processData: false,
                 success: function (datos) {
                     Swal.fire({
                         toast: true,
                         position: 'top-right',
                         icon: 'success',
-                        title: 'Publicando...',
+                        title: 'Entrando al foro...',
                         showConfirmButton: false,
                         timer: 1000
                     })
                     setTimeout(() => {
                         let timerInterval
                         Swal.fire({
-                            title: 'PUBLICADO',
+                            title: 'FORO CREADO',
                             // html: 'Redireccionando ...',
                             timer: 1000,
                             timerProgressBar: true,
@@ -48,11 +71,12 @@ document.addEventListener('DOMContentLoaded', function () {
                             }
                         }).then((result) => {
                             if (result.dismiss === Swal.DismissReason.timer) {
+                                //LLEVAR AL NUEVO FORO CREADO
                                 // window.location.reload();
                             }
                         })
                     }, 1000);
-                    window.publicar.setData('');
+                    foroForm.reset();
                 },
                 error: function (error) {
                     alertaPersonalizada('error', error.responseText);

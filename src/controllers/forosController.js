@@ -1,5 +1,7 @@
 const Foro = require('./../models/forosModel');
 const { response } = require('express');
+const path = require('path');
+const fs = require('fs');
 
 class ForosController {
 
@@ -12,6 +14,11 @@ class ForosController {
         req.body.timestamp = timestamp;
         // req.body.author = req.user.username; //ESTA ES LA QUE VA, LA LINEA DE ABAJO ES PARA DEV
         req.body.author = 'Usuario';
+        if (req.file) {
+            req.body.img = req.file.filename;
+        } else {
+            req.body.img = 'foroSinImagen.png';
+        }
         const foro = new Foro(req.body);
         try {
             await foro.save();
