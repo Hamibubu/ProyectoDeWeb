@@ -70,14 +70,22 @@ class UsersController {
     async eliminarusuario(req, res) {
         try {
             const _id = req.user._id;
-            const usuarioEliminado = await User.findOneAndDelete({ _id: _id });
+            const usuarioEliminado = await Usuario.findOneAndDelete({ _id: _id });
             if(!usuarioEliminado){
                 return res.status(404).send('Usuario no encontrado');
             }
-            res.send({ message: 'Usuario eliminado correctamente' });
+            if (usuarioExistente.profilePhoto) {
+                const rutaActual = path.join(__dirname, '..', '..', 'uploads', usuarioExistente.profilePhoto);
+                if (fs.existsSync(rutaActual)) {
+                    fs.unlinkSync(rutaActual);
+                } else {
+                    console.log("Archivo no encontrado en: ", rutaActual);
+                }
+            }
+            return res.send({ message: 'Usuario eliminado correctamente' });
         } catch (error) {
-            console.error('Delete error: ', err);
-            res.sendStatus(500).send("Error interno"); 
+            console.error('Delete error: '+ error);
+            return res.sendStatus(500).send("Error interno");
         }
     }
 

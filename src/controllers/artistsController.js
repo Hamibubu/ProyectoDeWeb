@@ -93,14 +93,36 @@ class ArtistController {
     async eliminarartist(req, res) {
         try {
             const _id = req.user._id;
-            const atistEliminado = await Artist.findOneAndDelete({ _id: _id });
+            const artistEliminado = await Artist.findOneAndDelete({ _id: _id });
             if(!artistEliminado){
                 return res.status(404).send('Usuario no encontrado');
             }
-            res.send({ message: 'Artist eliminado correctamente' });
+            const directorioAlbumes = path.join(__dirname, '..', 'uploads', 'albumes');
+            if (artistEliminado.profilePhoto) {
+                const rutaActual = path.join(__dirname, '..', '..', 'uploads', artistEliminado.profilePhoto);
+                if (fs.existsSync(rutaActual)) {
+                    fs.unlinkSync(rutaActual);
+                } else {
+                    console.log("Archivo no encontrado en: ", rutaActual);
+                }
+            }
+            if (artistEliminado.albums) {
+                for (const album of artistEliminado.albums) {
+                    if (artistEliminado.albumPhoto) {
+                        const rutaFotoAlbum = path.join(directorioAlbumes, album.albumPhoto);
+                        if (fs.existsSync(rutaFotoAlbum)) {
+                            fs.unlinkSync(rutaFotoAlbum);
+                            console.log(`Foto de álbum eliminada: ${rutaFotoAlbum}`);
+                        } else {
+                            console.log(`Foto de álbum no encontrada en: ${rutaFotoAlbum}`);
+                        }
+                    }
+                }
+            }
+            return res.send({ message: 'Artist eliminado correctamente' });
         } catch (error) {
-            console.error('Delete error: ', err);
-            res.sendStatus(500).send("Error interno"); 
+            console.error('Delete error: '+ error);
+            return res.sendStatus(500).send("Error interno"); 
         }
     }
 

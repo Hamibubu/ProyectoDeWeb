@@ -3,6 +3,44 @@ document.addEventListener('DOMContentLoaded', function() {
         type: "GET",
         url: "http://127.0.0.1:3000/api/profile",
         success: function(userDataResponse) {
+            $('#btnEliminarPerfil').click(function() {
+                Swal.fire({
+                    title: "¿Estás seguro?",
+                    text: "Una vez eliminado, no podrás recuperar tu perfil.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#dc3545",
+                    confirmButtonText: "Sí, eliminar mi perfil",
+                    cancelButtonText: "Cancelar",
+                    dangerMode: true
+                }).then((result) => {
+                    document.body.classList.add("swal-opened");
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/api/del',
+                            type: 'DELETE',
+                            success: function(response) {
+                                Swal.fire("¡Tu perfil ha sido eliminado!", {
+                                    icon: "success",
+                                }).then(() => {
+                                    deleteCookie("authToken");
+                                    window.location = './../../views/index/index.html'; 
+                                });
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                console.error('Error al eliminar el perfil:', errorThrown);
+                                Swal.fire("Error al eliminar el perfil. Por favor, inténtalo de nuevo.", {
+                                    icon: "error",
+                                });
+                            }
+                        });
+                    } else {
+                        Swal.fire("Tu perfil está a salvo.", {
+                            icon: "info",
+                        });
+                    }
+                });
+            });
             userData = userDataResponse;
             $('#changePasswordCheckbox').change(function() {
                 if ($(this).is(':checked')) {
