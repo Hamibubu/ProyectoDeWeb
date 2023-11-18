@@ -252,3 +252,54 @@ header {
 .bienvenidac {
     font-size: 18px;
 }
+
+.agregar-album-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.btn-agregar-album {
+    background-color: #AED6F1;
+    color: #5D6D7E; 
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
+}
+
+.btn-agregar-album:hover {
+    background-color: #A3CCE3;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.15);
+    transform: scale(1.02);
+}
+
+.btn-agregar-album:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);
+}
+
+.btn-primary.form-control {
+    background-color: #f1a935;
+    color: white; 
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-primary.form-control:hover {
+    background-color: #fdc56b;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.15);
+}
+
+.btn-primary.form-control:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);
+}

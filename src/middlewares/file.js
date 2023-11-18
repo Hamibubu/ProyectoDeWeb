@@ -10,7 +10,6 @@ const storage = multer.diskStorage({
         const extension = file.originalname.split('.').pop();
         const time = new Date().getTime();
         let name;
-
         if (req.body.username) {
             name = `${req.body.username}_${time}.${extension}`;
         } else if (req.user && req.user.username) {

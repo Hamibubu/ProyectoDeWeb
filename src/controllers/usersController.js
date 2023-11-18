@@ -15,7 +15,7 @@ class UsersController {
 
     async profile(req, res){
         try {
-            const user = await Usuario.findOne({ username: req.user.username });
+            const user = await Usuario.findOne({ _id: req.user._id });
             
             if (!user) {
                 return res.status(404).json({ error: '¿Estás generando una cookie?' });
@@ -69,8 +69,8 @@ class UsersController {
 
     async eliminarusuario(req, res) {
         try {
-            const username = req.user.username;
-            const usuarioEliminado = await User.findOneAndDelete({ username: username });
+            const _id = req.user._id;
+            const usuarioEliminado = await User.findOneAndDelete({ _id: _id });
             if(!usuarioEliminado){
                 return res.status(404).send('Usuario no encontrado');
             }
@@ -88,9 +88,9 @@ class UsersController {
 
     async editarusuario(req, res) {
         try {
-            const username = req.user.username;
+            const _id = req.user._id;
             let datosActualizacion = req.body;
-            const usuarioExistente = await Usuario.findOne({ username: username });
+            const usuarioExistente = await Usuario.findOne({ _id: _id });
             
             if (!usuarioExistente) {
                 return res.status(404).send('Usuario no encontrado');
@@ -119,14 +119,17 @@ class UsersController {
                 delete datosActualizacion.profilePhoto;
             }
             const usuarioActualizado = await Usuario.findOneAndUpdate(
-                { username: username },
+                { _id: _id },
                 datosActualizacion,
                 { new: true }
             );
             res.send("Usuario modificado exitosamente");
         } catch (error) {
-            console.log(error);
-            res.status(500).send('Error al actualizar el usuario');
+            if (error.code === 11000) {
+                res.status(400).send('El username ya está en uso. Por favor, elige otro.');
+            }else{
+                res.status(500).send('Error al actualizar el usuario');
+            }
         }
     }
 
@@ -140,12 +143,13 @@ class UsersController {
             if (!isMatch) {
                 return res.status(400).send({ message: 'Contraseña incorrecta' });
             }
-            const { email, username } = user;
+            const { email, username, _id } = user;
             const userType = "user"
             const tokenPayload = {
                 userType,
                 username,
-                email
+                email,
+                _id
             }
             const token = jwt.sign(tokenPayload, process.env.SECRET_KEY, { expiresIn: '1h' });
             res.send({ token });

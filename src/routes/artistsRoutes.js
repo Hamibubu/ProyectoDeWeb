@@ -8,5 +8,6 @@ const artistsController = require('./../controllers/artistsController');
 // Los datos se mandan por post y por json para seguridad
 router.post('/login/artist',artistController.iniciarsesion);
 router.post('/register/artist',file.single('profilePhoto'),artistController.creartist);
+router.post('/register/albums',auth,roles(['artist'],{'none':'none'}),file.single('albumPhoto'),artistController.registeralbum);
 
 module.exports = router;

@@ -76,11 +76,13 @@
                                     <h5 class="text-center"><i class="fas fa-role"></i>Rol</h5>
                                 <p class="text-muted font-size-sm"><i class="fas fa-usname"></i>USUARIO</p>
                                 </div>
+                                <div class="agregar-album-container" style="display:none;">
+                                    <a href="album.html" class="btn-agregar-album">¿Quieres agregar un álbum? Presiona aquí</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Lado derecho con formulario para editar perfil -->
                 <div class="col-lg-8">
                     <div class="card">
                         <div class="card-body">
@@ -95,10 +97,18 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Apellido</h6>
+                                        <h6 class="mb-0" id="apellidoh6">Apellido</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <input type="text" class="form-control" id="apellido" name="apellido"  />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Username</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input type="text" class="form-control" id="username" name="username"  />
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -111,7 +121,7 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Teléfono</h6>
+                                        <h6 class="mb-0" id="phoneh6">Teléfono</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <input type="text" class="form-control" id="phone" name="phone"  />
@@ -119,15 +129,15 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Género favorito</h6>
+                                        <h6 class="mb-0" id="genresh6">Género favorito</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <input type="text" class="form-control" id="genres" name="genres"  />
                                     </div>
                                 </div>
-                                <div class="row mb-3">
+                                <div class="row mb-3 hs">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Album Favorito</h6>
+                                        <h6 class="mb-0" id="albumfavh6">Album Favorito</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <input type="text" class="form-control" id="albumfav" name="albumfav"  />
