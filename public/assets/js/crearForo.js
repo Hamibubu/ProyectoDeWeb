@@ -5,59 +5,6 @@ const botonPublicar = document.querySelector('#botonPublicar');
 
 document.addEventListener('DOMContentLoaded', function () {
 
-
-    ClassicEditor
-        .create(document.querySelector('#publicar'), {
-            toolbar: {
-                items: [
-                    'selectAll', '|',
-                    'heading', '|',
-                    'bold', 'italic', '|',
-                    'undo', 'redo', '|',
-                    'imageUpload', 'mediaEmbed', 'link', 'blockQuote', 'insertTable'
-                ],
-                shouldNotGroupWhenFull: true
-            },
-        })
-        .then(editor => {
-            window.publicar = editor;
-        })
-        .catch(error => {
-            console.error(error);
-        });
-    ClassicEditor
-        .create(document.querySelector('#NuevoComentario'), {
-            toolbar: {
-                items: [
-                    'selectAll', '|',
-                    'heading', '|',
-                    'bold', 'italic', '|',
-                    'undo', 'redo', '|',
-                    'imageUpload', 'mediaEmbed', 'link', 'blockQuote', 'insertTable'
-                ],
-                shouldNotGroupWhenFull: true
-            },
-        })
-        .catch(error => {
-            console.error(error);
-        });
-    ClassicEditor
-        .create(document.querySelector('#NuevoComentarioResena'), {
-            toolbar: {
-                items: [
-                    'selectAll', '|',
-                    'heading', '|',
-                    'bold', 'italic', '|',
-                    'undo', 'redo', '|',
-                    'imageUpload', 'mediaEmbed', 'link', 'blockQuote', 'insertTable'
-                ],
-                shouldNotGroupWhenFull: true
-            },
-        })
-        .catch(error => {
-            console.error(error);
-        });
-
     // crear post
     botonPublicar.addEventListener('click', function (e) {
         e.preventDefault();
