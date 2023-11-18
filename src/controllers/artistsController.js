@@ -31,6 +31,8 @@ class ArtistController {
             await artist.save();
             res.status(200).json({ message: 'Álbum agregado con éxito.' });
         } catch(err){
+            const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+            fs.unlinkSync(uri);
             console.log(err);
             res.status(500).json({ error: 'Error al agregar el álbum.' });
         }
