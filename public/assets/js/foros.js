@@ -1,5 +1,7 @@
 const publicar = document.querySelector('#publicar');
 const botonPublicar = document.querySelector('#botonPublicar');
+const forosEnTendencia = document.querySelector('#forosEnTendencia');
+const forosQueTePodrianInteresar = document.querySelector('#forosQueTePodrianInteresar');
 
 
 
@@ -115,6 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
     })
+
 })
 
 function alertaPersonalizada(type, msg) {

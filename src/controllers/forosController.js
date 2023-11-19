@@ -6,7 +6,17 @@ const fs = require('fs');
 class ForosController {
 
     verForo(req, res) {
-        res.send('Comentario');
+    }
+
+    verForos(req, res) {
+        Foro.find()
+        .select('timestamp author name description img verified flags')
+        .then(foros => {
+            res.status(200).json(foros);
+        })
+        .catch(err => {
+            res.status(500).json({ error: 'Error al recoger datos' });
+        });
     }
 
     async crearForo(req, res) {

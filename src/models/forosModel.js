@@ -6,6 +6,7 @@ const ForoSchema = new mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
     img: { type: String, required: false },
+    verified: { type: Boolean, default: false },
     flags: { type: String, required: false }
 });
 
