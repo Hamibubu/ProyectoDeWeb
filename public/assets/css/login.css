@@ -19,6 +19,16 @@ body {
     border-radius: 20px;
 }
 
+#home-button {
+    position: relative;
+    top: 20px; 
+    left: 20px; 
+    background-color: rgba(247, 171, 72, 0.5); 
+    padding: 5px;
+    border-radius: 4px;
+    justify-content: center;
+}
+
 .btn-primary {
     background-color: #f79336;
     border: none;

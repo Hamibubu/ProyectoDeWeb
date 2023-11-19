@@ -124,6 +124,15 @@ document.addEventListener('DOMContentLoaded', function() {
                                     showConfirmButton: false,
                                     timer: 4000
                                 });
+                            }else if (xhr.responseText == 'Ya existe ese nombre de artista, si necesitas ayuda contáctanos'){
+                                Swal.fire({
+                                    toast: true,
+                                    position: 'top-right',
+                                    icon: 'error',
+                                    title: 'Ya existe ese nombre de artista, si necesitas ayuda contáctanos',
+                                    showConfirmButton: false,
+                                    timer: 4000
+                                });
                             }else{
                                 Swal.fire({
                                     toast: true,
