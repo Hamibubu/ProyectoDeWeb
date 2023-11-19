@@ -297,3 +297,53 @@ header {
     width: 70%;
     height: 70%;
 }
+
+.card-img-redondeada{
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.crearNuevoForo{
+    background-color: #f79336;
+}
+
+.crearNuevoForo .btn-custom{
+    background-color: #141e28;
+    color: #f79336;
+}
+.crearNuevoForo .btn-custom:hover{
+    background-color: #78738d;
+    color: #f79336;
+}
+
+h2.text-nuevoForo{
+    color: rgb(250, 190, 227);
+    font-size: 60px;
+    margin-left: 20px;
+}
+
+p.text-nuevoForo{
+    margin-left: 20px;
+    font-size: 20px;
+    color: rgb(162, 208, 238);
+}
+
+p.nuevoForoFooter{
+    color: rgb(250, 190, 227);
+}
+
+.text-nuevoForo:hover{
+    color: #f79336;
+}
+
+.card-text-nuevoForo{
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+}
+
+.card-nuevoForo{
+    border: 2px #f79336 solid;
+    box-shadow: 0 0 30px #f79336;
+}
