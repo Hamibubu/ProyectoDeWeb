@@ -55,3 +55,25 @@ function alertaPersonalizada(type, msg) {
         timer: 3000
     })
 }
+
+function mostrarForo(foroId) {
+    // Realizar una solicitud AJAX al servidor
+    $.ajax({
+        type: 'GET',
+        url: `http://localhost:3000/api/foro/:${foroId}`, // Asegúrate de que esta URL sea correcta
+        success: function (data) {
+            //cargar html a la nueva pagina
+            fetch(`./../../views/foros/foroPlantilla.html`)
+                .then(response => response.text())
+                .then(html => {
+                    var nuevaVentana = window.location.href(`http://localhost:3000/api/foro/:${foroId}`);
+                    nuevaVentana.document.write(html);
+                })
+                .catch(error => console.error('Error al cargar el HTML:', error));
+        },
+        error: function (error) {
+            // Manejar errores, como un ID que no existe o problemas de servidor
+            console.error("Error al obtener los detalles del foro:", error);
+        }
+    });
+}

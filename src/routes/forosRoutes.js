@@ -8,6 +8,9 @@ router.get('/foro/:foroId',foroController.verForo);
 // traerforos
 router.get('/hub',foroController.verForos);
 
+router.get('/foro/entrar/:foroId',foroController.entrarForo);
+
+
 // Los datos se mandan por post y por json para seguridad
 router.post('/foro', file.single('img'), foroController.crearForo);
 

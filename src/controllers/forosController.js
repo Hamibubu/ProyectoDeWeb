@@ -6,6 +6,15 @@ const fs = require('fs');
 class ForosController {
 
     verForo(req, res) {
+        const foroId = req.params.foroId.slice(1);
+        Foro.findById(foroId)
+        .select('timestamp author name description img verified flags')
+        .then(foro => {
+            res.status(200).json(foro);
+        })
+        .catch(err => {
+            res.status(500).json({ error: 'Error al recoger datos' });
+        });
     }
 
     verForos(req, res) {
@@ -48,6 +57,11 @@ class ForosController {
     }
 
     editarForo(req, res) {
+        res.send('Editar comantario');
+    }
+
+    entrarForo(req, res) {
+        const foroId = req.params.foroId.slice(1);
         res.send('Editar comantario');
     }
 
