@@ -44,6 +44,8 @@ class UsersController {
             const hashedPassword = await bcrypt.hash(req.body.password, salt);
             req.body.password = hashedPassword;
         } catch (err) {
+            const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+            fs.unlinkSync(uri);
             res.status(500).send('Hubo un error al registrarlo. Inténtalo de nuevo.');
         }
         if(!req.file) {
@@ -101,12 +103,16 @@ class UsersController {
             const usuarioExistente = await Usuario.findOne({ _id: _id });
             
             if (!usuarioExistente) {
+                const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+                fs.unlinkSync(uri);
                 return res.status(404).send('Usuario no encontrado');
             }
 
             if (req.body.password && req.body.claveActual){
                 const isMatch = await bcrypt.compare(req.body.claveActual, usuarioExistente.password);
                 if (!isMatch) {
+                    const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+                    fs.unlinkSync(uri);
                     return res.status(401).send({ message: 'Contraseña incorrecta' });
                 }
                 const salt = await bcrypt.genSalt(10);
@@ -133,6 +139,8 @@ class UsersController {
             );
             res.send("Usuario modificado exitosamente");
         } catch (error) {
+            const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+            fs.unlinkSync(uri);
             if (error.code === 11000) {
                 res.status(400).send('El username ya está en uso. Por favor, elige otro.');
             }else{

@@ -12,7 +12,7 @@ const albumSchema = new mongoose.Schema({
 });
 
 const artistSchema = new mongoose.Schema({
-    name: { type: String, required: true },
+    name: { type: String, unique: true, required: true },
     username: { type: String, unique: true, required: true },
     genre: { type: String, required: true },
     email: { type: String, unique: true, required: true },

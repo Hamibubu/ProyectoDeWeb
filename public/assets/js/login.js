@@ -6,6 +6,9 @@ const erroremail = document.querySelector('#erroremail');
 const errorpwd = document.querySelector('#errorpwd');
 
 document.addEventListener('DOMContentLoaded', function() {
+    $('#home-button').on('click', function() {
+        window.location.href = "./../../views/index/index.html";
+    });
     formulario.addEventListener('submit', function(e) {
         e.preventDefault();
         erroremail.textContent = '';

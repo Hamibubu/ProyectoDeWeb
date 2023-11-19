@@ -1,4 +1,7 @@
 $(document).ready(() => {
+    $('#home-button').on('click', function() {
+        window.location.href = "./../../views/index/index.html";
+    });
     $('form').on('submit', (event) => {
         event.preventDefault();
         if (!event.currentTarget.checkValidity()) {
@@ -18,7 +21,6 @@ $(document).ready(() => {
         if (archivoInput.files.length > 0) {
             formData.append('profilePhoto', archivoInput.files[0]);
         }
-
         for (let pair of formData.entries()) {
             if (pair[1] === '') {
                 Swal.fire({
@@ -32,7 +34,17 @@ $(document).ready(() => {
                 return;
             }
         }
-
+        if (archivoInput.files.length === 0) {
+            Swal.fire({
+                toast: true,
+                position: 'top-right',
+                icon: 'error',
+                title: 'Por favor, selecciona una foto de portada para el álbum.',
+                showConfirmButton: false,
+                timer: 4000
+            });
+            return;
+        }
         $.ajax({
             type: "POST",
             url: "http://localhost:3000/api/register/artist",
@@ -75,7 +87,16 @@ $(document).ready(() => {
                         showConfirmButton: false,
                         timer: 4000
                     })
-                } else {
+                } else if (response.error === "Ya existe ese nombre de artista, si necesitas ayuda contáctanos") {
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-right',
+                        icon: 'error',
+                        title: 'Ya existe ese nombre de artista, si necesitas ayuda contáctanos',
+                        showConfirmButton: false,
+                        timer: 4000
+                    })
+                }else {
                     Swal.fire({
                         toast: true,
                         position: 'top-right',

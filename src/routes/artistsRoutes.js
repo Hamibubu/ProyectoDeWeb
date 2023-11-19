@@ -9,5 +9,6 @@ const artistsController = require('./../controllers/artistsController');
 router.post('/login/artist',artistController.iniciarsesion);
 router.post('/register/artist',file.single('profilePhoto'),artistController.creartist);
 router.post('/register/albums',auth,roles(['artist'],{'none':'none'}),file.single('albumPhoto'),artistController.registeralbum);
+router.get('/artist',artistController.showProfile)
 
 module.exports = router;

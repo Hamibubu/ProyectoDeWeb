@@ -13,6 +13,12 @@ class ArtistController {
         res.send(`Bienvenido, ${username} (${userType})`);
     }
 
+    async showProfile(req, res){
+        const name = req.body.name;
+
+
+    }
+
     async registeralbum(req, res){ 
         try{
             req.body.albumPhoto = req.file.filename;
@@ -68,11 +74,20 @@ class ArtistController {
             const hashedPassword = await bcrypt.hash(req.body.password, salt);
             req.body.password = hashedPassword;
         } catch (err) {
+            const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+            fs.unlinkSync(uri);
             res.status(500).send('Hubo un error al registrarlo. Inténtalo de nuevo.');
         }
         if(!req.file) {
             res.status(400).send('Hubo un error al subir la foto de perfil');
             return;
+        }
+        const existingName = await Artist.findOne({ name: req.body.name });
+
+        if (existingName) {
+            const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+            fs.unlinkSync(uri);
+            return res.status(400).send({error: 'Ya existe ese nombre de artista, si necesitas ayuda contáctanos'});
         }
         req.body.profilePhoto = req.file.filename;
         const artist = new Artist(req.body);
@@ -121,6 +136,8 @@ class ArtistController {
             }
             return res.send({ message: 'Artist eliminado correctamente' });
         } catch (error) {
+            const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+            fs.unlinkSync(uri);
             console.error('Delete error: '+ error);
             return res.sendStatus(500).send("Error interno"); 
         }
@@ -140,7 +157,11 @@ class ArtistController {
             if (!artistaExistente) {
                 return res.status(404).send('Usuario no encontrado');
             }
+            const existingName = await Artist.findOne({ name: req.body.name });
 
+            if (existingName) {
+                return res.status(400).send({error: 'Ya existe ese nombre de artista, si necesitas ayuda contáctanos'});
+            }
             if (req.body.password && req.body.claveActual){
                 const isMatch = await bcrypt.compare(req.body.claveActual, artistaExistente.password);
                 if (!isMatch) {
@@ -175,6 +196,8 @@ class ArtistController {
             }
             res.send("Usuario modificado exitosamente");
         } catch (error) {
+            const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+            fs.unlinkSync(uri);
             if (error.code === 11000) {
                 res.status(400).send('El username ya está en uso. Por favor, elige otro.');
             }else{
