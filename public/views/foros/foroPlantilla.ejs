@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/foros.css">
     <link rel="shortcut icon" href="/assets/img/1.gif">
+    <link rel="preload" href="/uploads/<%= foro.img %>" as="image">
 </head>
 
 <body>
@@ -28,7 +29,7 @@
                             <a class="nav-link" aria-current="page" href="/views/index/index.html">Inicio</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link active" aria-current="page" href="/views/foros/foros.html">Foros</a>
+                            <a class="nav-link active" aria-current="page" href="/views/foros/foros.html">Foros</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/views/artistas/artistas.html">Artistas</a>
@@ -58,14 +59,18 @@
     </header>
 
 
-
-    <h1 class="text-center mt-5"><i class="fas fa-comments" style="color: #f78036;"></i> <%= foro.name %> <i
-            class="fas fa-check-circle" style="color: rgb(46, 111, 252);"></i></h1>
-    <p class="text-center"><%= foro.description %></p>
-
-    <div class="container">
-        <div class="card bg-card">
+    <div class="container mt-3">
+        <div class="card bg-card card-nuevoForo">
+            <div class="background-image"
+                style="background-image: url('/uploads/<%= foro.img %>'); background-size: cover; background-position: center; ">
+            </div>
             <div class="card-body" id="cardbody">
+                <h1 class="text-center mt-5"><i class="fas fa-comments" style="color: #f78036;"></i>
+                    <%= foro.name %>  <%- foro.verified == true ? '<i class="fas fa-check-circle" style="color: rgb(46, 111, 252);"></i>' : '' %>
+                </h1>
+                <p class="text-center">
+                    <%= foro.description %>
+                </p>
                 <h5 class="card-title" id="realizapublicacion" style="font-weight: lighter; "><img
                         src="/assets/img/usuarios/fantasma.jpg" alt="foto de perfil" id="fotoperfil"> Añadir una
                     publicación</h5>
@@ -74,7 +79,7 @@
                     <textarea class="form-control" rows="3" placeholder="¿Qué estás opinando?..."
                         id="publicar"></textarea>
                 </div>
-                <hr>
+                <hr style="animation: none !important;">
                 <div class="d-flex justify-content-end">
                     <button id="botonPublicar" type="submit" class="btn btn-custom "
                         style="width: 80px; height: 34px; padding: 5px 10px; font-size: 16px;">Publicar</button>

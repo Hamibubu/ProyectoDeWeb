@@ -116,10 +116,6 @@ header {
     animation-delay: 0.1s;
 }
 
-.contact-form {
-    animation-delay: 0.2s;
-}
-
 
 .modal, .modal * {
     animation-name: none !important;
@@ -343,7 +339,20 @@ p.nuevoForoFooter{
     align-items: center; /* Centra verticalmente */
 }
 
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.2;
+    border-radius: 10px;
+    animation: none !important;
+    
+}
 .card-nuevoForo{
     border: 2px #f79336 solid;
     box-shadow: 0 0 30px #f79336;
+    position: relative;
 }
