@@ -76,22 +76,24 @@
                         src="/assets/img/usuarios/fantasma.jpg" alt="foto de perfil" id="fotoperfil"> Añadir una
                     publicación</h5>
 
-                <div class="form-group" id="input">
-                    <textarea class="form-control" rows="3" placeholder="¿Qué estás opinando?..."
-                        id="publicar"></textarea>
+                <form id="postForm">
+                    <div class="form-group" id="input">
+                        <textarea class="form-control" rows="3" placeholder="¿Qué estás opinando?..."
+                            id="publicar"></textarea>
                         <div class="upload-wrapper">
-                            <input type="file" id="image-upload" accept="image/*" />
+                            <input class="input-group" type="file" id="image-upload" accept="image/*" />
                             <label for="image-upload" class="upload-label">Seleccionar imagen</label>
                             <div class="preview">
                                 <img id="image-preview" src="#" alt="Vista previa de la imagen" style="display: none;">
                             </div>
                         </div>
-                </div>
-                <hr style="animation: none !important;">
-                <div class="d-flex justify-content-end">
-                    <button id="botonPublicar" type="submit" class="btn btn-custom "
-                        style="width: 80px; height: 34px; padding: 5px 10px; font-size: 16px;">Publicar</button>
-                </div>
+                    </div>
+                    <hr style="animation: none !important;">
+                    <div class="d-flex justify-content-end">
+                        <button id="botonPublicar" type="submit" class="btn btn-custom "
+                            style="width: 80px; height: 34px; padding: 5px 10px; font-size: 16px;">Publicar</button>
+                    </div>
+                </form>
 
             </div>
         </div>

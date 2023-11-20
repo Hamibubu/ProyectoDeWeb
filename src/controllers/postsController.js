@@ -26,12 +26,11 @@ class PostsController {
         req.body.timestamp = timestamp;
         // req.body.author = req.user.username; //ESTA ES LA QUE VA, LA LINEA DE ABAJO ES PARA DEV
         req.body.author = 'Usuario';
-        console.log(req.body);
-        // if (req.file) {
-        //     req.body.img = req.file.filename;
-        // } else {
-        //     req.body.img = '';
-        // }
+        if (req.file) {
+            req.body.img = req.file.filename;
+        } else {
+            req.body.img = '';
+        }
         const post = new Post(req.body);
         try {
             await post.save();
