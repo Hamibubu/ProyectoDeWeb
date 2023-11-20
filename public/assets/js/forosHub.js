@@ -67,8 +67,8 @@ function mostrarForo(foroId) {
             fetch(`./../../views/foros/foroPlantilla.html`)
                 .then(response => response.text())
                 .then(html => {
-                    var nuevaVentana = window.open('http://localhost:3000/api/foro/:'+ foroId, '_self');
-                    nuevaVentana.document.write(html);
+                    nuevaVentana = window.open(`http://localhost:3000/api/foro/entrar/:${foroId}`, '_self');
+                    // nuevaVentana.document.write(html);
                 })
                 .catch(error => console.error('Error al cargar el HTML:', error));
         },

@@ -45,6 +45,8 @@ const MONGO = {
 
 const mongoUrl = `${MONGO.DB_HOST}://${MONGO.DB_USER}:${MONGO.DB_PASS}@${MONGO.DB_NAME}/${MONGO.DB_INST}?retryWrites=true&w=majority`;
 
+app.set('view engine', 'ejs');
+
 mongoose.connect(mongoUrl).then(() => {
     Usuario.syncIndexes()
             .then(() => {
