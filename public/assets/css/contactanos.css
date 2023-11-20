@@ -115,3 +115,7 @@ header {
 .btn-custom {
     animation-delay: 0.3s;
 }
+
+.text-custom{
+    color: #f79336;
+}

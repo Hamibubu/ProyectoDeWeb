@@ -16,7 +16,8 @@
     <header>
         <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#"><img src="../../assets/img/logomovible.gif" heights="100px" width="100px"></a>
+                <a class="navbar-brand" href="#"><img src="../../assets/img/logomovible.gif" heights="100px"
+                        width="100px"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
                     aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -25,6 +26,9 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="../index/index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="./../../views/foros/foros.html">Foros</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../artistas/artistas.html">Artistas</a>
@@ -53,26 +57,33 @@
         </nav>
     </header>
 
-    
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <h2 class="text-left mb-2"><i class="fas fa-ghost" style="color: #141e28;"></i> Contáctanos</h2>
+                <h2 class="text-left mb-2"><i class="fas fa-ghost" style="color: #141e28;"></i> Contáctanos
+                </h2>
                 <p class="text-left mb-4">Llena el formulario y envianos un correo</p>
                 <div class="contact-form custom-form">
                     <form action="/ruta-de-envio" method="post">
                         <div class="form-group">
-                            <label for="name">Nombre:</label>
-                            <input type="text" class="form-control" id="name" placeholder="Ingresa tu nombre"
-                                name="name" required autocomplete="off">
+                            <label for="name">Nombre: <span class="text-custom">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-list"></i></span>
+                                <input type="text" class="form-control" id="name" placeholder="Ingresa tu nombre"
+                                    name="name" required autocomplete="off">
+                            </div>
                         </div>
                         <div class="form-group mt-2">
-                            <label for="email">Correo Electrónico:</label>
-                            <input type="email" class="form-control" id="email"
-                                placeholder="Ingresa tu correo electrónico" name="email" required autocomplete="off">
+                            <label for="email">Correo Electrónico: <span class="text-custom">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                <input type="email" class="form-control" id="email"
+                                    placeholder="Ingresa tu correo electrónico" name="email" required
+                                    autocomplete="off">
+                            </div>
                         </div>
                         <div class="form-group mt-3">
-                            <label for="message">Mensaje:</label>
+                            <label for="message">Mensaje: <span class="text-custom">*</span></label>
                             <textarea class="form-control" id="message" rows="5" placeholder="Ingresa tu mensaje"
                                 name="message" required autocomplete="off"></textarea>
                         </div>

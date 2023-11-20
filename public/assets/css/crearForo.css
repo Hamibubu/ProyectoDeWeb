@@ -1,0 +1,331 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    /*para que el tamaño de los elementos no se modifique*/
+}
+
+
+body {
+    margin: 0;
+    display: block;
+    /*permite que los elementos se acomoden en varias lineas*/
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    /*para que el contenedor se ajuste al tamaño de los elementos*/
+    background-color: #e1e4e4;
+    font-family: 'Roboto', sans-serif;
+}
+
+header {
+    color: white;
+}
+
+
+.voto {
+    border-radius: 20px;
+    width: 20%;
+    height: 40px;
+    font-size: medium;
+}
+
+.voto-comentario {
+    border-radius: 20px;
+    width: 15%;
+    height: 35px;
+    font-size: smaller;
+}
+
+.comentario {
+    background-color: #e1e4e4;
+    width: 300px;
+    height: 40px;
+}
+
+.btn-comentar {
+    font-size: medium;
+    width: 50%;
+    height: 40px;
+    text-align: center;
+    background-color: white;
+    border-color: #e1e4e4;
+    color: #141e28;
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+    animation-delay: 0.3s;
+}
+
+
+.btn-comentar:hover {
+    background-color: #e1e4e4;
+}
+
+.navbar-expand-lg {
+    background-color: #141e28;
+}
+
+.navbar {
+    position: sticky;
+}
+
+.dropdown-menu {
+    list-style: none;
+}
+
+.container-fluid {
+    color: white;
+}
+
+
+/* Animación de aparición */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(3px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+* {
+    opacity: 1;
+    animation-name: fadeInUp;
+    animation-duration: .6s;
+    animation-timing-function: ease-out;
+}
+
+
+.slider,
+.slider * {
+    animation: none !important;
+    opacity: 1 !important;
+    /* Asegúrate de que sean completamente visibles */
+}
+
+.btn-custom {
+    animation-delay: 0.3s;
+}
+
+
+header {
+    animation-delay: 0.1s;
+}
+
+.contact-form {
+    animation-delay: 0.2s;
+}
+
+
+.modal,
+.modal * {
+    animation-name: none !important;
+}
+
+.ck {
+    animation: none !important;
+}
+
+
+
+.card-header>a {
+    text-decoration: none;
+    color: #141e28;
+}
+
+.card-header>a>img {
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    border-radius: 0;
+    height: auto;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 18px;
+}
+
+.rating-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f79336;
+    /* Color de fondo del círculo */
+    width: 80px;
+    /* Tamaño del círculo */
+    height: 80px;
+    border-radius: 50%;
+    /* Hace que el contenedor sea un círculo */
+    position: absolute;
+    /* Posiciona el círculo en la esquina superior derecha de la tarjeta */
+    top: 15px;
+    right: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra para darle profundidad */
+    z-index: 1;
+    /* Asegura que el círculo esté por encima de otros elementos */
+}
+
+.rating {
+    font-size: 24px;
+    /* Tamaño del texto de la calificación */
+    font-weight: bold;
+    /* Texto en negrita */
+    color: #fff;
+    /* Color del texto */
+}
+
+.card-body {
+    position: relative;
+    /* Establece un contexto de posicionamiento para los elementos internos */
+}
+
+.card-title,
+.card-text {
+    z-index: 0;
+    /* Asegura que el texto esté debajo del rating */
+}
+
+
+.rating-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    padding: 20px;
+    /* Espacio interno para el contenido */
+}
+
+.rating-badge-yellow {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    /* Asegura que el rating esté encima del contenido */
+    background-color: #f79336;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.rating-badge-red {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    /* Asegura que el rating esté encima del contenido */
+    background-color: red;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.rating-badge-green {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    /* Asegura que el rating esté encima del contenido */
+    background-color: green;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.btn-custom {
+    background-color: #f79336;
+    color: #141e28;
+    padding: 5px 20px;
+    border-radius: 20px;
+    border: none;
+    transition: background-color 0.3s;
+    height: 34px;
+}
+
+.btn-custom:hover {
+    background-color: #ad6827;
+}
+
+.bg-card {
+    background-color: #141e28;
+    color: white;
+}
+
+#input {
+    color: #141e28;
+}
+
+#realizapublicacion {
+    font-size: 20px;
+}
+
+#fotoperfil {
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.img-comentario {
+    width: 70%;
+    height: 70%;
+}
+
+#buscarEtiqueta,
+.spanBusqueda {
+    padding: 5px;
+    font-size: smaller;
+    background-color: #141e28;
+    color: #f79336;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#buscarEtiqueta {
+    padding: 8px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#buscarEtiqueta::placeholder {
+    color: #f79336;
+}
+
+
+.busquedaEtiqueta {
+    width: 20%;
+    margin-left: 5px;
+    padding: 15px;
+}
+
+.text-custom{
+    color: #f79336;
+}

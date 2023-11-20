@@ -1,19 +1,3 @@
-*{
-    padding:0;
-    margin:0;
-    box-sizing: border-box; /*para que el tamaño de los elementos no se modifique*/
-}
-
-body{
-    margin:0;
-    display: block; /*permite que los elementos se acomoden en varias lineas*/
-    justify-content: center;
-    align-items: center;
-    position: relative; /*para que el contenedor se ajuste al tamaño de los elementos*/
-    background-color: #e1e4e4;
-	font-family: 'Roboto', sans-serif;
-}
-
 /* Animación de aparición */
 @keyframes fadeInUp {
     0% {
@@ -27,11 +11,37 @@ body{
 }
 
 *{
+    padding:0;
+    margin:0;
+    box-sizing: border-box; 
     opacity: 1;
     animation-name: fadeInUp;
     animation-duration: .6s;
     animation-timing-function: ease-out;
     animation-fill-mode: forwards;
+}
+
+header{
+    color:white
+}
+
+body{
+    margin:0;
+    display: block; 
+    justify-content: center;
+    align-items: center;
+    position: relative; 
+    background-color: #e1e4e4;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+}
+
+.navbar-expand-lg{
+    background-color: #141e28; 
+}
+
+.dropdown-menu{
+    list-style: none;
 }
 
 header {
@@ -46,20 +56,18 @@ header {
     animation-delay: 0.3s;
 }
 
-.navbar-expand-lg{
-    background-color: #141e28; 
+.artist-image {
+    width: 250px;  /* Ancho de la imagen */
+    height: 250px; /* Alto de la imagen */
+    border-radius: 50%; /* Hace que la imagen sea circular */
+    object-fit: cover;  /* Asegura que la imagen cubra el espacio sin deformarse */
 }
 
-navbar{
-    position: absolute;
-}
-
-.dropdown-menu{
-    list-style: none;
-}
-
-.container-fluid{
-    color: white;
+.artist-image-container {
+    display: flex;        /* Habilita el diseño flexible */
+    justify-content: center; /* Centra los elementos hijos horizontalmente */
+    align-items: center;     /* Centra los elementos hijos verticalmente */
+    height: 250px;          /* Altura del contenedor de la imagen */
 }
 
 .btn-custom {
@@ -75,81 +83,53 @@ navbar{
     background-color: #ad6827;
 }
 
-.tarjeta{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 60vh;
-    font-family: 'Roboto', sans-serif;
-    padding: 0px;
+.card{
     border-radius: 20px;
+    background-color: #141e28;
+    color: #fff;
 }
 
-.tarjeta-imagen{
-    display:flex;
-    width: 600px;
-    height: auto;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 1px 1px 4px 2px rgba(0,0,0,.2);
-}
-
-.header{
-    border-right: 1px solid white;;
-}
-
-.descripcion{
-    background: white;
-}
-
-.header .descripcion{
-    padding: 20px;
-    text-align: center;
-}
-
-.header a{
-    position: relative;
-    display: block;
-}
-
-.header img{
-    border-radius: 2px;
-    box-shadow: 0 0 0 8px rgba(0,0,0,.06);
-    margin: 20px 30px;
-    transition: .2s;
-    height: 200px;
-    width: 200px;
-}
-
-.header a:hover img{
-    box-shadow: 0 0 0 12px rgba(0,0,0,.1);
-}
-
-.header h2{
-    margin-left: 10px;
-    color: orangered;
-    text-align: center;
+.card-title{
     font-size: 40px;
+    color: #f79336;
 }
 
-.header h4{
-    margin-left: 10px;
-    margin-bottom: 20px;
-    font-style: oblique;
-    text-align: center;
+.card-text{
+    color: #fff;
+    font-weight: 200;
+    font-size: 18px;
+}
+
+h1 {
+    color: #141e28;  /* Color del texto */
+    font-weight: bold;  /* Grosor del texto */
+}
+
+h2 {
+    color: #f79336;  /* Color del texto */
+    font-weight: bold;  /* Grosor del texto */
+}
+
+p{
+    color: white;
     font-size: 20px;
+    font-weight: lighter;
 }
 
-.descripcion{
-    position: relative;
-    text-align: center;
-    align-items: center;
-    border-radius: 20px;
+h2{
+    text-shadow:
+        -1px -1px 0 #141e2862,  
+        1px -1px 0 #141e2862, 
+        -1px 1px 0 #141e2862,  
+        1px 1px 0 #141e2862;    
+    color: #f79336;
+    font-size: 50px;
+    font-weight: 350;
 }
 
-.descripcion p{
-    margin: 20px 30px;
-    text-align: justify;
-    align-items: center;
-    border-radius: 20px;
+.card-body{
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    padding: 50px;
 }

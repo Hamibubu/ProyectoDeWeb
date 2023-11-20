@@ -19,12 +19,12 @@ const welcomeRouteHandlers = {
 
 const editRouteHandlers = {
     'user': usersController.editarusuario,
-    'artist': artistController.editartist
+    'artist': artistController.editarartist
 }
 
 const deleteRouteHandlers = {
     'user': usersController.eliminarusuario,
-    'artist': artistController.eliminartist
+    'artist': artistController.eliminarartist
 }
 
 router.get('/welcome',auth,roles(rolesList,welcomeRouteHandlers));

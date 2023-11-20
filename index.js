@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 const path = require('path');
 const adminRoutes = require('./src/routes/adminsRoutes');
 const artistRoutes = require('./src/routes/artistsRoutes');
+const postsRoutes = require('./src/routes/postsRoutes');
+const forosRoutes = require('./src/routes/forosRoutes');
 const commentRoutes = require('./src/routes/commentsRoutes');
 const musicRoutes = require('./src/routes/musicRoutes');
 const usersRoutes = require('./src/routes/usersRoutes');
@@ -27,6 +29,8 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api', usersartistRoutes)
 app.use('/api', adminRoutes);
 app.use('/api', artistRoutes);
+app.use('/api', postsRoutes);
+app.use('/api', forosRoutes);
 app.use('/api', commentRoutes);
 app.use('/api', musicRoutes);
 app.use('/api', usersRoutes);
@@ -40,6 +44,8 @@ const MONGO = {
 };
 
 const mongoUrl = `${MONGO.DB_HOST}://${MONGO.DB_USER}:${MONGO.DB_PASS}@${MONGO.DB_NAME}/${MONGO.DB_INST}?retryWrites=true&w=majority`;
+
+app.set('view engine', 'ejs');
 
 mongoose.connect(mongoUrl).then(() => {
     Usuario.syncIndexes()

@@ -15,7 +15,7 @@ class UsersController {
 
     async profile(req, res){
         try {
-            const user = await Usuario.findOne({ username: req.user.username });
+            const user = await Usuario.findOne({ _id: req.user._id });
             
             if (!user) {
                 return res.status(404).json({ error: '¿Estás generando una cookie?' });
@@ -44,6 +44,8 @@ class UsersController {
             const hashedPassword = await bcrypt.hash(req.body.password, salt);
             req.body.password = hashedPassword;
         } catch (err) {
+            const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+            fs.unlinkSync(uri);
             res.status(500).send('Hubo un error al registrarlo. Inténtalo de nuevo.');
         }
         if(!req.file) {
@@ -69,15 +71,23 @@ class UsersController {
 
     async eliminarusuario(req, res) {
         try {
-            const username = req.user.username;
-            const usuarioEliminado = await User.findOneAndDelete({ username: username });
+            const _id = req.user._id;
+            const usuarioEliminado = await Usuario.findOneAndDelete({ _id: _id });
             if(!usuarioEliminado){
                 return res.status(404).send('Usuario no encontrado');
             }
-            res.send({ message: 'Usuario eliminado correctamente' });
+            if (usuarioExistente.profilePhoto) {
+                const rutaActual = path.join(__dirname, '..', '..', 'uploads', usuarioExistente.profilePhoto);
+                if (fs.existsSync(rutaActual)) {
+                    fs.unlinkSync(rutaActual);
+                } else {
+                    console.log("Archivo no encontrado en: ", rutaActual);
+                }
+            }
+            return res.send({ message: 'Usuario eliminado correctamente' });
         } catch (error) {
-            console.error('Delete error: ', err);
-            res.sendStatus(500).send("Error interno"); 
+            console.error('Delete error: '+ error);
+            return res.sendStatus(500).send("Error interno");
         }
     }
 
@@ -88,17 +98,21 @@ class UsersController {
 
     async editarusuario(req, res) {
         try {
-            const username = req.user.username;
+            const _id = req.user._id;
             let datosActualizacion = req.body;
-            const usuarioExistente = await Usuario.findOne({ username: username });
+            const usuarioExistente = await Usuario.findOne({ _id: _id });
             
             if (!usuarioExistente) {
+                const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+                fs.unlinkSync(uri);
                 return res.status(404).send('Usuario no encontrado');
             }
 
             if (req.body.password && req.body.claveActual){
                 const isMatch = await bcrypt.compare(req.body.claveActual, usuarioExistente.password);
                 if (!isMatch) {
+                    const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+                    fs.unlinkSync(uri);
                     return res.status(401).send({ message: 'Contraseña incorrecta' });
                 }
                 const salt = await bcrypt.genSalt(10);
@@ -119,14 +133,19 @@ class UsersController {
                 delete datosActualizacion.profilePhoto;
             }
             const usuarioActualizado = await Usuario.findOneAndUpdate(
-                { username: username },
+                { _id: _id },
                 datosActualizacion,
                 { new: true }
             );
             res.send("Usuario modificado exitosamente");
         } catch (error) {
-            console.log(error);
-            res.status(500).send('Error al actualizar el usuario');
+            const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+            fs.unlinkSync(uri);
+            if (error.code === 11000) {
+                res.status(400).send('El username ya está en uso. Por favor, elige otro.');
+            }else{
+                res.status(500).send('Error al actualizar el usuario');
+            }
         }
     }
 
@@ -140,12 +159,13 @@ class UsersController {
             if (!isMatch) {
                 return res.status(400).send({ message: 'Contraseña incorrecta' });
             }
-            const { email, username } = user;
+            const { email, username, _id } = user;
             const userType = "user"
             const tokenPayload = {
                 userType,
                 username,
-                email
+                email,
+                _id
             }
             const token = jwt.sign(tokenPayload, process.env.SECRET_KEY, { expiresIn: '1h' });
             res.send({ token });

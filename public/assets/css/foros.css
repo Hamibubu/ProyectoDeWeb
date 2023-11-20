@@ -107,17 +107,8 @@ header {
     /* Asegúrate de que sean completamente visibles */
 }
 
-.btn-custom {
-    animation-delay: 0.3s;
-}
-
-
 header {
     animation-delay: 0.1s;
-}
-
-.contact-form {
-    animation-delay: 0.2s;
 }
 
 
@@ -259,6 +250,7 @@ header {
 }
 
 .btn-custom {
+    animation-delay: 0.3s;
     background-color: #f79336;
     color: #141e28;
     padding: 5px 20px;
@@ -296,4 +288,94 @@ header {
 .img-comentario{
     width: 70%;
     height: 70%;
+}
+
+.card-img-redondeada{
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.crearNuevoForo{
+    background-color: #f79336;
+}
+
+.crearNuevoForo .btn-custom{
+    background-color: #141e28;
+    color: #f79336;
+}
+.crearNuevoForo .btn-custom:hover{
+    background-color: #78738d;
+    color: #f79336;
+}
+
+h2.text-nuevoForo{
+    color: rgb(250, 190, 227);
+    font-size: 60px;
+    margin-left: 20px;
+}
+
+p.text-nuevoForo{
+    margin-left: 20px;
+    font-size: 20px;
+    color: rgb(162, 208, 238);
+}
+
+p.nuevoForoFooter{
+    color: rgb(250, 190, 227);
+}
+
+.text-nuevoForo:hover{
+    color: #f79336;
+}
+
+.card-text-nuevoForo{
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+}
+
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.2;
+    border-radius: 10px;
+    animation: none !important;
+    
+}
+.card-nuevoForo{
+    border: 2px #f79336 solid;
+    box-shadow: 0 0 30px #f79336;
+    position: relative;
+}
+
+.upload-wrapper {
+    margin-top: 10px;
+}
+
+.upload-label {
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.upload-label:hover {
+    background-color: #45a049;
+}
+
+#image-upload {
+    display: none;
+}
+
+.preview img {
+    max-width: 200px;
+    height: auto;
+    margin-top: 10px;
 }

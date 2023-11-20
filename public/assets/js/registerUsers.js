@@ -1,4 +1,7 @@
 $(document).ready(() => {
+    $('#home-button').on('click', function() {
+        window.location.href = "./../../views/index/index.html";
+    });
     $('form').on('submit', (event) => {
         event.preventDefault();
         if (!event.currentTarget.checkValidity()) {
@@ -33,6 +36,17 @@ $(document).ready(() => {
                 });
                 return;
             } 
+        }
+        if (archivoInput.files.length === 0) {
+            Swal.fire({
+                toast: true,
+                position: 'top-right',
+                icon: 'error',
+                title: 'Por favor, selecciona una foto de portada para el álbum.',
+                showConfirmButton: false,
+                timer: 4000
+            });
+            return;
         }
         $.ajax({
             type: "POST",

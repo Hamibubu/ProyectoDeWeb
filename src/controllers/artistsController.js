@@ -13,9 +13,40 @@ class ArtistController {
         res.send(`Bienvenido, ${username} (${userType})`);
     }
 
+    async showProfile(req, res){
+        const name = req.body.name;
+
+
+    }
+
+    async registeralbum(req, res){ 
+        try{
+            req.body.albumPhoto = req.file.filename;
+            const artist = await Artist.findOne({ _id: req.user._id });
+            if (!artist) {
+                return res.status(404).json({ error: '¿Estás generando una cookie?' });
+            }
+            const existingAlbum = artist.albums.find(album => album.name === req.body.name);
+            if (existingAlbum) {
+                return res.status(400).json({ error: 'Ya existe un álbum con este nombre.' });
+            }
+            if (!artist.albums) {
+                artist.albums = [];
+            }    
+            artist.albums.push(req.body);
+            await artist.save();
+            res.status(200).json({ message: 'Álbum agregado con éxito.' });
+        } catch(err){
+            const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+            fs.unlinkSync(uri);
+            console.log(err);
+            res.status(500).json({ error: 'Error al agregar el álbum.' });
+        }
+    }
+
     async profile(req, res){
         try {
-            const artist = await Artist.findOne({ username: req.user.username });
+            const artist = await Artist.findOne({ _id: req.user._id });
             
             if (!artist) {
                 return res.status(404).json({ error: '¿Estás generando una cookie?' });
@@ -24,6 +55,7 @@ class ArtistController {
                 name: artist.name,
                 username: artist.username,
                 genre: artist.genre,
+                email: artist.email,
                 description: artist.description,
                 Influences: artist.Influences,
                 profilePhoto: artist.profilePhoto,
@@ -42,11 +74,20 @@ class ArtistController {
             const hashedPassword = await bcrypt.hash(req.body.password, salt);
             req.body.password = hashedPassword;
         } catch (err) {
+            const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+            fs.unlinkSync(uri);
             res.status(500).send('Hubo un error al registrarlo. Inténtalo de nuevo.');
         }
         if(!req.file) {
             res.status(400).send('Hubo un error al subir la foto de perfil');
             return;
+        }
+        const existingName = await Artist.findOne({ name: req.body.name });
+
+        if (existingName) {
+            const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+            fs.unlinkSync(uri);
+            return res.status(400).send({error: 'Ya existe ese nombre de artista, si necesitas ayuda contáctanos'});
         }
         req.body.profilePhoto = req.file.filename;
         const artist = new Artist(req.body);
@@ -66,15 +107,39 @@ class ArtistController {
 
     async eliminarartist(req, res) {
         try {
-            const username = req.user.username;
-            const atistEliminado = await Artist.findOneAndDelete({ username: username });
+            const _id = req.user._id;
+            const artistEliminado = await Artist.findOneAndDelete({ _id: _id });
             if(!artistEliminado){
                 return res.status(404).send('Usuario no encontrado');
             }
-            res.send({ message: 'Artist eliminado correctamente' });
+            const directorioAlbumes = path.join(__dirname, '..', 'uploads', 'albumes');
+            if (artistEliminado.profilePhoto) {
+                const rutaActual = path.join(__dirname, '..', '..', 'uploads', artistEliminado.profilePhoto);
+                if (fs.existsSync(rutaActual)) {
+                    fs.unlinkSync(rutaActual);
+                } else {
+                    console.log("Archivo no encontrado en: ", rutaActual);
+                }
+            }
+            if (artistEliminado.albums) {
+                for (const album of artistEliminado.albums) {
+                    if (artistEliminado.albumPhoto) {
+                        const rutaFotoAlbum = path.join(directorioAlbumes, album.albumPhoto);
+                        if (fs.existsSync(rutaFotoAlbum)) {
+                            fs.unlinkSync(rutaFotoAlbum);
+                            console.log(`Foto de álbum eliminada: ${rutaFotoAlbum}`);
+                        } else {
+                            console.log(`Foto de álbum no encontrada en: ${rutaFotoAlbum}`);
+                        }
+                    }
+                }
+            }
+            return res.send({ message: 'Artist eliminado correctamente' });
         } catch (error) {
-            console.error('Delete error: ', err);
-            res.sendStatus(500).send("Error interno"); 
+            const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+            fs.unlinkSync(uri);
+            console.error('Delete error: '+ error);
+            return res.sendStatus(500).send("Error interno"); 
         }
     }
 
@@ -85,19 +150,59 @@ class ArtistController {
 
     async editarartist(req, res) {
         try {
-            const username = req.user.username;
-            const datosActualizacion = req.body;
+            const _id = req.user._id;
+            let datosActualizacion = req.body;
+            const artistaExistente = await Artist.findOne({ _id: _id });
+            
+            if (!artistaExistente) {
+                return res.status(404).send('Usuario no encontrado');
+            }
+            const existingName = await Artist.findOne({ name: req.body.name });
+
+            if (existingName) {
+                return res.status(400).send({error: 'Ya existe ese nombre de artista, si necesitas ayuda contáctanos'});
+            }
+            if (req.body.password && req.body.claveActual){
+                const isMatch = await bcrypt.compare(req.body.claveActual, artistaExistente.password);
+                if (!isMatch) {
+                    return res.status(401).send({ message: 'Contraseña incorrecta' });
+                }
+                const salt = await bcrypt.genSalt(10);
+                const hashedPassword = await bcrypt.hash(req.body.password, salt);
+                req.body.password = hashedPassword;
+            }
+
+            if (req.file) {
+                if (artistaExistente.profilePhoto) {
+                    const rutaActual = path.join(__dirname, '..', '..', 'uploads', usuarioExistente.profilePhoto);
+                    if (fs.existsSync(rutaActual)) {
+                        fs.unlinkSync(rutaActual);
+                    } else {
+                        console.log("Archivo no encontrado en: ", rutaActual);
+                    }
+                }
+                datosActualizacion.profilePhoto = req.file.filename;
+            } else {
+                delete datosActualizacion.profilePhoto;
+            }
+
             const artistActualizado = await Artist.findOneAndUpdate(
-                { username: username },
+                {  _id: _id },
                 datosActualizacion,
                 { new: true }
             );
             if (!artistActualizado) {
                 return res.status(404).send('Usuario no encontrado');
             }
-            res.send(artistActualizado);
+            res.send("Usuario modificado exitosamente");
         } catch (error) {
-            res.status(500).send('Error al actualizar el usuario');
+            const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+            fs.unlinkSync(uri);
+            if (error.code === 11000) {
+                res.status(400).send('El username ya está en uso. Por favor, elige otro.');
+            }else{
+                res.status(500).send('Error al actualizar el usuario');
+            }
         }
     }
 
@@ -112,11 +217,12 @@ class ArtistController {
                 return res.status(400).send({ message: 'Contraseña incorrecta' });
             }
             const userType = "artist";
-            const { email, username } = artist;
+            const { email, username, _id } = artist;
             const tokenPayload = {
                 userType,
                 username,
-                email
+                email,
+                _id
             }
             const token = jwt.sign(tokenPayload, process.env.SECRET_KEY, { expiresIn: '1h' });
             res.send({ token });

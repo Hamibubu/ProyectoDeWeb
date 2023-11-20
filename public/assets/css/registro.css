@@ -9,6 +9,15 @@ body {
     position: relative;
 }
 
+#home-button {
+    position: relative;
+    top: 20px; 
+    left: 20px; 
+    background-color: rgba(247, 171, 72, 0.5); 
+    padding: 5px;
+    border-radius: 4px;
+    justify-content: center;
+}
 .card {
     background-color: rgba(0, 0, 0, 0.8);
     border: none;
@@ -45,7 +54,8 @@ body {
     margin-bottom: 20px;
 }
 
-.form-control, .btn-primary {
+.form-control,
+.btn-primary {
     background-color: rgba(255, 255, 255, 0.2);
     border: none;
     color: #fff;
@@ -53,7 +63,8 @@ body {
     height: 50px;
 }
 
-.form-control:focus, .btn-primary:hover {
+.form-control:focus,
+.btn-primary:hover {
     border-color: #f78036;
     background-color: #acdfe0;
     color: #fff;
@@ -78,7 +89,8 @@ body {
     background-color: #ad6827;
 }
 
-.custom-control-label::before, .custom-control-label::after {
+.custom-control-label::before,
+.custom-control-label::after {
     border-color: #aaa;
 }
 
