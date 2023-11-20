@@ -63,10 +63,11 @@ function mostrarForo(foroId) {
         url: `http://localhost:3000/api/foro/:${foroId}`, // Asegúrate de que esta URL sea correcta
         success: function (data) {
             //cargar html a la nueva pagina
+                    // window.location.href = `http://localhost:3000/api/foro/:${foroId}`;
             fetch(`./../../views/foros/foroPlantilla.html`)
                 .then(response => response.text())
                 .then(html => {
-                    var nuevaVentana = window.location.href(`http://localhost:3000/api/foro/:${foroId}`);
+                    var nuevaVentana = window.open('http://localhost:3000/api/foro/:'+ foroId, '_self');
                     nuevaVentana.document.write(html);
                 })
                 .catch(error => console.error('Error al cargar el HTML:', error));
