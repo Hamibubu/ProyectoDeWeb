@@ -2,10 +2,24 @@ const publicar = document.querySelector('#publicar');
 const botonPublicar = document.querySelector('#botonPublicar');
 const forosEnTendencia = document.querySelector('#forosEnTendencia');
 const forosQueTePodrianInteresar = document.querySelector('#forosQueTePodrianInteresar');
+const postsEnTendencia = document.querySelector('#postsEnTendencia');
+
 
 
 
 document.addEventListener('DOMContentLoaded', function () {
+    listarPublicaciones();
+
+    document.getElementById('image-upload').addEventListener('change', function(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById('image-preview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    });
+    
 
 
     ClassicEditor
@@ -15,11 +29,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     'selectAll', '|',
                     'heading', '|',
                     'bold', 'italic', '|',
-                    'undo', 'redo', '|',
-                    'imageUpload', 'mediaEmbed', 'link', 'blockQuote', 'insertTable'
+                    'undo', 'redo', '|', 'link', 'blockQuote', 'insertTable'
                 ],
                 shouldNotGroupWhenFull: true
-            },
+            }
         })
         .then(editor => {
             window.publicar = editor;
@@ -67,9 +80,18 @@ document.addEventListener('DOMContentLoaded', function () {
             alertaPersonalizada('warning', 'PUBLICACIÓN VACIA');
             return;
         } else {
+            let imagen = '';
+            const archivoInput = $('#image-upload')[0];
+            console.log(archivoInput);
+            if (archivoInput.files.length > 0) {
+                imagen = archivoInput.files[0];
+            }
+            const url = window.location.href;
+            const foroID = url.substring(url.lastIndexOf('/') + 2);
             const content = {
+                img: imagen,
                 content: window.publicar.getData(),
-                foroID: 'aqui va el id del foro'
+                foroID: foroID
             };
             $.ajax({
                 type: "POST",
@@ -128,5 +150,49 @@ function alertaPersonalizada(type, msg) {
         title: msg,
         showConfirmButton: false,
         timer: 3000
+    })
+}
+
+function listarPublicaciones() {
+    const url = window.location.href;
+    const foroID = url.substring(url.lastIndexOf('/') + 2);
+    $.ajax({
+        type: "GET",
+        url: `http://localhost:3000/api/listar/:${foroID}`,
+        success: function (datos) {
+            console.log(datos);
+            for (let i = 0; i < datos.length; i++) {
+                const post = datos[i];
+
+                const div = document.createElement('div');
+                div.classList.add('col-lg-6');
+                div.classList.add('mb-4');
+                div.innerHTML = `
+                <div class="card">
+
+                <div class="card-header" style="font-weight: bold;"><a href=""><img
+                                        src="/assets/img/artistas/pesopluma.jpg" alt="foto de perfil">
+                                    ${post.author} </a><i class="fas fa-check-circle"
+                                    style="color: rgb(46, 111, 252);"></i></div>
+                                    ${post.img != '' ? `<img src="${post.img}" class="card-img-top" alt="Imagen Publicacion">` : ''}
+                                <div class="card-body">
+                                ${post.content}
+                                <hr>
+                                <button href="#" class="btn btn-success voto">+ <i class="fas fa-fire"></i> ${post.likes}</button>
+                                <button href="#" class="btn btn-danger voto">- <i class="fas fa-fire"></i> ${post.dislikes}</button>
+                                <button href="#" class="btn btn-comentar comentar" data-bs-toggle="modal"
+                                    data-bs-target="#modalComentarios">Comentarios <i class="fas fa-comments"></i></button>
+
+                            </div>
+                </div>
+                `;
+                postsEnTendencia.appendChild(div);
+
+            }
+        },
+        error: function (error) {
+            alertaPersonalizada('error', error.responseText);
+            console.error('Error:', error);
+        }
     })
 }

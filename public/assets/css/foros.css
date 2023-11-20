@@ -107,11 +107,6 @@ header {
     /* Asegúrate de que sean completamente visibles */
 }
 
-.btn-custom {
-    animation-delay: 0.3s;
-}
-
-
 header {
     animation-delay: 0.1s;
 }
@@ -255,6 +250,7 @@ header {
 }
 
 .btn-custom {
+    animation-delay: 0.3s;
     background-color: #f79336;
     color: #141e28;
     padding: 5px 20px;
@@ -355,4 +351,31 @@ p.nuevoForoFooter{
     border: 2px #f79336 solid;
     box-shadow: 0 0 30px #f79336;
     position: relative;
+}
+
+.upload-wrapper {
+    margin-top: 10px;
+}
+
+.upload-label {
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.upload-label:hover {
+    background-color: #45a049;
+}
+
+#image-upload {
+    display: none;
+}
+
+.preview img {
+    max-width: 200px;
+    height: auto;
+    margin-top: 10px;
 }
