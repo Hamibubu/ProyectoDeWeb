@@ -162,7 +162,7 @@ function listarPublicaciones() {
     const foroID = url.substring(url.lastIndexOf('/') + 2);
     $.ajax({
         type: "GET",
-        url: `http://localhost:3000/api/listar/:${foroID}`,
+        url: `http://127.0.0.1:3000/api/listar/:${foroID}`,
         success: function (datos) {
             console.log(datos);
             for (let i = 0; i < datos.length; i++) {

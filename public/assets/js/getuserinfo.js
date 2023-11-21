@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     $.ajax({
         type: "GET",
-        url: "/api/profile",
+        url: "http://127.0.0.1:3000/api/profile",
         success: function(userDataResponse) {
             $('#btnEliminarPerfil').click(function() {
                 Swal.fire({

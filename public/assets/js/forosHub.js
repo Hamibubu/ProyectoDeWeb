@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function mostrarForos() {
     $.ajax({
         type: "GET",
-        url: 'http://localhost:3000/api/hub',
+        url: 'http://127.0.0.1:3000/api/hub',
         contentType: false,
         success: function (datos) {
             console.log(datos);
@@ -71,10 +71,10 @@ function mostrarForo(foroId) {
     // Realizar una solicitud AJAX al servidor
     $.ajax({
         type: 'GET',
-        url: `http://localhost:3000/api/foro/:${foroId}`, // Asegúrate de que esta URL sea correcta
+        url: `http://127.0.0.1:3000/api/foro/:${foroId}`, // Asegúrate de que esta URL sea correcta
         success: function (data) {
             //cargar html a la nueva pagina
-            window.open(`http://localhost:3000/api/foro/entrar/:${foroId}`, '_self');
+            window.open(`http://127.0.0.1:3000/api/foro/entrar/:${foroId}`, '_self');
         },
         error: function (error) {
             // Manejar errores, como un ID que no existe o problemas de servidor
