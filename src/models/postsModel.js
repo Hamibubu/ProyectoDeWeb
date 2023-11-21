@@ -5,8 +5,8 @@ const PostSchema = new mongoose.Schema({
     author: { type: String, required: true },
     img: { type: String, required: false },
     content: { type: String, required: true },
-    likes: { type: Number, default: 0 },
-    dislikes: { type: Number, default: 0 },
+    likes: { type: Array, required: false },
+    dislikes: { type: Array, required: false },
     foroID: { type: String, required: true }
 });
 

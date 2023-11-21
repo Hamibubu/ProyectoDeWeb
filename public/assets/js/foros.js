@@ -10,16 +10,16 @@ const publicacionesRecientesContainer = document.querySelector('#publicacionesRe
 document.addEventListener('DOMContentLoaded', function () {
     listarPublicaciones();
 
-    document.getElementById('image-upload').addEventListener('change', function(event) {
+    document.getElementById('image-upload').addEventListener('change', function (event) {
         var reader = new FileReader();
-        reader.onload = function() {
+        reader.onload = function () {
             var output = document.getElementById('image-preview');
             output.src = reader.result;
             output.style.display = 'block';
         };
         reader.readAsDataURL(event.target.files[0]);
     });
-    
+
 
 
     ClassicEditor
@@ -125,19 +125,21 @@ document.addEventListener('DOMContentLoaded', function () {
                             }
                         }).then((result) => {
                             if (result.dismiss === Swal.DismissReason.timer) {
-                                window.location.reload();
+                                // window.location.reload();
+                                postForm.reset();
+                                postsEnTendencia.innerHTML = '';
+                                listarPublicaciones();
                             }
                         })
                     }, 1000);
                     // window.publicar.setData('');
-                    postForm.reset();
-                    listarPublicaciones();
                 },
                 error: function (error) {
                     if (error.status == 401) {
                         alertaPersonalizada('warning', 'Primero debes iniciar sesión');
                     } else {
                         alertaPersonalizada('error', 'Ocurrio un error al publicar');
+                        postForm.reset();
                     }
                 }
             })
@@ -167,6 +169,8 @@ function listarPublicaciones() {
         success: function (datos) {
             for (let i = 0; i < datos.length; i++) {
                 const post = datos[i];
+                const numLikes = post.likes.length;
+                const numDislikes = post.dislikes.length;
                 const div = document.createElement('div');
                 div.classList.add('col-lg-6');
                 div.classList.add('mb-4');
@@ -175,15 +179,14 @@ function listarPublicaciones() {
 
                 <div class="card-header" style="font-weight: bold;"><a href=""><img
                                         src="/uploads/${post.profilePhoto}" alt="foto de perfil">
-                                    ${post.author} </a><i class="fas fa-check-circle"
-                                    style="color: rgb(46, 111, 252);"></i></div>
+                                    ${post.author} </a>${post.verified == true ? ' <i class="fas fa-check-circle" style="color: rgb(46, 111, 252);"></i>' : ''}</div>
                                     ${post.img != '' ? `<img src="/uploads/${post.img}" class="card-img-top" alt="Imagen Publicacion">` : ''}
                                 <div class="card-body">
                                 ${post.content}
                                 <hr>
-                                <button href="#" class="btn btn-success voto">+ <i class="fas fa-fire"></i> ${post.likes}</button>
-                                <button href="#" class="btn btn-danger voto">- <i class="fas fa-fire"></i> ${post.dislikes}</button>
-                                <button href="#" class="btn btn-comentar comentar" data-bs-toggle="modal"
+                                <button onclick="like('${post._id}')"  class="btn btn-success voto">+ <i class="fas fa-fire"></i> <span id="likes-count-${post._id}">${numLikes}</span></button>
+                                <button onclick="dislike('${post._id}')" class="btn btn-danger voto">- <i class="fas fa-fire"></i> <span id="dislikes-count-${post._id}" >${numDislikes}</span></button>
+                                <button class="btn btn-comentar comentar" data-bs-toggle="modal"
                                     data-bs-target="#modalComentarios">Comentarios <i class="fas fa-comments"></i></button>
 
                             </div>
@@ -198,4 +201,58 @@ function listarPublicaciones() {
             console.error('Error:', error);
         }
     })
+}
+
+function like(postId) {
+    $.ajax({
+        type: "POST",
+        url: `/api/like/:${postId}`, // URL para registrar el like en el servidor
+        success: function (datos) {
+            if (datos.conDislikePrevio) {
+                let dislikePrevio = $(`#dislikes-count-${postId}`);
+                let current = parseInt(dislikePrevio.text());
+                dislikePrevio.text(current - 1);
+            }
+            if (datos.message == 'Quitaste like') {
+                let likesCountElement = $(`#likes-count-${postId}`);
+                let currentLikes = parseInt(likesCountElement.text());
+                likesCountElement.text(currentLikes - 1);
+            } else {
+                let likesCountElement = $(`#likes-count-${postId}`);
+                let currentLikes = parseInt(likesCountElement.text());
+                likesCountElement.text(currentLikes + 1);
+            }
+        },
+        error: function (error) {
+            console.error("Error al dar like:", error.responseJSON.error);
+            alertaPersonalizada('error', error.responseJSON.error);
+        }
+    });
+}
+
+function dislike(postId) {
+    $.ajax({
+        type: "POST",
+        url: `/api/dislike/:${postId}`, // URL para registrar el like en el servidor
+        success: function (datos) {
+            if (datos.conLikePrevio) {
+                let likePrevio = $(`#likes-count-${postId}`);
+                let current = parseInt(likePrevio.text());
+                likePrevio.text(current - 1);
+            }
+            if (datos.message == 'Quitaste dislike') {
+                let dislikesCountElement = $(`#dislikes-count-${postId}`);
+                let currentDislikes = parseInt(dislikesCountElement.text());
+                dislikesCountElement.text(currentDislikes - 1);
+            } else {
+                let dislikesCountElement = $(`#dislikes-count-${postId}`);
+                let currentDislikes = parseInt(dislikesCountElement.text());
+                dislikesCountElement.text(currentDislikes + 1);
+            }
+        },
+        error: function (error) {
+            console.error("Error al dar dislike:", error.responseJSON.error);
+            alertaPersonalizada('error', error.responseJSON.error);
+        }
+    });
 }

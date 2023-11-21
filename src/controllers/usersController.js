@@ -159,10 +159,11 @@ class UsersController {
             if (!isMatch) {
                 return res.status(400).send({ message: 'Contraseña incorrecta' });
             }
-            const { email, username, _id } = user;
+            const { email, username, _id, profilePhoto } = user;
             const userType = "user"
             const tokenPayload = {
                 userType,
+                profilePhoto,
                 username,
                 email,
                 _id

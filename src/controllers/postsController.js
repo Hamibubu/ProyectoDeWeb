@@ -14,14 +14,15 @@ class PostsController {
         Post.find({ foroID: foroId })
             .select('timestamp author img content likes dislikes foroID')
             .then(posts => {
-                const userPromises = posts.map(post => 
+                const userPromises = posts.map(post =>
                     Usuario.findById(post.author)
-                        .select('username profilePhoto')
+                        .select('username profilePhoto verified')
                         .then(user => {
                             return {
                                 ...post.toObject(), // Convertir el documento de Mongoose a un objeto JS
                                 author: user.username,
-                                profilePhoto: user.profilePhoto
+                                profilePhoto: user.profilePhoto,
+                                verified: user.verified
                             };
                         })
                 );
@@ -40,10 +41,60 @@ class PostsController {
             });
     }
 
+    async like(req, res) {
+        const postId = req.params.postId.slice(1);
+        const userId = req.user._id.slice(1);
+        let conDislikePrevio = false;
+        try {
+            const post = await Post.findById(postId);
+            if (post.dislikes.includes(userId)) {
+                post.dislikes.pull(userId);
+                await post.save();
+                conDislikePrevio = true;
+            }
+            if (post.likes.includes(userId)) {
+                post.likes.pull(userId);
+                await post.save();
+                res.status(202).json({ message: 'Quitaste like', conDislikePrevio: conDislikePrevio });
+            } else {
+                post.likes.push(userId);
+                await post.save();
+                res.status(200).json({ message: 'Like registrado exitosamente', conDislikePrevio: conDislikePrevio });
+            }
+        } catch (err) {
+            res.status(500).json({ error: 'Error al registrar like' });
+        }
+    }
+
+    async dislike(req, res) {
+        const postId = req.params.postId.slice(1);
+        const userId = req.user._id.slice(1);
+        let conLikePrevio = false;
+        try {
+            const post = await Post.findById(postId);
+            if (post.likes.includes(userId)) {
+                post.likes.pull(userId);
+                await post.save();
+                conLikePrevio = true;
+            }
+            if (post.dislikes.includes(userId)) {
+                post.dislikes.pull(userId);
+                await post.save();
+                res.status(200).json({ message: 'Quitaste dislike', conLikePrevio: conLikePrevio });
+            } else {
+                post.dislikes.push(userId);
+                await post.save();
+                res.status(200).json({ message: 'Dislike registrado exitosamente', conLikePrevio: conLikePrevio });
+            }
+        } catch (err) {
+            res.status(500).json({ error: 'Error al registrar dislike' });
+        }
+    }
+
+
     async crearPost(req, res) {
         const timestamp = Date.now();
         req.body.timestamp = timestamp;
-        console.log(req.user);
         req.body.author = req.user._id;
         if (req.file) {
             req.body.img = req.file.filename;

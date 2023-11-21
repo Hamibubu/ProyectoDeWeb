@@ -12,6 +12,10 @@ router.get('/listar/:foroId',secquery,postController.listarPosts);
 // Los datos se mandan por post y por json para seguridad
 router.post('/post', auth, file.single('img'), postController.crearPost);
 
+router.post('/like/:postId', auth, postController.like);
+
+router.post('/dislike/:postId', auth, postController.dislike);
+
 // Editar
 router.patch('/post/edit',postController.editarPost);
 
