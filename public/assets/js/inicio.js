@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
         success: function(response) {
             Swal.fire({
                 title: response,
-                text: 'Cybermusic te da la bienvenida',
+                text: 'CyberMusik te da la bienvenida',
                 icon: 'success',
                 confirmButtonText: 'OK',
                 customClass: {
