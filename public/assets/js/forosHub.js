@@ -16,7 +16,6 @@ function mostrarForos() {
         url: 'http://127.0.0.1:3000/api/hub',
         contentType: false,
         success: function (datos) {
-            console.log(datos);
             for (let i = 0; i < datos.length; i++) {
                 const foro = datos[i];
 
@@ -38,13 +37,16 @@ function mostrarForos() {
                         </div>
                     </div>
                 `;
+                verificado = foro.verified == true ? ' <i class="fas fa-check-circle" style="color: rgb(46, 111, 252);"></i>' : '';
                 const titleNode = document.createTextNode(name);
                 const descriptionNode = document.createTextNode(description);
                 const titleElement = div.querySelector('.card-title');
                 const descriptionElement = div.querySelector('.card-text');
+                const verificadoElement = document.createElement('span');
+                verificadoElement.innerHTML = verificado;
                 titleElement.appendChild(titleNode);
+                titleElement.appendChild(verificadoElement)
                 descriptionElement.appendChild(descriptionNode);
-
                 forosEnTendencia.appendChild(div);
 
             }

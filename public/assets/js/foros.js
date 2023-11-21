@@ -4,7 +4,7 @@ const forosEnTendencia = document.querySelector('#forosEnTendencia');
 const forosQueTePodrianInteresar = document.querySelector('#forosQueTePodrianInteresar');
 const postsEnTendencia = document.querySelector('#postsEnTendencia');
 const foroForm = document.querySelector('#foroForm');
-
+const publicacionesRecientesContainer = document.querySelector('#publicacionesRecientesContainer');
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             $.ajax({
                 type: "POST",
-                url: 'http://127.0.0.1:3000/api/post',
+                url: '/api/post',
                 data: formData,
                 contentType: false,
                 processData: false,
@@ -125,12 +125,13 @@ document.addEventListener('DOMContentLoaded', function () {
                             }
                         }).then((result) => {
                             if (result.dismiss === Swal.DismissReason.timer) {
-                                // window.location.reload();
+                                window.location.reload();
                             }
                         })
                     }, 1000);
                     // window.publicar.setData('');
                     postForm.reset();
+                    listarPublicaciones();
                 },
                 error: function (error) {
                     if (error.status == 401) {
@@ -164,10 +165,8 @@ function listarPublicaciones() {
         type: "GET",
         url: `http://127.0.0.1:3000/api/listar/:${foroID}`,
         success: function (datos) {
-            console.log(datos);
             for (let i = 0; i < datos.length; i++) {
                 const post = datos[i];
-                console.log(post);
                 const div = document.createElement('div');
                 div.classList.add('col-lg-6');
                 div.classList.add('mb-4');

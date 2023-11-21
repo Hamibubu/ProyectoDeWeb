@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     $.ajax({
         type: "GET",
-        url: "http://127.0.0.1:3000/api/welcome",
+        url: "/api/welcome",
         success: function(response) {
             const perfilDropdown = $('.btn-group .dropdown-menu');
             const loginItem = perfilDropdown.find('li:nth-child(1)');

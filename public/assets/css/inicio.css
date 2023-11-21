@@ -34,37 +34,6 @@ navbar{
     color: white;
 }
 
-/* Animación de aparición */
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(3px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-*{
-    opacity: 1;
-    animation-name: fadeInUp;
-    animation-duration: .6s;
-    animation-timing-function: ease-out;
-    animation-fill-mode: forwards;
-}
-
-header {
-    animation-delay: 0.1s;
-}
-
-.contact-form {
-    animation-delay: 0.2s;
-}
-
-.btn-custom {
-    animation-delay: 0.3s;
-}
 
 /* Fotos del Carrusel */
 .albumesC{
