@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     setTimeout(() => {
                         let timerInterval
                         Swal.fire({
-                            title: 'BIENVENIDO',
+                            title: 'BIENVENIDX',
                             html: 'Redireccionando ...',
                             timer: 1000,
                             timerProgressBar: true,

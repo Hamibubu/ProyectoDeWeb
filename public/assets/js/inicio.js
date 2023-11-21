@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 toast: true,
                 position: 'top-right',
                 icon: 'info',
-                title: 'Bienvenido, parece que no has iniciado sesión',
+                title: 'Bienvenidx, parece que no has iniciado sesión',
                 showConfirmButton: false,
                 timer: 3000
             })

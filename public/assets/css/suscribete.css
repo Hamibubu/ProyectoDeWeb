@@ -15,7 +15,7 @@ body{
     align-items: center;
     position: relative; 
     background-color: #e1e4e4;
-    color: #fff;
+    font-family: "Roboto", sans-serif;
 }
 
 p{
@@ -35,8 +35,22 @@ h2{
     font-weight: 350;
 }
 
+.btn-custom {
+    background-color: #f79336;
+    color: #141e28;
+    padding: 5px 20px;
+    border-radius: 20px;
+    border: none;
+    transition: background-color 0.3s;
+    float: none;
+    position: static;
+    font-weight: bold;
+    font-size: 30px;
+}
 
-
+.btn-custom:hover {
+    background-color: #ad6827;
+}
 
 .navbar-expand-lg{
     background-color: #141e28; 
@@ -81,4 +95,52 @@ header {
 
 .btn-custom {
     animation-delay: 0.3s;
+}
+
+.caja img {
+    height: 400px;
+    width: 100%;
+    align-items: center;
+}
+
+.card {
+    height: 300px;
+    width: 100%;
+    background-color: #141e28;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.card img {
+    border-radius: 20px 20px 20px 20px;
+    height: 200px;
+    width: 100%;
+    object-fit: contain;
+    object-position: center;
+    margin: 5px;
+}
+
+.card-body{
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+}
+
+ul{
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+#info li::before{
+    content: "  ☆ ";
+}
+
+h3{
+    color: #f79336;
+    font-weight: bold;
 }
