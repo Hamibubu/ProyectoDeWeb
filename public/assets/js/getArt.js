@@ -44,9 +44,9 @@ $(document).ready(function() {
                         const a = document.createElement("a");
                         a.href = "#";
                         a.classList.add("btn", "btn-custom");
-                        a.id = found.name;
+                        a.id = found._id;
                         a.appendChild(document.createTextNode("Ver Perfil"));
-                
+
                         artistImageContainer.appendChild(img);
                         cardBody.appendChild(h2);
                         cardBody.appendChild(p);
@@ -56,6 +56,12 @@ $(document).ready(function() {
                         artistaDiv.appendChild(card);
                 
                         profilesContainer.appendChild(artistaDiv);
+
+                        $(`#${found._id}`).on('click', (event) => {
+                            event.preventDefault();
+                            console.log(`Se hizo clic en ${found.name}`);
+                            // Aquí puedes realizar la acción que desees al hacer clic en el botón "Ver Perfil"
+                        });
                     });
                 },
                 error: function (error) {

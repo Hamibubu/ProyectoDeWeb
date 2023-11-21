@@ -29,7 +29,8 @@ class ArtistController {
                 name: artist.name,
                 username: artist.username,
                 genre: artist.genre,
-                profilePhoto: artist.profilePhoto
+                profilePhoto: artist.profilePhoto,
+                _id: artist._id
             }));
 
             res.send(userData);
