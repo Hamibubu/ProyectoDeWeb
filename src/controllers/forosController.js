@@ -65,7 +65,6 @@ class ForosController {
         Foro.findById(foroId)
         .select('timestamp author name description img verified flags')
         .then(foro => {
-            console.log(foro);
             res.render('./../public/views/foros/foroPlantilla.ejs', { foro: foro });
             // res.status(200).json(foro);
         })
