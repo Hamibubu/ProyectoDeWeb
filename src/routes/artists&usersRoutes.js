@@ -4,6 +4,7 @@ const roles = require('./../middlewares/roles');
 const file = require('./../middlewares/file');
 const artistController = require('./../controllers/artistsController');
 const usersController = require('./../controllers/usersController');
+const secquery = require('./../middlewares/secquery')
 
 let rolesList = ['user', 'artist'];
 
@@ -28,8 +29,8 @@ const deleteRouteHandlers = {
 }
 
 router.get('/welcome',auth,roles(rolesList,welcomeRouteHandlers));
-router.get('/profile',auth,roles(rolesList,profileRouteHandlers))
-router.patch('/edit',auth,file.single('profilePhoto'),roles(rolesList,editRouteHandlers));
-router.delete('/del',auth,roles(rolesList,deleteRouteHandlers));
+router.get('/profile',secquery,auth,roles(rolesList,profileRouteHandlers))
+router.patch('/edit',secquery,auth,file.single('profilePhoto'),roles(rolesList,editRouteHandlers));
+router.delete('/del',secquery,auth,roles(rolesList,deleteRouteHandlers));
 
 module.exports = router;

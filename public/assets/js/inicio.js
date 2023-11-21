@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
         url: "http://127.0.0.1:3000/api/welcome",
         success: function(response) {
             Swal.fire({
-                title: response,
+                title: escapeHtml(response),
                 text: 'CyberMusik te da la bienvenida',
                 icon: 'success',
                 confirmButtonText: 'OK',
