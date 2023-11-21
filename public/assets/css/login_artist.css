@@ -2,13 +2,16 @@ body {
     background: url('https://source.unsplash.com/1600x900/?music,vinyl') no-repeat center center fixed;
     background-size: cover;
     font-family: 'Roboto', sans-serif;
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    height: 100vh; 
     margin: 0;
     padding: 0;
     color: #fff;
+}
+
+.pantalla{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .login-container {
