@@ -23,4 +23,6 @@ const artistSchema = new mongoose.Schema({
     albums: [albumSchema]
 });
 
+artistSchema.index({ name: 1 }, { collation: { locale: 'es', strength: 2 } });
+
 module.exports = mongoose.model('Artist', artistSchema);

@@ -3,7 +3,7 @@ const botonPublicar = document.querySelector('#botonPublicar');
 const forosEnTendencia = document.querySelector('#forosEnTendencia');
 const forosQueTePodrianInteresar = document.querySelector('#forosQueTePodrianInteresar');
 const postsEnTendencia = document.querySelector('#postsEnTendencia');
-
+const foroForm = document.querySelector('#foroForm');
 
 
 
@@ -74,30 +74,30 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
     // crear post
-    botonPublicar.addEventListener('click', function (e) {
+    postForm.addEventListener('submit', function (e) {
         e.preventDefault();
+        if (!e.currentTarget.checkValidity()) {
+            e.stopPropagation();
+        }
         if (window.publicar.getData() == '') {
             alertaPersonalizada('warning', 'PUBLICACIÓN VACIA');
             return;
         } else {
-            let imagen = '';
-            const archivoInput = $('#image-upload')[0];
-            console.log(archivoInput);
-            if (archivoInput.files.length > 0) {
-                imagen = archivoInput.files[0];
-            }
             const url = window.location.href;
             const foroID = url.substring(url.lastIndexOf('/') + 2);
-            const content = {
-                img: imagen,
-                content: window.publicar.getData(),
-                foroID: foroID
-            };
+            const formData = new FormData(); // Crea un objeto FormData
+            formData.append('content', window.publicar.getData());
+            formData.append('foroID', foroID);
+            const archivoInput = $('#image-upload')[0];
+            if (archivoInput.files.length > 0) {
+                formData.append('img', archivoInput.files[0]);
+            }
             $.ajax({
                 type: "POST",
                 url: 'http://127.0.0.1:3000/api/post',
-                data: JSON.stringify(content),
-                contentType: 'application/json',
+                data: formData,
+                contentType: false,
+                processData: false,
                 success: function (datos) {
                     Swal.fire({
                         toast: true,
@@ -129,11 +129,15 @@ document.addEventListener('DOMContentLoaded', function () {
                             }
                         })
                     }, 1000);
-                    window.publicar.setData('');
+                    // window.publicar.setData('');
+                    postForm.reset();
                 },
                 error: function (error) {
-                    alertaPersonalizada('error', error.responseText);
-                    console.error('Error:', error);
+                    if (error.status == 401) {
+                        alertaPersonalizada('warning', 'Primero debes iniciar sesión');
+                    } else {
+                        alertaPersonalizada('error', 'Ocurrio un error al publicar');
+                    }
                 }
             })
         }
@@ -163,7 +167,7 @@ function listarPublicaciones() {
             console.log(datos);
             for (let i = 0; i < datos.length; i++) {
                 const post = datos[i];
-
+                console.log(post);
                 const div = document.createElement('div');
                 div.classList.add('col-lg-6');
                 div.classList.add('mb-4');
@@ -171,10 +175,10 @@ function listarPublicaciones() {
                 <div class="card">
 
                 <div class="card-header" style="font-weight: bold;"><a href=""><img
-                                        src="/assets/img/artistas/pesopluma.jpg" alt="foto de perfil">
+                                        src="/uploads/${post.profilePhoto}" alt="foto de perfil">
                                     ${post.author} </a><i class="fas fa-check-circle"
                                     style="color: rgb(46, 111, 252);"></i></div>
-                                    ${post.img != '' ? `<img src="${post.img}" class="card-img-top" alt="Imagen Publicacion">` : ''}
+                                    ${post.img != '' ? `<img src="/uploads/${post.img}" class="card-img-top" alt="Imagen Publicacion">` : ''}
                                 <div class="card-body">
                                 ${post.content}
                                 <hr>

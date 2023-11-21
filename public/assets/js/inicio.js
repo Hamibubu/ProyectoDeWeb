@@ -46,3 +46,7 @@ function logout() {
     deleteCookie("authToken");
     window.location.href = "./../../views/index/index.html";
 }
+
+function escapeHtml(unsafe) {
+    return unsafe.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}

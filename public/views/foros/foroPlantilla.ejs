@@ -15,47 +15,45 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#"><img src="/assets/img/logomovible.gif" heights="100px"
-                        width="100px"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
-                    aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarColor01">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/views/index/index.html">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/views/foros/foros.html">Foros</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/views/artistas/artistas.html">Artistas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/views/generos/generos.html">Géneros</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">¡Suscribete!</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/views/contacto/contactanos.html">Contáctanos</a>
-                        </li>
-                    </ul>
-                    <div class="btn-group dropstart" style="margin-right: 20px;">
-                        <button class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false"> Mi
-                            Perfil</button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="/views/logins/login.html">Log In</a></li>
-                            <li><a class="dropdown-item" href="/views./registro/registro.html">¡Registrate!</a></li>
-                        </ul>
-                    </div>
-                </div>
+      <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/views/index/index.html"><img src="/assets/img/logomovible.gif" heights="100px" width="100px"></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="/views/index/index.html">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/views/foros/foros.html">Foros</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/views/artistas/artistas.html">Artistas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/views/generos/generos.html">Géneros</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/views/suscribete/suscribete.html">¡Suscribete!</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/views/contacto/contactanos.html">Contáctanos</a>
+              </li>
+            </ul>
+            <div class="btn-group dropstart" style="margin-right: 20px;">
+              <button class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"> Mi
+                Perfil</button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="/views/logins/login.html">Log In</a></li>
+                <li><a class="dropdown-item" href="/views/registro/registro.html">¡Registrate!</a></li>
+              </ul>
             </div>
-        </nav>
+          </div>
+        </div>
+      </nav>
     </header>
 
 
@@ -76,22 +74,24 @@
                         src="/assets/img/usuarios/fantasma.jpg" alt="foto de perfil" id="fotoperfil"> Añadir una
                     publicación</h5>
 
-                <div class="form-group" id="input">
-                    <textarea class="form-control" rows="3" placeholder="¿Qué estás opinando?..."
-                        id="publicar"></textarea>
+                <form id="postForm">
+                    <div class="form-group" id="input">
+                        <textarea class="form-control" rows="3" placeholder="¿Qué estás opinando?..."
+                            id="publicar"></textarea>
                         <div class="upload-wrapper">
-                            <input type="file" id="image-upload" accept="image/*" />
+                            <input class="input-group" type="file" id="image-upload" accept="image/*" />
                             <label for="image-upload" class="upload-label">Seleccionar imagen</label>
                             <div class="preview">
                                 <img id="image-preview" src="#" alt="Vista previa de la imagen" style="display: none;">
                             </div>
                         </div>
-                </div>
-                <hr style="animation: none !important;">
-                <div class="d-flex justify-content-end">
-                    <button id="botonPublicar" type="submit" class="btn btn-custom "
-                        style="width: 80px; height: 34px; padding: 5px 10px; font-size: 16px;">Publicar</button>
-                </div>
+                    </div>
+                    <hr style="animation: none !important;">
+                    <div class="d-flex justify-content-end">
+                        <button id="botonPublicar" type="submit" class="btn btn-custom "
+                            style="width: 80px; height: 34px; padding: 5px 10px; font-size: 16px;">Publicar</button>
+                    </div>
+                </form>
 
             </div>
         </div>

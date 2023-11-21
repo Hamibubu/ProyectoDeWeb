@@ -155,7 +155,7 @@ navbar{
     }
 }
 
-*{
+header, .card, button, h1, a, p, .testimonials, .btn-custom{
     opacity: 1;
     animation-name: fadeInUp;
     animation-duration: .6s;
@@ -172,11 +172,15 @@ header {
     animation-delay: 0.1s;
 }
 
+p {
+    animation-delay: 0.2s;
+}
+
 .contact-form {
     animation-delay: 0.2s;
 }
 
-.btn-custom {
+.btn-custom, .testimonials {
     animation-delay: 0.3s;
 }
 
@@ -298,7 +302,7 @@ header {
     color: white;
 }
 
-.bienvenidap {
+/* .bienvenidap {
     top: -20%;
     left: 50%; 
     transform: translateX(-50%); 
@@ -311,5 +315,5 @@ header {
 
 .bienvenidac {
     font-size: 18px;
-}
+} */
 
