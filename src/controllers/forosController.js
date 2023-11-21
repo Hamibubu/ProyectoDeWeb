@@ -1,31 +1,33 @@
 const Foro = require('./../models/forosModel');
+const Usuario = require('./../models/usersModel');
 const { response } = require('express');
 const path = require('path');
 const fs = require('fs');
+const { log } = require('console');
 
 class ForosController {
 
     verForo(req, res) {
         const foroId = req.params.foroId.slice(1);
         Foro.findById(foroId)
-        .select('timestamp author name description img verified flags')
-        .then(foro => {
-            res.status(200).json(foro);
-        })
-        .catch(err => {
-            res.status(500).json({ error: 'Error al recoger datos' });
-        });
+            .select('timestamp author name description img verified flags')
+            .then(foro => {
+                res.status(200).json(foro);
+            })
+            .catch(err => {
+                res.status(500).json({ error: 'Error al recoger datos' });
+            });
     }
 
     verForos(req, res) {
         Foro.find()
-        .select('timestamp author name description img verified flags')
-        .then(foros => {
-            res.status(200).json(foros);
-        })
-        .catch(err => {
-            res.status(500).json({ error: 'Error al recoger datos' });
-        });
+            .select('timestamp author name description img verified flags')
+            .then(foros => {
+                res.status(200).json(foros);
+            })
+            .catch(err => {
+                res.status(500).json({ error: 'Error al recoger datos' });
+            });
     }
 
     async crearForo(req, res) {
@@ -63,14 +65,22 @@ class ForosController {
     entrarForo(req, res) {
         const foroId = req.params.foroId.slice(1);
         Foro.findById(foroId)
-        .select('timestamp author name description img verified flags')
-        .then(foro => {
-            res.render('./../public/views/foros/foroPlantilla.ejs', { foro: foro });
-            // res.status(200).json(foro);
-        })
-        .catch(err => {
-            res.status(500).json({ error: 'Error al recoger datos' });
-        });
+            .select('timestamp author name description img verified flags')
+            .then(foro => {
+                Usuario.findById(req.user._id)
+                    .select('profilePhoto')
+                    .then(user => {
+                        const usuario = user;
+                        res.render('./../public/views/foros/foroPlantilla.ejs', { foro: foro, user: usuario });
+                        // res.status(200).json(foro);
+                    })
+                    .catch(err => {
+                        res.status(500).json({ error: 'Error al recoger datos de usuario' });
+                    });
+            })
+            .catch(err => {
+                res.status(500).json({ error: 'Error al recoger datos' });
+            });
     }
 
 }

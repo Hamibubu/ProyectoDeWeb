@@ -13,10 +13,9 @@ document.addEventListener('DOMContentLoaded', function () {
 function mostrarForos() {
     $.ajax({
         type: "GET",
-        url: 'http://localhost:3000/api/hub',
+        url: 'http://127.0.0.1:3000/api/hub',
         contentType: false,
         success: function (datos) {
-            console.log(datos);
             for (let i = 0; i < datos.length; i++) {
                 const foro = datos[i];
 
@@ -38,13 +37,16 @@ function mostrarForos() {
                         </div>
                     </div>
                 `;
+                verificado = foro.verified == true ? ' <i class="fas fa-check-circle" style="color: rgb(46, 111, 252);"></i>' : '';
                 const titleNode = document.createTextNode(name);
                 const descriptionNode = document.createTextNode(description);
                 const titleElement = div.querySelector('.card-title');
                 const descriptionElement = div.querySelector('.card-text');
+                const verificadoElement = document.createElement('span');
+                verificadoElement.innerHTML = verificado;
                 titleElement.appendChild(titleNode);
+                titleElement.appendChild(verificadoElement)
                 descriptionElement.appendChild(descriptionNode);
-
                 forosEnTendencia.appendChild(div);
 
             }
@@ -71,10 +73,10 @@ function mostrarForo(foroId) {
     // Realizar una solicitud AJAX al servidor
     $.ajax({
         type: 'GET',
-        url: `http://localhost:3000/api/foro/:${foroId}`, // Asegúrate de que esta URL sea correcta
+        url: `http://127.0.0.1:3000/api/foro/:${foroId}`, // Asegúrate de que esta URL sea correcta
         success: function (data) {
             //cargar html a la nueva pagina
-            window.open(`http://localhost:3000/api/foro/entrar/:${foroId}`, '_self');
+            window.open(`http://127.0.0.1:3000/api/foro/entrar/:${foroId}`, '_self');
         },
         error: function (error) {
             // Manejar errores, como un ID que no existe o problemas de servidor

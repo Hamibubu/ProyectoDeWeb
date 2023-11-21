@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const foroController = require('./../controllers/forosController');
 const file = require('./../middlewares/file')
+const auth = require('./../middlewares/auth');
 const secquery = require('./../middlewares/secquery')
 
 // Mandar el id del admin
@@ -9,7 +10,7 @@ router.get('/foro/:foroId',secquery,foroController.verForo);
 // traerforos
 router.get('/hub',secquery,foroController.verForos);
 
-router.get('/foro/entrar/:foroId',secquery,foroController.entrarForo);
+router.get('/foro/entrar/:foroId', auth, secquery,foroController.entrarForo);
 
 
 // Los datos se mandan por post y por json para seguridad
