@@ -13,6 +13,7 @@ const musicRoutes = require('./src/routes/musicRoutes');
 const usersRoutes = require('./src/routes/usersRoutes');
 const usersartistRoutes = require('./src/routes/artists&usersRoutes');
 const Usuario = require('./src/models/usersModel');
+const mongoSanitize = require('express-mongo-sanitize');
 
 const app = express();
 
@@ -24,6 +25,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(express.json());
+// Data sanitization against NoSQL query injection
+app.use(mongoSanitize());
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api', usersartistRoutes)

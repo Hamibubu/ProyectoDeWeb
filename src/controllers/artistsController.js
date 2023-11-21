@@ -13,11 +13,68 @@ class ArtistController {
         res.send(`Bienvenido, ${username} (${userType})`);
     }
 
-    async showProfile(req, res){
-        const name = req.body.name;
+    async search(req, res){
+        try {
+            var query = req.query.name;
+            query = query.replace(/[.]/g, '');
+            if (!query){
+                return res.status(404).send('Introduce una búsqueda válida');
+            }
+            const regex = new RegExp(`^${query}`, 'i');
+            const artists = await Artist.find({ name: regex }).collation({ locale: 'en', strength: 2 });
+            if (artists.length === 0) {
+                return res.status(404).send('Artista no encontrado');
+            }
+            const userData = artists.map(artist => ({
+                name: artist.name,
+                username: artist.username,
+                genre: artist.genre,
+                profilePhoto: artist.profilePhoto
+            }));
 
-
+            res.send(userData);
+        } catch (error) {
+            res.status(500).send('Error al buscar el artista'+error);
+        }
     }
+
+    async showProfile(req, res){
+        try {
+            const name = req.body.name;
+            const artist = await Artist.findOne({ name: name }).collation({ locale: 'en', strength: 2 });
+    
+            if (!artist) {
+                return res.status(404).send('Artista no encontrado');
+            }
+            let albums = artist.albums.map(album => {
+                const albumObj = album.toObject ? album.toObject() : album;
+                return {
+                    name: albumObj.name,
+                    type: albumObj.type,
+                    description: albumObj.description,
+                    genre: albumObj.genre,
+                    albumPhoto: albumObj.albumPhoto,
+                    release: albumObj.release,
+                    approval: albumObj.likes - albumObj.dislikes
+                };
+            });
+            
+            const userData = {
+                name: artist.name,
+                username: artist.username,
+                genre: artist.genre,
+                description: artist.description,
+                Influences: artist.Influences,
+                profilePhoto: artist.profilePhoto,
+                albums: albums
+            };
+
+            res.send(userData);
+        } catch (error) {
+            res.status(500).send('Error al buscar el artista'+error);
+        }
+    }
+    
 
     async registeralbum(req, res){ 
         try{
@@ -82,7 +139,7 @@ class ArtistController {
             res.status(400).send('Hubo un error al subir la foto de perfil');
             return;
         }
-        const existingName = await Artist.findOne({ name: req.body.name });
+        const existingName = await Artist.findOne({ name: req.body.name }).collation({ locale: 'es', strength: 2 });
 
         if (existingName) {
             const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
@@ -157,7 +214,7 @@ class ArtistController {
             if (!artistaExistente) {
                 return res.status(404).send('Usuario no encontrado');
             }
-            const existingName = await Artist.findOne({ name: req.body.name });
+            const existingName = await Artist.findOne({ name: req.body.name }).collation({ locale: 'es', strength: 2 });
 
             if (existingName) {
                 return res.status(400).send({error: 'Ya existe ese nombre de artista, si necesitas ayuda contáctanos'});

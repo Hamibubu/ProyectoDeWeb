@@ -24,14 +24,15 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             $.ajax({
                 type: "POST",
-                url: "http://localhost:3000/api/login/user",
+                url: "/api/login/user",
                 data: JSON.stringify(userData),
                 contentType: 'application/json',
                 success: function(datos){
                     const now = new Date();
                     const expiration = new Date(now.getTime() + 60 * 60 * 1000);
                     const expirationString = expiration.toUTCString();
-                    document.cookie = `authToken=${datos.token}; expires=${expirationString}; path=/`;
+                    document.cookie = `authToken=${datos.token}; expires=${expirationString}; path=/; SameSite=Lax`;
+                    ;
                     Swal.fire({
                         toast: true,
                         position: 'top-right',

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
         url: "http://127.0.0.1:3000/api/welcome",
         success: function(response) {
             Swal.fire({
-                title: response,
+                title: escapeHtml(response),
                 text: 'Cybermusic te da la bienvenida',
                 icon: 'success',
                 confirmButtonText: 'OK',
@@ -45,4 +45,8 @@ function deleteCookie(name) {
 function logout() {
     deleteCookie("authToken");
     window.location.href = "./../../views/index/index.html";
+}
+
+function escapeHtml(unsafe) {
+    return unsafe.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
