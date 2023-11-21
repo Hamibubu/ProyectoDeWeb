@@ -133,8 +133,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     postForm.reset();
                 },
                 error: function (error) {
-                    alertaPersonalizada('error', error.responseText);
-                    console.error('Error:', error);
+                    if (error.status == 401) {
+                        alertaPersonalizada('warning', 'Primero debes iniciar sesión');
+                    } else {
+                        alertaPersonalizada('error', 'Ocurrio un error al publicar');
+                    }
                 }
             })
         }
@@ -164,7 +167,7 @@ function listarPublicaciones() {
             console.log(datos);
             for (let i = 0; i < datos.length; i++) {
                 const post = datos[i];
-
+                console.log(post);
                 const div = document.createElement('div');
                 div.classList.add('col-lg-6');
                 div.classList.add('mb-4');
@@ -172,7 +175,7 @@ function listarPublicaciones() {
                 <div class="card">
 
                 <div class="card-header" style="font-weight: bold;"><a href=""><img
-                                        src="/assets/img/artistas/pesopluma.jpg" alt="foto de perfil">
+                                        src="/uploads/${post.profilePhoto}" alt="foto de perfil">
                                     ${post.author} </a><i class="fas fa-check-circle"
                                     style="color: rgb(46, 111, 252);"></i></div>
                                     ${post.img != '' ? `<img src="/uploads/${post.img}" class="card-img-top" alt="Imagen Publicacion">` : ''}

@@ -1,4 +1,6 @@
 const Post = require('./../models/postsModel');
+const Usuario = require('./../models/usersModel');
+const jwt = require('jsonwebtoken');
 const { response } = require('express');
 
 class PostsController {
@@ -9,23 +11,40 @@ class PostsController {
 
     listarPosts(req, res) {
         const foroId = req.params.foroId.slice(1);
-        Post.find({foroID: foroId})
-        .select('timestamp author img content likes dislikes foroID')
-        .then(post => {
-            console.log(post);
-            // res.render('./../public/views/foros/foroPlantilla.ejs', { foro: foro });
-            res.status(200).json(post);
-        })
-        .catch(err => {
-            res.status(500).json({ error: 'Error al recoger datos' });
-        });
+        Post.find({ foroID: foroId })
+            .select('timestamp author img content likes dislikes foroID')
+            .then(posts => {
+                const userPromises = posts.map(post => 
+                    Usuario.findById(post.author)
+                        .select('username profilePhoto')
+                        .then(user => {
+                            return {
+                                ...post.toObject(), // Convertir el documento de Mongoose a un objeto JS
+                                author: user.username,
+                                profilePhoto: user.profilePhoto
+                            };
+                        })
+                );
+
+                // Esperar a que todas las promesas se resuelvan
+                Promise.all(userPromises)
+                    .then(updatedPosts => {
+                        res.status(200).json(updatedPosts);
+                    })
+                    .catch(err => {
+                        res.status(500).json({ error: 'Error al recoger datos de usuarios' });
+                    });
+            })
+            .catch(err => {
+                res.status(500).json({ error: 'Error al recoger datos de posts' });
+            });
     }
 
     async crearPost(req, res) {
         const timestamp = Date.now();
         req.body.timestamp = timestamp;
-        // req.body.author = req.user.username; //ESTA ES LA QUE VA, LA LINEA DE ABAJO ES PARA DEV
-        req.body.author = 'Usuario';
+        console.log(req.user);
+        req.body.author = req.user._id;
         if (req.file) {
             req.body.img = req.file.filename;
         } else {
