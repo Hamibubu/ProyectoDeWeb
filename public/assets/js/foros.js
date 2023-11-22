@@ -161,6 +161,14 @@ function listarPublicaciones() {
         type: "GET",
         url: `http://127.0.0.1:3000/api/listar/:${foroID}`,
         success: function (datos) {
+            if (datos.length <= 0) {
+                const div = document.createElement('div');
+                div.classList.add('mb-4');
+                div.innerHTML = `
+                <h4 class="text-center" style="color: #f79336;">Todavía no hay publicaciones, sé el primero en publicar algo!</h4>
+                `;
+                postsEnTendencia.appendChild(div);
+            }
             for (let i = 0; i < datos.length; i++) {
                 const post = datos[i];
                 const numLikes = post.likes.length;
