@@ -13,6 +13,7 @@ class PostsController {
     listarPosts(req, res) {
         const foroId = req.params.foroId.slice(1);
         Post.find({ foroID: foroId })
+        .sort({ timestamp: -1 }) // Orden descendente
             .select('timestamp author img content likes dislikes foroID')
             .then(posts => {
                 const userPromises = posts.map(post =>
@@ -45,6 +46,7 @@ class PostsController {
     mostrarModal(req, res) {
         const postId = req.params.postId.slice(1);
         Comment.find({ postId: postId })
+            .sort({ timestamp: -1 }) // Orden descendente
             .then(comments => {
                 const userPromises = comments.map(comment =>
                     Usuario.findById(comment.author)

@@ -9,7 +9,6 @@ const contenidoModalComentarios = document.querySelector('#contenidoModalComenta
 const modalComentarios = document.querySelector('#modalComentarios');
 let editorComentario;
 
-
 document.addEventListener('DOMContentLoaded', function () {
     listarPublicaciones();
 
@@ -113,13 +112,17 @@ document.addEventListener('DOMContentLoaded', function () {
                         }).then((result) => {
                             if (result.dismiss === Swal.DismissReason.timer) {
                                 // window.location.reload();
+                                window.publicar.setData('');
                                 postForm.reset();
                                 postsEnTendencia.innerHTML = '';
                                 listarPublicaciones();
                             }
                         })
                     }, 1000);
-                    // window.publicar.setData('');
+                    window.publicar.setData('');
+                    postForm.reset();
+                    postsEnTendencia.innerHTML = '';
+                    listarPublicaciones();
                 },
                 error: function (error) {
                     if (error.status == 401) {
@@ -163,10 +166,10 @@ function listarPublicaciones() {
                 const numLikes = post.likes.length;
                 const numDislikes = post.dislikes.length;
                 const div = document.createElement('div');
-                div.classList.add('col-lg-6');
+                // div.classList.add('col-lg-12');
                 div.classList.add('mb-4');
                 div.innerHTML = `
-                <div class="card">
+                <div class="card card-publicaciones">
 
                 <div class="card-header" style="font-weight: bold;"><a href=""><img
                                         src="/uploads/${post.profilePhoto}" alt="foto de perfil">
@@ -188,6 +191,18 @@ function listarPublicaciones() {
                 postsEnTendencia.appendChild(div);
 
             }
+            var msnry = new Masonry('#postsEnTendencia', {
+                // opciones
+                itemSelector: '.card',
+                columnWidth: '.card',
+                percentPosition: true
+            });
+            imagesLoaded('#postsEnTendencia', function () {
+                // Re-ejecutar Masonry después de que todas las imágenes se hayan cargado
+                msnry.layout();
+            });
+            msnry.layout();
+
         },
         error: function (error) {
             alertaPersonalizada('error', error.responseText);
@@ -275,7 +290,7 @@ function dislike(postId) {
     });
 }
 
-function mostrarModal(postId) {
+function mostrarModal(postId, pagina = 0) {
     $.ajax({
         type: "GET",
         url: `http://127.0.0.1:3000/api/mostrarModal/:${postId}`,

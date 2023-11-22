@@ -389,3 +389,8 @@ p.nuevoForoFooter{
     height: auto;
     margin-top: 10px;
 }
+
+.card-publicaciones {
+    width: 48%; /* El ancho de las tarjetas es en porcentajes */
+    margin: 1%; /* Asegúrate de que el margen + ancho no supere el 100% */
+  }
