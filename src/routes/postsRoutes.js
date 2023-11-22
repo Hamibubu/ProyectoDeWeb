@@ -14,9 +14,15 @@ router.get('/mostrarModal/:postId', auth, secquery,postController.mostrarModal);
 // Los datos se mandan por post y por json para seguridad
 router.post('/post', auth, file.single('img'), postController.crearPost);
 
+router.post('/comentar', auth, file.single('img'), postController.crearComentario);
+
 router.post('/like/:postId', auth, postController.like);
 
 router.post('/dislike/:postId', auth, postController.dislike);
+
+router.post('/likeComment/:commentId', auth, postController.likeComment);
+
+router.post('/dislikeComment/:commentId', auth, postController.dislikeComment);
 
 // Editar
 router.patch('/post/edit',postController.editarPost);

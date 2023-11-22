@@ -379,3 +379,13 @@ p.nuevoForoFooter{
     height: auto;
     margin-top: 10px;
 }
+
+#image-upload-comentario {
+    display: none;
+}
+
+.preview-comentario img {
+    max-width: 200px;
+    height: auto;
+    margin-top: 10px;
+}
