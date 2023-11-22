@@ -9,6 +9,8 @@ router.get('/post/:postId',secquery,postController.verPost);
 
 router.get('/listar/:foroId',secquery,postController.listarPosts);
 
+router.get('/mostrarModal/:postId', auth, secquery,postController.mostrarModal);
+
 // Los datos se mandan por post y por json para seguridad
 router.post('/post', auth, file.single('img'), postController.crearPost);
 

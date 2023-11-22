@@ -41,6 +41,11 @@ class PostsController {
             });
     }
 
+    async mostrarModal(req, res) {
+        const postId = req.params.postId.slice(1);
+        
+    }
+
     async like(req, res) {
         const postId = req.params.postId.slice(1);
         const userId = req.user._id.slice(1);

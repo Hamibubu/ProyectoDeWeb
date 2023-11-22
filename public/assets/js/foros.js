@@ -186,7 +186,7 @@ function listarPublicaciones() {
                                 <hr>
                                 <button onclick="like('${post._id}')"  class="btn btn-success voto">+ <i class="fas fa-fire"></i> <span id="likes-count-${post._id}">${numLikes}</span></button>
                                 <button onclick="dislike('${post._id}')" class="btn btn-danger voto">- <i class="fas fa-fire"></i> <span id="dislikes-count-${post._id}" >${numDislikes}</span></button>
-                                <button class="btn btn-comentar comentar" data-bs-toggle="modal"
+                                <button onclick="mostrarModal('${post._id}')" class="btn btn-comentar comentar" data-bs-toggle="modal"
                                     data-bs-target="#modalComentarios">Comentarios <i class="fas fa-comments"></i></button>
 
                             </div>
@@ -255,4 +255,45 @@ function dislike(postId) {
             alertaPersonalizada('error', error.responseJSON.error);
         }
     });
+}
+
+function mostrarModal(postId) {
+    $.ajax({
+        type: "GET",
+        url: `http://127.0.0.1:3000/api/mostrarModal/:${postId}`,
+        success: function (datos) {
+            for (let i = 0; i < datos.length; i++) {
+                const post = datos[i];
+                const numLikes = post.likes.length;
+                const numDislikes = post.dislikes.length;
+                const div = document.createElement('div');
+                div.classList.add('col-lg-6');
+                div.classList.add('mb-4');
+                div.innerHTML = `
+                <div class="card">
+
+                <div class="card-header" style="font-weight: bold;"><a href=""><img
+                                        src="/uploads/${post.profilePhoto}" alt="foto de perfil">
+                                    ${post.author} </a>${post.verified == true ? ' <i class="fas fa-check-circle" style="color: rgb(46, 111, 252);"></i>' : ''}</div>
+                                    ${post.img != '' ? `<img src="/uploads/${post.img}" class="card-img-top" alt="Imagen Publicacion">` : ''}
+                                <div class="card-body">
+                                ${post.content}
+                                <hr>
+                                <button onclick="like('${post._id}')"  class="btn btn-success voto">+ <i class="fas fa-fire"></i> <span id="likes-count-${post._id}">${numLikes}</span></button>
+                                <button onclick="dislike('${post._id}')" class="btn btn-danger voto">- <i class="fas fa-fire"></i> <span id="dislikes-count-${post._id}" >${numDislikes}</span></button>
+                                <button onclick="listarComentarios('${post._id}')" class="btn btn-comentar comentar" data-bs-toggle="modal"
+                                    data-bs-target="#modalComentarios">Comentarios <i class="fas fa-comments"></i></button>
+
+                            </div>
+                </div>
+                `;
+                postsEnTendencia.appendChild(div);
+
+            }
+        },
+        error: function (error) {
+            alertaPersonalizada('error', error.responseText);
+            console.error('Error:', error);
+        }
+    })
 }
