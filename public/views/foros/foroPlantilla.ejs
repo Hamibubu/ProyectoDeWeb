@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= foro.name %></title>
+    <title>
+        <%= foro.name %>
+    </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
@@ -15,48 +17,50 @@
 
 <body>
     <header>
-      <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="/views/index/index.html"><img src="/assets/img/logomovible.gif" heights="100px" width="100px"></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
-            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link " aria-current="page" href="/views/index/index.html">Inicio</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/views/foros/foros.html">Foros</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/views/artistas/artistas.html">Artistas</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/views/generos/generos.html">Géneros</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/views/suscribete/suscribete.html">¡Suscribete!</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/views/contacto/contactanos.html">Contáctanos</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./../../views/artistas/buscar_art.html">Buscar artista</a>
-             </li>
-            </ul>
-            <div class="btn-group dropstart" style="margin-right: 20px;">
-              <button class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"> Mi
-                Perfil</button>
-              <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="/views/logins/login.html">Log In</a></li>
-                <li><a class="dropdown-item" href="/views/registro/registro.html">¡Registrate!</a></li>
-              </ul>
+        <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/views/index/index.html"><img src="/assets/img/logomovible.gif"
+                        heights="100px" width="100px"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+                    aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page" href="/views/index/index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/views/foros/foros.html">Foros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/views/artistas/artistas.html">Artistas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/views/generos/generos.html">Géneros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/views/suscribete/suscribete.html">¡Suscribete!</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/views/contacto/contactanos.html">Contáctanos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./../../views/artistas/buscar_art.html">Buscar artista</a>
+                        </li>
+                    </ul>
+                    <div class="btn-group dropstart" style="margin-right: 20px;">
+                        <button class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false"> Mi
+                            Perfil</button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="/views/logins/login.html">Log In</a></li>
+                            <li><a class="dropdown-item" href="/views/registro/registro.html">¡Registrate!</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </nav>
+        </nav>
     </header>
 
 
@@ -101,10 +105,10 @@
     </div>
 
     <div class="container mt-3">
-        <div class="card bg-card" >
-            <h1 class="text-center mt-4"><i class="fas fa-fire" style="color: #f78036;"></i> Publicaciones en
-                tendencia</h1>
-            <p class="text-center">Descubre las publicaciones más votadas y comentadas en <%= foro.name %> <%-
+        <div class="card bg-card">
+            <h1 class="text-center mt-4"><i class="fas fa-fire" style="color: #f78036;"></i> Publicaciones destacadas
+            </h1>
+            <p class="text-center">Descubre las publicaciones más votadas y recientes en <%= foro.name %> <%-
                         foro.verified==true ? '<i class="fas fa-check-circle" style="color: rgb(46, 111, 252);"></i>'
                         : '' %>:</p>
             <div class="container mt-3">
@@ -113,61 +117,76 @@
                 </div>
 
 
-                <div class="d-flex justify-content-center align-items-center mt-5" >
-                    <button class="btn btn-custom" type="button"
+                <div class="d-flex justify-content-center align-items-center mt-5">
+                    <button onclick="cargarMasPosts()" id="verMasPosts" class="btn btn-custom" type="button"
                         style="width: 100px; height: 34px; padding: 5px 10px; font-size: 16px;">Ver más</button>
                 </div>
 
                 <hr>
-                <h1 class="text-center mt-4"><i class="fas fa-fire" style="color: #f78036;"></i> Publicaciones recientes
-                </h1>
-                <p class="text-center">Estas son las publicaciones más recientes en <%= foro.name %> <%-
-                            foro.verified==true
-                            ? '<i class="fas fa-check-circle" style="color: rgb(46, 111, 252);"></i>' : '' %>:</p>
-                <div class="container mt-5">
-                    <div class="row" id="publicacionesRecientesContainer">
-                        <!-- tarjeta de crítica -->
-                        <div class="col-lg-6 mb-4">
-                            <div class="card ">
-                                <div class="card-header" style="font-weight: bold;">
-                                    <a href=""><img src="/assets/img/usuarios/fantasma.jpg" alt="foto de perfil">
-                                        Dod magazine </a><i class="fas fa-check-circle"
-                                        style="color: rgb(46, 111, 252);"></i>
-                                </div>
-                                <div class="card-content">
-                                    <div class="card-image-container">
-                                        <img src="/assets/img/albumes/hdwgsd.jpg" class="card-img-top"
-                                            alt="Imagen Crítica 2">
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">How Did We Get So Dark?</h5>
-                                        <p class="card-text">"Hay temas que al escucharlos he tenido la
-                                            sensación de estar
-                                            escuchando a varias bandas míticas del rock..." <br>- Dod magazine
-                                        </p>
-                                        <hr>
-                                        <div class="d-flex justify-content-end">
-                                            <a href="#" class="btn btn-custom leer-mas" data-bs-toggle="modal"
-                                                data-bs-target="#modalResenas">Leer más ...</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="rating-badge-green">9.5</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-center align-items-center mt-5">
-                        <button class="btn btn-custom" type="button"
-                            style="width: 100px; height: 34px; padding: 5px 10px; font-size: 16px;">Ver más</button>
-                    </div>
-                    <hr>
-                </div>
-                <h1 class="text-center mt-4"><i class="fas fa-fire" style="color: #f78036;"></i> Ratings en
-                    tendencia</h1>
+                <h1 class="text-center mt-4"><i class="fas fa-fire" style="color: #f78036;"></i> Ratings destacados</h1>
                 <p class="text-center">Califica y enterate de lo que opinan los criticos y oyentes de los
                     ultimos álbumes en tendencia:</p>
                 <div class="container mt-5">
                     <div class="row">
+                        <div class="container mt-3 mb-5">
+                            <div class="card bg-card card-nuevoForo">
+                                <div class="background-image"
+                                    style="background-image: url('/uploads/<%= foro.img %>'); background-size: cover; background-position: center; ">
+                                </div>
+                                <div class="card-body" id="cardbody">
+                                    <h3 class="text-center publica-resena">
+                                        Publica tu reseña en <%= foro.name %> <%- foro.verified==true
+                                                ? '<i class="fas fa-check-circle" style="color: rgb(46, 111, 252);"></i>'
+                                                : '' %>
+                                    </h3>
+                                    <h5 class="card-title" id="realizapublicacion" style="font-weight: lighter; "><img
+                                            src="/uploads/<%= user.profilePhoto %>" alt="foto de perfil"
+                                            id="fotoperfil"> Añadir una
+                                        reseña</h5>
+
+                                    <form id="resenaForm">
+                                        <div class="form-group col-lg-12 mt-2 mb-2">
+                                            <label for="objetoResena" class="campos-resena">Artista, Albúm o Canción: <span class="text-custom">*</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-list"></i></span>
+                                                <input type="text" class="form-control" id="objetoResena"
+                                                    placeholder="Ingresa el Artista, Albúm o Canción a reseñar" name="objetoResena" required
+                                                    autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-12" id="input">
+                                            <label for="resena" class="campos-resena">Reseña: <span class="text-custom">*</span></label>
+                                            <textarea class="form-control" rows="3" placeholder="Escribe una reseña..."
+                                                id="resena"></textarea>
+                                            <div class="form-group col-lg-6 mt-2 mb-2">
+                                                <label for="puntaje" class="campos-resena">Calificación: <span class="text-custom">*</span></label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text"><i class="fas fa-star-half-alt"></i></span>
+                                                    <input type="text" class="form-control" id="puntaje"
+                                                        placeholder="Ingresa la calificación (0.0 - 10.0)" name="puntaje" required
+                                                        autocomplete="off">
+                                                </div>
+                                            </div>
+                                            <div class="upload-wrapper">
+                                                <input class="input-group" type="file" id="image-upload-resena"
+                                                    accept="image/*" />
+                                                <label for="image-upload-resena" class="upload-label">Seleccionar
+                                                    imagen</label>
+                                                <div class="preview-resena">
+                                                    <img id="image-preview-resena" src="#" alt="Vista previa de la imagen"
+                                                        style="display: none;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr style="animation: none !important;">
+                                        <div class="d-flex justify-content-end">
+                                            <button id="botonPublicar" type="submit" class="btn btn-custom "
+                                                style="width: 80px; height: 34px; padding: 5px 10px; font-size: 16px;">Publicar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                         <!-- tarjeta de crítica -->
                         <div class="col-lg-6 mb-4">
                             <div class="card ">
@@ -213,7 +232,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content" id="contenidoModalComentarios">
-                
+
             </div>
         </div>
     </div>

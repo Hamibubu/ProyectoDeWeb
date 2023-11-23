@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function mostrarForos() {
     $.ajax({
         type: "GET",
-        url: 'http://127.0.0.1:3000/api/hub',
+        url: '/api/hub',
         contentType: false,
         success: function (datos) {
             for (let i = 0; i < datos.length; i++) {
@@ -28,7 +28,7 @@ function mostrarForos() {
 
                 div.innerHTML = `
                     <div class="card">
-                        <img src="http://localhost:3000/uploads/${foro.img}" class="card-img-redondeada"
+                        <img src="/uploads/${foro.img}" class="card-img-redondeada"
                             alt="Imagen del foro">
                         <div class="card-body">
                             <h5 class="card-title"></h5>
@@ -73,10 +73,10 @@ function mostrarForo(foroId) {
     // Realizar una solicitud AJAX al servidor
     $.ajax({
         type: 'GET',
-        url: `http://127.0.0.1:3000/api/foro/:${foroId}`, // Asegúrate de que esta URL sea correcta
+        url: `/api/foro/:${foroId}`, // Asegúrate de que esta URL sea correcta
         success: function (data) {
             //cargar html a la nueva pagina
-            window.open(`http://127.0.0.1:3000/api/foro/entrar/:${foroId}`, '_self');
+            window.open(`/api/foro/entrar/:${foroId}`, '_self');
         },
         error: function (error) {
             // Manejar errores, como un ID que no existe o problemas de servidor

@@ -12,10 +12,31 @@ class PostsController {
 
     listarPosts(req, res) {
         const foroId = req.params.foroId.slice(1);
+        const page = req.query.page ? parseInt(req.query.page) : 0; // Paginación
         Post.find({ foroID: foroId })
-        .sort({ timestamp: -1 }) // Orden descendente
+            .sort({ timestamp: -1 }) // Orden descendente
+            .skip(10 * page) // Saltar los comentarios de las páginas anteriores
+            .limit(10) // Limitar a 20 comentarios
             .select('timestamp author img content likes dislikes foroID')
             .then(posts => {
+                //crear puntaje para el sorteo de los posts
+                const now = new Date();
+
+                posts.forEach(post => {
+                    const hoursSinceCreation = Math.abs(now - post.timestamp) / 36e5; // Convertir milisegundos a horas
+                    let score = post.likes.length + post.dislikes.length;
+
+                    // Añadir un valor adicional para publicaciones con menos de 1 hora de antigüedad
+                    if (hoursSinceCreation < 1) {
+                        score += 10; // Aumentar puntaje. Ajusta este valor según lo que consideres adecuado
+                    }
+
+                    score -= hoursSinceCreation / 24; // Ponderar antigüedad
+                    post.score = score; // Añadir un campo 'score' al documento de la publicación
+                });
+
+                // Ordenar los posts por el puntaje calculado
+                posts.sort((a, b) => b.score - a.score);
                 const userPromises = posts.map(post =>
                     Usuario.findById(post.author)
                         .select('username profilePhoto verified')
@@ -23,6 +44,7 @@ class PostsController {
                             return {
                                 ...post.toObject(), // Convertir el documento de Mongoose a un objeto JS
                                 author: user.username,
+                                authorId: user._id,
                                 profilePhoto: user.profilePhoto,
                                 verified: user.verified
                             };
@@ -32,7 +54,10 @@ class PostsController {
                 // Esperar a que todas las promesas se resuelvan
                 Promise.all(userPromises)
                     .then(updatedPosts => {
-                        res.status(200).json(updatedPosts);
+                        res.status(200).json({
+                            posts: updatedPosts,
+                            usuarioActualId: req.user._id // Asumiendo que estás usando autenticación
+                        });
                     })
                     .catch(err => {
                         res.status(500).json({ error: 'Error al recoger datos de usuarios' });
@@ -48,6 +73,15 @@ class PostsController {
         Comment.find({ postId: postId })
             .sort({ timestamp: -1 }) // Orden descendente
             .then(comments => {
+                comments.forEach(comment => {
+                    const now = new Date();
+                    const hoursSinceCreation = Math.abs(now - comment.timestamp) / 36e5; // Convertir milisegundos a horas
+                    const score = comment.likes.length - comment.dislikes.length - hoursSinceCreation / 24; // Ponderar interacciones y antigüedad
+                    comment.score = score; // Añadir un campo 'score' al documento del comentario
+                });
+
+                // Ordenar los comentarios por el puntaje calculado
+                comments.sort((a, b) => b.score - a.score);
                 const userPromises = comments.map(comment =>
                     Usuario.findById(comment.author)
                         .select('username profilePhoto verified')
@@ -72,6 +106,28 @@ class PostsController {
                 res.status(500).json({ error: 'Error al recoger datos de posts' });
             });
     }
+
+    eliminarPost(req, res) {
+        const postId = req.params.postId.slice(1);
+        const userId = req.user._id;
+        Post.findById(postId)
+            .then(post => {
+                if (!post) {
+                    return res.status(404).json({ error: 'Post no encontrado' });
+                }
+                if (post.author !== userId) {
+                    return res.status(403).json({ error: 'No tienes permiso para eliminar este post' });
+                }
+
+                return Post.findByIdAndRemove(postId);
+            })
+            .then(() => {
+                res.json({ message: 'Post eliminado con éxito' });
+            })
+            .catch(err => {
+                res.status(500).json({ error: 'Error al eliminar el post' });
+            });
+    };
 
     async like(req, res) {
         const postId = req.params.postId.slice(1);
@@ -210,9 +266,6 @@ class PostsController {
         }
     }
 
-    eliminarPost(req, res) {
-        res.send('Eliminar comentario');
-    }
 
     // NO USAR MÉTODO INSEGURO
     putPost(req, res) {

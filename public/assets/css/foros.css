@@ -384,6 +384,10 @@ p.nuevoForoFooter{
     display: none;
 }
 
+#image-upload-resena {
+    display: none;
+}
+
 .preview-comentario img {
     max-width: 200px;
     height: auto;
@@ -393,4 +397,21 @@ p.nuevoForoFooter{
 .card-publicaciones {
     width: 48%; /* El ancho de las tarjetas es en porcentajes */
     margin: 1%; /* Asegúrate de que el margen + ancho no supere el 100% */
+  }
+
+  .publica-resena:hover{
+    color: #f79336;
+  }
+
+  .campos-resena{
+    color: white;
+  }
+
+  .text-custom{
+    color: #f79336;
+  }
+
+  .eliminarBtn{
+    background-color: rgba(253, 66, 66, 0.137);
+    --bs-btn-border-color: none;
   }

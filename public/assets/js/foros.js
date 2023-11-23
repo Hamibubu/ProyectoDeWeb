@@ -8,6 +8,8 @@ const publicacionesRecientesContainer = document.querySelector('#publicacionesRe
 const contenidoModalComentarios = document.querySelector('#contenidoModalComentarios');
 const modalComentarios = document.querySelector('#modalComentarios');
 let editorComentario;
+let paginaActual = 0;
+
 
 document.addEventListener('DOMContentLoaded', function () {
     listarPublicaciones();
@@ -21,7 +23,15 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         reader.readAsDataURL(event.target.files[0]);
     });
-
+    document.getElementById('image-upload-resena').addEventListener('change', function (event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var output = document.getElementById('image-preview-resena');
+            output.src = reader.result;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    });
 
 
     ClassicEditor
@@ -54,6 +64,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 ],
                 shouldNotGroupWhenFull: true
             },
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+    ClassicEditor
+        .create(document.querySelector('#resena'), {
+            toolbar: {
+                items: [
+                    'selectAll', '|',
+                    'heading', '|',
+                    'bold', 'italic', '|',
+                    'undo', 'redo', '|', 'link', 'blockQuote', 'insertTable'
+                ],
+                shouldNotGroupWhenFull: true
+            }
+        })
+        .then(editor => {
+            window.resena = editor;
         })
         .catch(error => {
             console.error(error);
@@ -121,8 +150,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     }, 1000);
                     window.publicar.setData('');
                     postForm.reset();
-                    postsEnTendencia.innerHTML = '';
-                    listarPublicaciones();
                 },
                 error: function (error) {
                     if (error.status == 401) {
@@ -154,14 +181,19 @@ function alertaPersonalizada(type, msg) {
     })
 }
 
-function listarPublicaciones() {
+function cargarMasPosts() {
+    paginaActual++;
+    listarPublicaciones(paginaActual);
+}
+
+function listarPublicaciones(pagina = 0) {
     const url = window.location.href;
     const foroID = url.substring(url.lastIndexOf('/') + 2);
     $.ajax({
         type: "GET",
-        url: `http://127.0.0.1:3000/api/listar/:${foroID}`,
+        url: `/api/listar/:${foroID}?page=${pagina}`,
         success: function (datos) {
-            if (datos.length <= 0) {
+            if (datos.posts.length <= 0) {
                 const div = document.createElement('div');
                 div.classList.add('mb-4');
                 div.innerHTML = `
@@ -169,8 +201,8 @@ function listarPublicaciones() {
                 `;
                 postsEnTendencia.appendChild(div);
             }
-            for (let i = 0; i < datos.length; i++) {
-                const post = datos[i];
+            for (let i = 0; i < datos.posts.length; i++) {
+                const post = datos.posts[i];
                 const numLikes = post.likes.length;
                 const numDislikes = post.dislikes.length;
                 const div = document.createElement('div');
@@ -181,13 +213,14 @@ function listarPublicaciones() {
 
                 <div class="card-header" style="font-weight: bold;"><a href=""><img
                                         src="/uploads/${post.profilePhoto}" alt="foto de perfil">
-                                    ${post.author} </a>${post.verified == true ? ' <i class="fas fa-check-circle" style="color: rgb(46, 111, 252);"></i>' : ''}</div>
+                                    ${post.author} </a>${post.verified == true ? ' <i class="fas fa-check-circle" style="color: rgb(46, 111, 252);"></i>' : ''}
+                                    </div>
                                     ${post.img != '' ? `<img src="/uploads/${post.img}" class="card-img-top" alt="Imagen Publicacion">` : ''}
                                 <div class="card-body">
                                 ${post.content}
                                 ${numLikes - numDislikes > 0 ? `<span id="temperatura-${post._id}" style="color: green; margin-left: 10px;">${numLikes - numDislikes}°</span>` : `<span id="temperatura-${post._id}" style="color: red; margin-left: 10px;">${numLikes - numDislikes}°</span>`}         
                                 <span style="color: gray;"> - ${formatTimestamp(post.timestamp)}</span>
-                                <hr>
+                                <hr style="animation: none;">
                                 <button onclick="like('${post._id}')"  class="btn btn-success voto">+ <i class="fas fa-fire"></i> <span id="likes-count-${post._id}">${numLikes}</span></button>
                                 <button onclick="dislike('${post._id}')" class="btn btn-danger voto">- <i class="fas fa-fire"></i> <span id="dislikes-count-${post._id}" >${numDislikes}</span></button>
                                 <button onclick="mostrarModal('${post._id}')" class="btn btn-comentar comentar" data-bs-toggle="modal"
@@ -197,7 +230,15 @@ function listarPublicaciones() {
                 </div>
                 `;
                 postsEnTendencia.appendChild(div);
+                if (post.authorId === datos.usuarioActualId) {
+                    const btnEliminar = document.createElement('button');
+                    btnEliminar.style.float = 'right';
+                    btnEliminar.onclick = function () { eliminarPost(post._id); };
+                    btnEliminar.classList.add('btn', 'btn-danger', 'btn-sm', 'eliminarBtn'); // Clase btn-sm para botón pequeño
+                    btnEliminar.innerHTML = '<i class="fas fa-trash"></i>';
 
+                    div.querySelector('.card-header ').appendChild(btnEliminar);
+                }
             }
             var msnry = new Masonry('#postsEnTendencia', {
                 // opciones
@@ -210,7 +251,11 @@ function listarPublicaciones() {
                 msnry.layout();
             });
             msnry.layout();
-
+            if (datos.posts.length < 10) { // Asumiendo que 20 es el número máximo de publicaciones por página
+                $('#verMasPosts').hide(); // Oculta el botón si no hay suficientes publicaciones para una nueva página
+            } else {
+                $('#verMasPosts').show(); // Muestra el botón si todavía puede haber más publicaciones para cargar
+            }
         },
         error: function (error) {
             alertaPersonalizada('error', error.responseText);
@@ -301,7 +346,7 @@ function dislike(postId) {
 function mostrarModal(postId, pagina = 0) {
     $.ajax({
         type: "GET",
-        url: `http://127.0.0.1:3000/api/mostrarModal/:${postId}`,
+        url: `/api/mostrarModal/:${postId}`,
         success: function (datos) {
             const header = document.createElement('div');
             header.classList.add('modal-header');
@@ -615,4 +660,36 @@ function formatTimestamp(timestamp) {
         // Menos de 1 minuto
         return `${diffSeconds} segundos`;
     }
+}
+
+function eliminarPost(postId) {
+    Swal.fire({
+        title: "Eliminar post?",
+        html: "¿Estás seguro de que quieres eliminar este post? <br> No podrás revertirlo",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, eliminar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "DELETE",
+                url: `/api/post/delete/:${postId}`,
+                success: function (response) {
+                    Swal.fire({
+                        title: "Eliminado",
+                        text: "El post ha sido eliminado",
+                        icon: "success"
+                    })
+                    postsEnTendencia.innerHTML = '';
+                    listarPublicaciones();
+                },
+                error: function (error) {
+                    alertaPersonalizada('error', error.responseJSON.error);
+                    console.error('Error:', error);
+                }
+            });
+        }
+    });
 }

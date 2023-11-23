@@ -7,7 +7,7 @@ const secquery = require('./../middlewares/secquery')
 // Mandar el id del admin
 router.get('/post/:postId',secquery,postController.verPost);
 
-router.get('/listar/:foroId',secquery,postController.listarPosts);
+router.get('/listar/:foroId', auth, secquery,postController.listarPosts);
 
 router.get('/mostrarModal/:postId', auth, secquery,postController.mostrarModal);
 
@@ -28,7 +28,7 @@ router.post('/dislikeComment/:commentId', auth, postController.dislikeComment);
 router.patch('/post/edit',postController.editarPost);
 
 // Eliminar
-router.delete('/post/delete',postController.eliminarPost);
+router.delete('/post/delete/:postId', auth, postController.eliminarPost);
 
 // Se omite usar el put
 
