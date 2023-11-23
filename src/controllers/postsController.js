@@ -84,13 +84,14 @@ class PostsController {
                 comments.sort((a, b) => b.score - a.score);
                 const userPromises = comments.map(comment =>
                     Usuario.findById(comment.author)
-                        .select('username profilePhoto verified')
+                        .select('username profilePhoto verified _id')
                         .then(user => {
                             return {
                                 ...comment.toObject(),
                                 author: user.username,
                                 profilePhoto: user.profilePhoto,
-                                verified: user.verified
+                                verified: user.verified,
+                                authorId: user._id
                             };
                         })
                 );
@@ -126,6 +127,29 @@ class PostsController {
             })
             .catch(err => {
                 res.status(500).json({ error: 'Error al eliminar el post' });
+            });
+    };
+
+    eliminarComentario(req, res) {
+        const commentId = req.params.commentId.slice(1);
+        const userId = req.user._id; // Asumiendo que estás usando autenticación
+        Comment.findById(commentId)
+            .then(comment => {
+                if (!comment) {
+                    return res.status(404).json({ error: 'Comentario no encontrado' });
+                }
+    
+                if (comment.author !== userId) {
+                    return res.status(403).json({ error: 'No tienes permiso para eliminar este comentario' });
+                }
+    
+                return Comment.findByIdAndRemove(commentId);
+            })
+            .then(() => {
+                res.json({ message: 'Comentario eliminado con éxito' });
+            })
+            .catch(err => {
+                res.status(500).json({ error: 'Error al eliminar el comentario' });
             });
     };
 

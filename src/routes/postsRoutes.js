@@ -30,6 +30,8 @@ router.patch('/post/edit',postController.editarPost);
 // Eliminar
 router.delete('/post/delete/:postId', auth, postController.eliminarPost);
 
+router.delete('/comentario/delete/:commentId', auth, postController.eliminarComentario);
+
 // Se omite usar el put
 
 module.exports = router;

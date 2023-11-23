@@ -415,6 +415,18 @@ function mostrarModal(postId, pagina = 0) {
                             </div>
                 `;
                     }
+                    if (comment.authorId === datos.user._id) {
+                        // Crear botón de eliminación
+                        const btnEliminar = document.createElement('button');
+                        btnEliminar.style.float = 'right';
+                        btnEliminar.onclick = function () { eliminarComentario(comment._id, postId); };
+                        btnEliminar.classList.add('btn', 'btn-danger', 'btn-sm', 'ms-2', 'eliminarBtn'); 
+                        btnEliminar.innerHTML = '<i class="fas fa-trash-alt"></i>';
+
+                        // Añadir el botón de eliminación al comentario
+                        const cardHeader = body.querySelector('.card-header');
+                        cardHeader.appendChild(btnEliminar);
+                    }
 
                     modalBodyID.appendChild(body);
                 }
@@ -684,6 +696,38 @@ function eliminarPost(postId) {
                     })
                     postsEnTendencia.innerHTML = '';
                     listarPublicaciones();
+                },
+                error: function (error) {
+                    alertaPersonalizada('error', error.responseJSON.error);
+                    console.error('Error:', error);
+                }
+            });
+        }
+    });
+}
+
+function eliminarComentario(commentId, postId) {
+    Swal.fire({
+        title: "Eliminar comentario?",
+        html: "¿Estás seguro de que quieres eliminar este comentario? <br> No podrás revertirlo",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, eliminar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "DELETE",
+                url: `/api/comentario/delete/:${commentId}`,
+                success: function (response) {
+                    Swal.fire({
+                        title: "Eliminado",
+                        text: "El comentario ha sido eliminado",
+                        icon: "success"
+                    })
+                    contenidoModalComentarios.innerHTML = '';
+                    mostrarModal(postId);
                 },
                 error: function (error) {
                     alertaPersonalizada('error', error.responseJSON.error);
