@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= userData.name %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/plantillaart.css">
+    <link rel="shortcut icon" href="/assets/img/1.gif">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#"><img src="/assets/img/logomovible.gif" heights="100px"
+                        width="100px"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+                    aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/views/index/index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/views/foros/foros.html">Foros</a>
+                          </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/views/artistas/artistas.html">Artistas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/views/generos/generos.html">Géneros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/views/suscribete/suscribete.html">¡Suscríbete!</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/views/contacto/contactanos.html">Contáctanos</a>
+                        </li>
+                    </ul>
+                    <div class="btn-group dropstart" style="margin-right: 20px;">
+                        <button class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false"> Mi
+                            Perfil</button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="/views/logins/login.html">Log In</a></li>
+                            <li><a class="dropdown-item" href="/views/registro/registro.html">¡Registrate!</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="profile">
+            <div class="profile-image">
+                <img src="/uploads/<%= userData.profilePhoto %>" alt="<%= userData._id %>"  width="300" height="300">
+            </div>
+            <div class="profile-user-settings">
+                <h1 class="profile-user-name">@<%= userData.username %></h1>
+                
+            </div>
+            <div class="profile-bio">
+                <p><span class="profile-real-name">  <i class="fas fa-user icono-usuario"> </i> <%= userData.name %><br></span></p>
+                <p><span><i class="fas fa-book icono-descripcion"></i><em> <%= userData.description %></em></span></p>
+                <p><span><i class="fas fa-music icono-musica"></i><em> <%= userData.genre %></em></span></p>
+                <p><span><i class="fas fa-lightbulb icono-influences"></i><em> <%= userData.Influences %></em></span></p>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <div class="gallery" id="albums">
+            <h1>Álbumes</h1>
+        </div>
+    </main>
+
+
+    
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="/assets/js/checklogin.js"></script>
+    <script src="/assets/js/getAlbums.js"></script>
+</body>
+
+</html>

@@ -59,8 +59,7 @@ $(document).ready(function() {
 
                         $(`#${found._id}`).on('click', (event) => {
                             event.preventDefault();
-                            console.log(`Se hizo clic en ${found.name}`);
-                            // Aquí puedes realizar la acción que desees al hacer clic en el botón "Ver Perfil"
+                            window.location.href = `/api/artist/public/${found._id}`;
                         });
                     });
                 },

@@ -134,10 +134,21 @@ img{
 }
 
 /* Perfil */
-.profile{
-    padding: 5rem 0; 
+.profile {
+    display: flex;
+    align-items: center; /* Centra los elementos horizontalmente */
+    flex-direction: column; /* Alinea los elementos verticalmente */
+    padding: 5rem 0;
 }
 
+.profile-image,
+.profile-user-settings,
+.profile-stats,
+.profile-bio {
+    /* Elimina la línea de float: left; */
+    width: 100%; /* Ajusta el ancho según sea necesario */
+    /* Resto de tus estilos... */
+}
 .profile::after{ 
     content: "";
     display: block;
@@ -145,13 +156,12 @@ img{
 }
 
 .profile-image{
-    float: left;
-    width: calc(33.333% - 1rem);
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 0.5rem;
+    margin-left: 5%;
 }
+
 
 .profile-image img{
     border-radius: 50%;
@@ -160,7 +170,7 @@ img{
 .profile-user-settings,
 .profile-stats,
 .profile-bio{
-    float: left;
+    text-align: center;
     width: calc(66.666% - 2rem);
 }
 
@@ -205,6 +215,7 @@ img{
 }
 
 .profile-bio{
+    margin-left: 2.5%;
     font-size: 1.6rem;
     font-weight: 400;
     line-height: 1.5;
@@ -220,14 +231,14 @@ img{
 /* Galeria */
 .gallery{ 
     display: flex; 
-    flex-wrap: wrap; 
-    margin: -1rem -1rem;
+    flex-wrap: wrap;
     padding-bottom: 3rem;
 }
 
 .gallery-item{
     position: relative;
-    flex: 1 0 22rem;
+    flex: 1 0 22rem; /* Ajusta este valor según tus necesidades */
+    max-width: 25%;
     margin: 1rem;
     cursor: pointer;
     color: #fff;
@@ -278,7 +289,9 @@ img{
     object-fit: cover; 
 }
 
-
+#albums{
+    margin: 2%;
+}
 
 /* Media Query
 @media screen and (max-width: 40rem){

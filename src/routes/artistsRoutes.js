@@ -9,7 +9,9 @@ const secquery = require('./../middlewares/secquery')
 router.post('/login/artist',secquery,artistController.iniciarsesion);
 router.post('/register/artist',file.single('profilePhoto'),artistController.creartist);
 router.post('/register/albums',auth,roles(['artist'],{'none':'none'}),file.single('albumPhoto'),artistController.registeralbum);
-router.get('/artist',secquery,artistController.showProfile);
+
+router.get('/albums/show/:artistId',secquery,artistController.showAlbums);
 router.get('/search',secquery,artistController.search);
+router.get('/artist/public/:artistId',secquery,artistController.perfilPublico);
 
 module.exports = router;

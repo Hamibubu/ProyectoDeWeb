@@ -7,6 +7,28 @@ const fs = require('fs');
 
 class ArtistController {
 
+    async perfilPublico(req, res){
+        try {
+            const _id = req.params.artistId;
+            const artist = await Artist.findOne({ _id: _id });
+            
+            const userData = {
+                name: artist.name,
+                username: artist.username,
+                genre: artist.genre,
+                description: artist.description,
+                Influences: artist.Influences,
+                profilePhoto: artist.profilePhoto,
+                _id: artist._id
+            };
+
+            res.render('./../public/views/artistas/plantillaart.ejs', { userData: userData });
+
+        } catch (error) {
+            res.status(500).send('Error al buscar el artista '+error);
+        }
+    }
+
     welcome(req, res) {
         const username = req.user.username;
         const userType = req.user.userType;
@@ -39,17 +61,19 @@ class ArtistController {
         }
     }
 
-    async showProfile(req, res){
+    async showAlbums(req, res){
         try {
-            const name = req.body.name;
-            const artist = await Artist.findOne({ name: name }).collation({ locale: 'en', strength: 2 });
-    
+            const _id = req.params.artistId;
+            const artist = await Artist.findOne({ _id: _id });
+
             if (!artist) {
                 return res.status(404).send('Artista no encontrado');
             }
-            let albums = artist.albums.map(album => {
+
+            res.send(artist.albums.map(album => {
                 const albumObj = album.toObject ? album.toObject() : album;
                 return {
+                    _id: albumObj._id,
                     name: albumObj.name,
                     type: albumObj.type,
                     description: albumObj.description,
@@ -58,19 +82,7 @@ class ArtistController {
                     release: albumObj.release,
                     approval: albumObj.likes - albumObj.dislikes
                 };
-            });
-            
-            const userData = {
-                name: artist.name,
-                username: artist.username,
-                genre: artist.genre,
-                description: artist.description,
-                Influences: artist.Influences,
-                profilePhoto: artist.profilePhoto,
-                albums: albums
-            };
-
-            res.send(userData);
+            }));
         } catch (error) {
             res.status(500).send('Error al buscar el artista'+error);
         }
