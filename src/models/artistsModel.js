@@ -7,8 +7,8 @@ const albumSchema = new mongoose.Schema({
     genre: { type: String, required: true },
     albumPhoto: { type: String, required: true },
     release: { type: String, required: true },
-    likes: { type: Number, default: 0 },
-    dislikes: { type: Number, default: 0 }
+    likes: { type: Array,  unique: true, required: true },
+    dislikes: { type: Array,  unique: true, required: true }
 });
 
 const artistSchema = new mongoose.Schema({

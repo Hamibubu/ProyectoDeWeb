@@ -2,6 +2,7 @@ const Artist = require('./../models/artistsModel');
 const { response } = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+mongoose = require('mongoose')
 const path = require('path');
 const fs = require('fs');
 
@@ -39,8 +40,12 @@ class ArtistController {
 
             const albumEncontrado = artist.albums.find(album => album._id.equals(albumId));
 
+            albumEncontrado.likes = countProperties(albumEncontrado.likes);
+            albumEncontrado.dislikes = countProperties(albumEncontrado.dislikes);
+
             let artistData = {
-                name: artist.name
+                name: artist.name,
+                _id: artist._id
             }
 
             res.render('./../public/views/artistas/album.ejs', { album: albumEncontrado, artist: artistData});
@@ -96,7 +101,10 @@ class ArtistController {
             }
 
             res.send(artist.albums.map(album => {
+                
                 const albumObj = album.toObject ? album.toObject() : album;
+                let likes = countProperties(albumObj.likes)
+                let dislikes = countProperties(albumObj.dislikes)
                 return {
                     _id: albumObj._id,
                     name: albumObj.name,
@@ -105,11 +113,89 @@ class ArtistController {
                     genre: albumObj.genre,
                     albumPhoto: albumObj.albumPhoto,
                     release: albumObj.release,
-                    approval: albumObj.likes - albumObj.dislikes
+                    approval: likes - dislikes,
                 };
             }));
         } catch (error) {
             res.status(500).send('Error al buscar el artista'+error);
+        }
+    }
+    
+    async dislike(req, res) {
+        const albumId = req.params.albumId.slice(1);
+        const artistId = req.query.artistId;
+        const userId = req.user._id;
+        let conLikePrevio = false;
+        try {
+            const artist = await Artist.findOne({ _id: artistId });
+            if (!artist) {
+                return res.status(404).json({ error: 'Artista no encontrado' });
+            }
+            const album = artist.albums.find((album) => album._id.equals(albumId));
+            if (!album) {
+                return res.status(404).json({ error: 'Álbum no encontrado' });
+            }
+
+            const likesArray = album.likes;
+            const dislikesArray = album.dislikes;
+
+           if (likesArray.includes(userId)){
+                likesArray.pull(userId);
+                await artist.save();
+                conLikePrevio = true;
+           }
+           if (dislikesArray.includes(userId)){
+                dislikesArray.pull(userId);
+                await artist.save();
+                res.status(200).json({ message: 'Quitaste dislike', conLikePrevio: conLikePrevio });
+           } else {
+                dislikesArray.push(userId);
+                await artist.save();
+                res.status(200).json({ message: 'Dislike registrado exitosamente', conLikePrevio: conLikePrevio });
+           }
+
+        } catch (err) {
+            res.status(500).json({ error: 'Error al registrar dislike'+err });
+        }
+    }
+
+    async like(req, res) {
+        const albumId = req.params.albumId.slice(1);
+        const artistId = req.query.artistId;
+        const userId = req.user._id;
+        let conDislikePrevio = false;
+    
+        try {
+            const artist = await Artist.findOne({ _id: artistId });
+            if (!artist) {
+                return res.status(404).json({ error: 'Artista no encontrado' });
+            }
+    
+            const album = artist.albums.find((album) => album._id.equals(albumId));
+            if (!album) {
+                return res.status(404).json({ error: 'Álbum no encontrado' });
+            }
+    
+            const likesArray = album.likes;
+            const dislikesArray = album.dislikes;
+    
+            if (dislikesArray.includes(userId)) {
+                dislikesArray.pull(userId);
+                await artist.save()
+                conDislikePrevio = true;
+            } 
+            if (likesArray.includes(userId)) {
+                likesArray.pull(userId);
+                await artist.save()
+                res.status(202).json({ message: 'Quitaste like', conDislikePrevio: conDislikePrevio });
+            } else {
+                likesArray.push(userId);
+                await artist.save()
+                res.status(200).json({ message: 'Like registrado exitosamente', conDislikePrevio: conDislikePrevio });
+            }
+
+        } catch (err) {
+            res.status(500).json({ error: 'Error al registrar like' });
         }
     }
     
@@ -327,6 +413,16 @@ class ArtistController {
         }
     }
 
+}
+
+function countProperties(obj) {
+    let count = 0;
+    for (let prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+            count++;
+        }
+    }
+    return count;
 }
 
 module.exports = new ArtistController();
