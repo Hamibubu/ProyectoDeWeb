@@ -29,6 +29,31 @@ class ArtistController {
         }
     }
 
+    async album(req, res) {
+        try {
+            
+            const _id = req.params.artistId;
+            const albumId = req.query.albumId;
+
+            const artist = await Artist.findOne({ _id: _id });
+
+            const albumEncontrado = artist.albums.find(album => album._id.equals(albumId));
+
+            let artistData = {
+                name: artist.name
+            }
+
+            res.render('./../public/views/artistas/album.ejs', { album: albumEncontrado, artist: artistData});
+
+            if(!artist){
+                return res.status(404).send('Artista no encontrado');
+            }
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     welcome(req, res) {
         const username = req.user.username;
         const userType = req.user.userType;

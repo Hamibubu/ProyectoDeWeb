@@ -13,5 +13,6 @@ router.post('/register/albums',auth,roles(['artist'],{'none':'none'}),file.singl
 router.get('/albums/show/:artistId',secquery,artistController.showAlbums);
 router.get('/search',secquery,artistController.search);
 router.get('/artist/public/:artistId',secquery,artistController.perfilPublico);
+router.get('/albums/show/spec/:artistId',artistController.album);
 
 module.exports = router;
