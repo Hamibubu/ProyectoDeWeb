@@ -1,38 +1,26 @@
-
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f4f4f4;
-    color: #333;
+    color: white;
     line-height: 1.6;
 }
 
 .container {
-    padding-top: 20px;
+    padding: 10px;
 }
+
 
 .card {
-    display: flex;
-    justify-content: center !important; 
-    align-items: center !important; 
-    margin: 20px 0; 
-}
-
-.card-body {
-    padding-left: 50%;
-    padding-top: 12%;
-    padding-bottom: 20%;
+    margin: 20px 0;
 }
 
 .card img {
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 100% !important;
-    max-height: 100% !important; 
+    max-height: 100% !important;
     width: 600px;
-    margin-left: 50%;
-    padding-top: 20%;
-    padding-bottom: 20%;
-    object-fit: contain; 
+    object-fit: contain;
 }
 
 .card h1 {
@@ -45,6 +33,16 @@ body {
     margin-bottom: 1em;
 }
 
+#bg {
+    background-color: #141e28;
+    color: #ccc !important;
+}
+
+#move {
+    margin: 5%;
+    margin-left: 30%;
+}
+
 .voto {
     border-radius: 20px;
     width: 30%;
@@ -52,9 +50,149 @@ body {
     font-size: medium;
 }
 
-@media (max-width: 768px) {
-    .card img {
-        width: 100% !important;
-        margin-bottom: 20px !important;
-    }
+.comment {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .comment img.user-avatar {
+    /* Estilos para el avatar del usuario (circular) */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px; /* Espacio entre el avatar y el nombre */
+  }
+  
+  .comment-text {
+    text-align: left; /* Alinea el texto a la izquierda */
+  }
+  
+  .comment-author {
+    margin-right: 20px; /* Agrega margen a la derecha del nombre del autor */
+  }
+  
+  .comment-timestamp {
+    margin-right: 20px; /* Agrega margen a la derecha de la fecha del comentario */
+  }
+  
+  .comment-author,
+  .comment-timestamp,
+  .comment-text {
+    display: block; /* Hacer que los elementos sean elementos en bloque */
+    margin-bottom: 10px; /* Agregar margen inferior entre cada elemento */
+  }
+  
+  .list-group-item {
+    display: flex;
+    justify-content: center; /* Alinea elementos al centro horizontalmente */
+    align-items: center; /* Alinea verticalmente al centro */
+  }
+  
+  /* Añade el siguiente estilo para centrar los elementos dentro de cada comentario verticalmente */
+  .comment-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  #user-avatar-circle {
+    border-radius: 50%;
+    width: 50px; /* Ajusta el ancho según tus necesidades */
+    height: 50px; /* Ajusta la altura según tus necesidades */
+  }
+
+#fotoperfil {
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin-right: 10px;
 }
+
+.rating-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    padding: 20px;
+    /* Espacio interno para el contenido */
+}
+
+.rating-badge-yellow {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    /* Asegura que el rating esté encima del contenido */
+    background-color: #f79336;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.rating-badge-red {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    /* Asegura que el rating esté encima del contenido */
+    background-color: red;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.rating-badge-green {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    /* Asegura que el rating esté encima del contenido */
+    background-color: green;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.btn-custom {
+    animation-delay: 0.3s;
+    background-color: #f79336;
+    color: #141e28;
+    padding: 5px 20px;
+    border-radius: 20px;
+    border: none;
+    transition: background-color 0.3s;
+    height: 34px;
+}
+
+.btn-custom:hover {
+    background-color: #ad6827;
+}
+
+.bg-card {
+    background-color: #141e28;
+    color: white;
+}
+
+#input {
+    color: #141e28;
+}
+
+#realizapublicacion {
+    font-size: 20px;
+}
+/* Puedes personalizar aún más los estilos según tus preferencias */

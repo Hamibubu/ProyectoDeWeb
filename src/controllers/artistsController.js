@@ -2,9 +2,11 @@ const Artist = require('./../models/artistsModel');
 const { response } = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-mongoose = require('mongoose')
+const mongoose = require('mongoose')
 const path = require('path');
 const fs = require('fs');
+const AlbumReview = require('./../models/albumReviewModel')
+const User = require('./../models/usersModel')
 
 class ArtistController {
 
@@ -222,6 +224,44 @@ class ArtistController {
             fs.unlinkSync(uri);
             console.log(err);
             res.status(500).json({ error: 'Error al agregar el álbum.' });
+        }
+    }
+
+    async reviewAlbum(req, res) {
+        const timestamp = Date.now();
+        req.body.timestamp = timestamp;
+        req.body.author = req.user._id;
+        if (req.file) {
+            req.body.img = req.file.filename;
+        } else {
+            req.body.img = '';
+        }
+        req.body.author = req.user.username
+        const comment = new AlbumReview(req.body);
+        try {
+            await comment.save();
+            res.status(201).send("Comentario creado exitosamente");
+        } catch (err) {
+            const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+            fs.unlinkSync(uri);
+            res.status(400).send('Hubo un error al publicar. Inténtalo de nuevo.');
+        }
+    }
+
+    async listReviews(req, res){
+        try{
+            const albumId = req.params.albumId;
+            const allrevs = await AlbumReview.find({ albumId: albumId })
+            const username = allrevs.author;
+
+            for (const rev of allrevs) {
+                const authorInfo = await User.findOne({ username: rev.author }); 
+                rev.albumId = authorInfo.profilePhoto;
+            }
+            res.status(200).send(allrevs);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Error interno del servidor' });
         }
     }
 

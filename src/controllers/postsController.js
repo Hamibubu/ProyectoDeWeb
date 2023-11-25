@@ -178,6 +178,8 @@ class PostsController {
         }
     }
 
+    
+
     async dislike(req, res) {
         const postId = req.params.postId.slice(1);
         const userId = req.user._id.slice(1);

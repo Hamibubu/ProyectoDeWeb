@@ -7,8 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/foros.css">
     <link rel="stylesheet" href="/assets/css/album.css">
-    <link rel="stylesheet" href="/assets/css/artistas.css">
 </head>
 <body>
     <header>
@@ -59,16 +59,16 @@
     <div class="container my-5">
         <div class="row justify-content-center align-items-center">
             <div class="col-md-10">
-                <div class="card">
+                <div class="card" id="bg">
                     <div class="row no-gutters">
                         <div class="col-md-4">
-                            <img src="/uploads/<%= album.albumPhoto %>" alt="Album Cover" class="img-fluid" style="width: 100%;">
+                            <img src="/uploads/<%= album.albumPhoto %>" alt="Album Cover" class="img-fluid" id="move" style="width: 850px;">
                         </div>
                         <div class="col-md-8">
-                            <div class="card-body">
+                            <div class="card-body" id="move">
                                 <h1 class="card-title"><%= album.name %></h1>
                                 <p class="card-text id" id="<%= artist._id %>">by <%= artist.name %></p>
-                                <p class="card-text"><small class="text-muted">Released: <%= album.release %></small></p>
+                                <p class="card-text" style="color: #ccc;">Released: <%= album.release %></p>
                                 <p class="card-text">Type: <%= album.type %></p>
                                 <p class="card-text"><%= album.description %></p>
                                 <p class="card-text">Genre: <%= album.genre %></p>
@@ -82,6 +82,46 @@
             </div>
         </div>
     </div>
+
+    <div class="container my-5">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-10">
+                <div class="card card-comments">
+                    <div class="background-image" style="background-image: url('/uploads/<%= album.albumPhoto %>'); background-size: cover; background-position: center;"></div>
+                    <div class="card-body" id="cardbody">
+                        <h1 class="text-center mt-5"><i class="fas fa-comments" style="color: #f78036;"></i>  <%= album.name %>  <i class="fas fa-check-circle" style="color: rgb(46, 111, 252);"></i></h1>
+                        <p class="text-center">Reviews del álbum</p>
+                        <h5 class="card-title" id="realizapublicacion" style="font-weight: lighter;"><img src="/uploads/a_1700344350106.jpg" alt="foto de perfil" id="fotoperfil"> Añadir una publicación</h5>
+            
+                        <form id="postForm">
+                            <div class="form-group" id="input">
+                                <textarea class="form-control" rows="3" placeholder="¿Qué estás opinando?..." id="publicar"></textarea>
+                                <div class="upload-wrapper">
+                                    <input class="input-group" type="file" id="image-upload" accept="image/*" />
+                                    <label for="image-upload" class="upload-label">Seleccionar imagen</label>
+                                    <div class="preview">
+                                        <img id="image-preview" src="#" alt="Vista previa de la imagen" style="display: none;">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="animation: none !important;">
+                            <div class="d-flex justify-content-end">
+                                <button id="botonPublicar" type="submit" class="btn btn-custom" style="width: 80px; height: 34px; padding: 5px 10px; font-size: 16px;">Publicar</button>
+                            </div>
+                        </form>
+            
+                        <!-- Sección de comentarios -->
+                        <div class="comments-section mt-4">
+                            <h3>Comentarios</h3>
+                            <ul class="list-group">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.all.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
