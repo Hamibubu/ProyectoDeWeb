@@ -27,7 +27,7 @@ const authMiddleware = (req, res, next) => {
             }
         });
     } catch (err) {
-        return res.status(401).send(err);
+        return res.status(401).send({ msg: "Inicia sesión para continuar" });
     }
 }
 
