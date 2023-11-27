@@ -308,7 +308,6 @@ class ArtistController {
         } else {
             req.body.img = '';
         }
-        req.body.author = req.user.username
         const comment = new AlbumReview(req.body);
         try {
             await comment.save();
@@ -324,10 +323,10 @@ class ArtistController {
         try{
             const albumId = req.params.albumId;
             const allrevs = await AlbumReview.find({ albumId: albumId })
-            const username = allrevs.author;
 
             for (const rev of allrevs) {
-                const authorInfo = await User.findOne({ username: rev.author }); 
+                const authorInfo = await User.findOne({ _id: rev.author }); 
+                rev.author = authorInfo.username;
                 rev.albumId = authorInfo.profilePhoto;
             }
             res.status(200).send(allrevs);

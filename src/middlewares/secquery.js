@@ -35,6 +35,24 @@ const sanitizeAndValidateQuery = [
     if (req.params.foroId) {
         req.params.foroId = req.params.foroId.replace(/[=|&$"]/g, '');
     }
+    if (req.params.reviewId) {
+        req.params.reviewId = req.params.reviewId.replace(/[=|&$"]/g, '');
+    }
+    if (req.query.artistId) {
+        req.query.artistId = req.query.artistId.replace(/[=|&$"]/g, '');
+    }
+    if (req.params.albumId) {
+      req.params.albumId = req.params.albumId.replace(/[=|&$"]/g, '');
+    }
+    if (req.params.artistId) {
+      req.params.artistId = req.params.artistId.replace(/[=|&$"]/g, '');
+    }
+    if (req.params.commentId) {
+      req.params.commentId = req.params.commentId.replace(/[=|&$"]/g, '');
+    }
+    if (req.params.postId) {
+      req.params.postId = req.params.postId.replace(/[=|&$"]/g, '');
+    }
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
