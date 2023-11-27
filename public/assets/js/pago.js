@@ -1,8 +1,23 @@
-submit-btn.addEventListener('click', function(event) {
-    event.preventDefault(); // Evita que el formulario se envíe de la manera predeterminada
-    Swal.fire({
-        title: '¡Listo!',
-        text: 'Tu pago ha sido procesado, espera tu confirmación por correo electrónico.',
-        icon: 'success'
+document.addEventListener('DOMContentLoaded', function () {
+    var pagarBoton = document.getElementById('pagar');
+
+    pagarBoton.addEventListener('click', function () {
+        showLoader();
+        setTimeout(function () {
+            Swal.fire({
+                title: '¡Pago Exitoso!',
+                text: 'Gracias por tu pago.',
+                icon: 'success',
+                confirmButtonText: 'Regresar al Inicio'
+            }).then(function () {
+                // Redirige al inicio
+                window.location.href = 'http://127.0.0.1:3000/views/index/index.html';
+            });
+        }, 5000); 
     });
+
+    function showLoader() {
+        pagarBoton.innerHTML = 'Procesando...';
+        pagarBoton.disabled = true;
+    }
 });
