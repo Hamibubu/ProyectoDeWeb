@@ -58,15 +58,15 @@
         </div>
       </nav>
     </header>
+<div id="wrapper">
 
     <div class="container mt-5 mb-5">
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <h2 class="text-left mb-2"><i class="fas fa-ghost" style="color: #141e28;"></i> Contáctanos
-                </h2>
-                <p class="text-left mb-4">Llena el formulario y envianos un correo</p>
+                <h2 class="text-left mb-2"><i class="fas fa-ghost" style="color: #141e28;"></i> Contáctanos</h2>
+                <p class="text-left mb-4">Llena el formulario y envíanos un correo.</p>
                 <div class="contact-form custom-form">
-                    <form action="/ruta-de-envio" method="post">
+                    <form action="https://formsubmit.co/2c2414fcd5d856f51f8ca9a017f613ab" method="POST">
                         <div class="form-group">
                             <label for="name">Nombre: <span class="text-custom">*</span></label>
                             <div class="input-group">
@@ -84,26 +84,35 @@
                                     autocomplete="off">
                             </div>
                         </div>
+                        <div class="form-group mt-4">
+                            <label for="email">Asunto: <span class="text-custom">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                <input type="asunto" class="form-control" id="asunto"
+                                    placeholder="Ingresa tu asunto" name="asunto" required
+                                    autocomplete="off">
+                            </div>
+                        </div>
                         <div class="form-group mt-3">
                             <label for="message">Mensaje: <span class="text-custom">*</span></label>
                             <textarea class="form-control" id="message" rows="5" placeholder="Ingresa tu mensaje"
                                 name="message" required autocomplete="off"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-custom mt-3"><i class="fas fa-envelope"></i>
-                            Enviar</button>
+                        <button type="submit" class="btn btn-custom mt-3"><i class="fas fa-envelope"></i> Enviar</button>
+                        <input type="hidden" name="_captcha" value="false"> 
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
+</form>
+</div>
     <!-- Enlace a jQuery y Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <script src="./../../assets/js/checklogin.js"></script>
-
 </body>
 
 </html>

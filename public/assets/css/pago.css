@@ -155,3 +155,17 @@ navbar{
 .container form .submit-btn:hover{
   background: #f79336;
 }
+
+.image-button {
+  background-color: #e1e4e4;
+  position: absolute;
+  height: 50px;  
+  width: 50px;
+  top: 140px;
+  left: 20px;
+}
+
+.image-button img {
+  height: 50px;
+  width: 50px;
+}
