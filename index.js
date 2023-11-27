@@ -58,7 +58,7 @@ mongoose.connect(mongoUrl).then(() => {
             .catch(err => {
                 console.error("Error sincronizando índices: ", err);
             });
-    app.listen(3000, () => {
+    app.listen(process.env.PORT || 30000, () => {
         console.log('La app esta funcionando...');
     });
 }).catch(err => {
