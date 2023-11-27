@@ -34,7 +34,11 @@ class ArtistController {
 
     async album(req, res) {
         try {
-            
+            var pfp = "../../../../assets/img/1.gif";
+            if (req.user != "not") {
+                const user = await User.findOne({ _id: req.user._id });
+                pfp = "/uploads/"+user.profilePhoto;
+            }
             const _id = req.params.artistId;
             const albumId = req.query.albumId;
 
@@ -47,7 +51,8 @@ class ArtistController {
 
             let artistData = {
                 name: artist.name,
-                _id: artist._id
+                _id: artist._id,
+                pfp: pfp
             }
 
             res.render('./../public/views/artistas/album.ejs', { album: albumEncontrado, artist: artistData});
@@ -200,7 +205,74 @@ class ArtistController {
             res.status(500).json({ error: 'Error al registrar like' });
         }
     }
+
+    async dislikeRev(req, res) {
+        const reviewId = req.params.reviewId.slice(1);
+        const userId = req.user._id;
+        let conLikePrevio = false;
+
+        try {
+            const review = await AlbumReview.findOne({ _id: reviewId });
+            if (!review) {
+                return res.status(404).json({ error: 'Review no encontrada' });
+            }
     
+            const likesArray = review.likes;
+            const dislikesArray = review.dislikes;
+    
+            if (likesArray.includes(userId)) {
+                likesArray.pull(userId);
+                await review.save()
+                conLikePrevio = true;
+            } 
+            if (dislikesArray.includes(userId)) {
+                dislikesArray.pull(userId);
+                await review.save()
+                res.status(202).json({ message: 'Quitaste dislike', conLikePrevio: conLikePrevio });
+            } else {
+                dislikesArray.push(userId);
+                await review.save()
+                res.status(200).json({ message: 'Dislike registrado exitosamente', conLikePrevio: conLikePrevio });
+            }
+
+        } catch (err) {
+            res.status(500).json({ error: 'Error al registrar dislike'+err });
+        }
+    }
+    
+    async likeRev(req, res) {
+        const reviewId = req.params.reviewId.slice(1);
+        const userId = req.user._id;
+        let conDislikePrevio = false;
+
+        try {
+            const review = await AlbumReview.findOne({ _id: reviewId });
+            if (!review) {
+                return res.status(404).json({ error: 'Review no encontrada' });
+            }
+    
+            const likesArray = review.likes;
+            const dislikesArray = review.dislikes;
+    
+            if (dislikesArray.includes(userId)) {
+                dislikesArray.pull(userId);
+                await review.save()
+                conDislikePrevio = true;
+            } 
+            if (likesArray.includes(userId)) {
+                likesArray.pull(userId);
+                await review.save()
+                res.status(202).json({ message: 'Quitaste like', conDislikePrevio: conDislikePrevio });
+            } else {
+                likesArray.push(userId);
+                await review.save()
+                res.status(200).json({ message: 'Like registrado exitosamente', conDislikePrevio: conDislikePrevio });
+            }
+
+        } catch (err) {
+            res.status(500).json({ error: 'Error al registrar like' });
+        }
+    }
 
     async registeralbum(req, res){ 
         try{

@@ -46,8 +46,8 @@
                             aria-expanded="false"> Mi
                             Perfil</button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="../logins/login.html">Log In</a></li>
-                            <li><a class="dropdown-item" href="../registro/registro.html">¡Registrate!</a></li>
+                            <li><a class="dropdown-item" href="../../../../views/logins/login.html">Log In</a></li>
+                            <li><a class="dropdown-item" href="../../../../views/registro/registro.html">¡Registrate!</a></li>
                         </ul>
                     </div>
                 </div>
@@ -56,6 +56,7 @@
         </div>
       </nav>
     </header>
+    <button onclick="back()" class="btn btn-primary" id="back"><i class="fas fa-arrow-left"></i></button>
     <div class="container my-5">
         <div class="row justify-content-center align-items-center">
             <div class="col-md-10">
@@ -89,9 +90,9 @@
                 <div class="card card-comments">
                     <div class="background-image" style="background-image: url('/uploads/<%= album.albumPhoto %>'); background-size: cover; background-position: center;"></div>
                     <div class="card-body" id="cardbody">
-                        <h1 class="text-center mt-5"><i class="fas fa-comments" style="color: #f78036;"></i>  <%= album.name %>  <i class="fas fa-check-circle" style="color: rgb(46, 111, 252);"></i></h1>
+                        <h1 class="text-center mt-5">  <%= album.name %>  <i class="fas fa-check-circle" style="color: rgb(46, 111, 252);"></i></h1>
                         <p class="text-center">Reviews del álbum</p>
-                        <h5 class="card-title" id="realizapublicacion" style="font-weight: lighter;"><img src="/uploads/a_1700344350106.jpg" alt="foto de perfil" id="fotoperfil"> Añadir una publicación</h5>
+                        <h5 class="card-title" id="realizapublicacion" style="font-weight: lighter;"><img src="<%= artist.pfp %>" alt="foto de perfil" id="fotoperfil"> Añadir una publicación</h5>
             
                         <form id="postForm">
                             <div class="form-group" id="input">
@@ -109,10 +110,14 @@
                                 <button id="botonPublicar" type="submit" class="btn btn-custom" style="width: 80px; height: 34px; padding: 5px 10px; font-size: 16px;">Publicar</button>
                             </div>
                         </form>
+                    </div>
+                </div>
             
+            <div class="card card-comments">
+                <div class="card-body" id="cardbody"></div>
                         <!-- Sección de comentarios -->
                         <div class="comments-section mt-4">
-                            <h3>Comentarios</h3>
+                            <h3><i class="fas fa-comments" style="color: #f78036; margin-left: 40%; margin-bottom: 3%;"></i> Comentarios</h3>
                             <ul class="list-group">
                             </ul>
                         </div>
