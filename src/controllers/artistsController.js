@@ -2,10 +2,69 @@ const Artist = require('./../models/artistsModel');
 const { response } = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose')
 const path = require('path');
 const fs = require('fs');
+const AlbumReview = require('./../models/albumReviewModel')
+const User = require('./../models/usersModel')
 
 class ArtistController {
+
+    async perfilPublico(req, res){
+        try {
+            const _id = req.params.artistId;
+            const artist = await Artist.findOne({ _id: _id });
+            
+            const userData = {
+                name: artist.name,
+                username: artist.username,
+                genre: artist.genre,
+                description: artist.description,
+                Influences: artist.Influences,
+                profilePhoto: artist.profilePhoto,
+                _id: artist._id
+            };
+
+            res.render('./../public/views/artistas/plantillaart.ejs', { userData: userData });
+
+        } catch (error) {
+            res.status(500).send('Error al buscar el artista '+error);
+        }
+    }
+
+    async album(req, res) {
+        try {
+            var pfp = "../../../../assets/img/1.gif";
+            if (req.user != "not") {
+                const user = await User.findOne({ _id: req.user._id });
+                pfp = "/uploads/"+user.profilePhoto;
+            }
+            const _id = req.params.artistId;
+            const albumId = req.query.albumId;
+
+            const artist = await Artist.findOne({ _id: _id });
+
+            const albumEncontrado = artist.albums.find(album => album._id.equals(albumId));
+
+            albumEncontrado.likes = countProperties(albumEncontrado.likes);
+            albumEncontrado.dislikes = countProperties(albumEncontrado.dislikes);
+
+            let artistData = {
+                name: artist.name,
+                _id: artist._id,
+                pfp: pfp
+            }
+
+            res.render('./../public/views/artistas/album.ejs', { album: albumEncontrado, artist: artistData});
+
+            if(!artist){
+                return res.status(404).send('Artista no encontrado');
+            }
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     welcome(req, res) {
         const username = req.user.username;
@@ -39,43 +98,181 @@ class ArtistController {
         }
     }
 
-    async showProfile(req, res){
+    async showAlbums(req, res){
         try {
-            const name = req.body.name;
-            const artist = await Artist.findOne({ name: name }).collation({ locale: 'en', strength: 2 });
-    
+            const _id = req.params.artistId;
+            const artist = await Artist.findOne({ _id: _id });
+
             if (!artist) {
                 return res.status(404).send('Artista no encontrado');
             }
-            let albums = artist.albums.map(album => {
+
+            res.send(artist.albums.map(album => {
+                
                 const albumObj = album.toObject ? album.toObject() : album;
+                let likes = countProperties(albumObj.likes)
+                let dislikes = countProperties(albumObj.dislikes)
                 return {
+                    _id: albumObj._id,
                     name: albumObj.name,
                     type: albumObj.type,
                     description: albumObj.description,
                     genre: albumObj.genre,
                     albumPhoto: albumObj.albumPhoto,
                     release: albumObj.release,
-                    approval: albumObj.likes - albumObj.dislikes
+                    approval: likes - dislikes,
                 };
-            });
-            
-            const userData = {
-                name: artist.name,
-                username: artist.username,
-                genre: artist.genre,
-                description: artist.description,
-                Influences: artist.Influences,
-                profilePhoto: artist.profilePhoto,
-                albums: albums
-            };
-
-            res.send(userData);
+            }));
         } catch (error) {
             res.status(500).send('Error al buscar el artista'+error);
         }
     }
     
+    async dislike(req, res) {
+        const albumId = req.params.albumId.slice(1);
+        const artistId = req.query.artistId;
+        const userId = req.user._id;
+        let conLikePrevio = false;
+        try {
+            const artist = await Artist.findOne({ _id: artistId });
+            if (!artist) {
+                return res.status(404).json({ error: 'Artista no encontrado' });
+            }
+            const album = artist.albums.find((album) => album._id.equals(albumId));
+            if (!album) {
+                return res.status(404).json({ error: 'Álbum no encontrado' });
+            }
+
+            const likesArray = album.likes;
+            const dislikesArray = album.dislikes;
+
+           if (likesArray.includes(userId)){
+                likesArray.pull(userId);
+                await artist.save();
+                conLikePrevio = true;
+           }
+           if (dislikesArray.includes(userId)){
+                dislikesArray.pull(userId);
+                await artist.save();
+                res.status(200).json({ message: 'Quitaste dislike', conLikePrevio: conLikePrevio });
+           } else {
+                dislikesArray.push(userId);
+                await artist.save();
+                res.status(200).json({ message: 'Dislike registrado exitosamente', conLikePrevio: conLikePrevio });
+           }
+
+        } catch (err) {
+            res.status(500).json({ error: 'Error al registrar dislike'+err });
+        }
+    }
+
+    async like(req, res) {
+        const albumId = req.params.albumId.slice(1);
+        const artistId = req.query.artistId;
+        const userId = req.user._id;
+        let conDislikePrevio = false;
+    
+        try {
+            const artist = await Artist.findOne({ _id: artistId });
+            if (!artist) {
+                return res.status(404).json({ error: 'Artista no encontrado' });
+            }
+    
+            const album = artist.albums.find((album) => album._id.equals(albumId));
+            if (!album) {
+                return res.status(404).json({ error: 'Álbum no encontrado' });
+            }
+    
+            const likesArray = album.likes;
+            const dislikesArray = album.dislikes;
+    
+            if (dislikesArray.includes(userId)) {
+                dislikesArray.pull(userId);
+                await artist.save()
+                conDislikePrevio = true;
+            } 
+            if (likesArray.includes(userId)) {
+                likesArray.pull(userId);
+                await artist.save()
+                res.status(202).json({ message: 'Quitaste like', conDislikePrevio: conDislikePrevio });
+            } else {
+                likesArray.push(userId);
+                await artist.save()
+                res.status(200).json({ message: 'Like registrado exitosamente', conDislikePrevio: conDislikePrevio });
+            }
+
+        } catch (err) {
+            res.status(500).json({ error: 'Error al registrar like' });
+        }
+    }
+
+    async dislikeRev(req, res) {
+        const reviewId = req.params.reviewId.slice(1);
+        const userId = req.user._id;
+        let conLikePrevio = false;
+
+        try {
+            const review = await AlbumReview.findOne({ _id: reviewId });
+            if (!review) {
+                return res.status(404).json({ error: 'Review no encontrada' });
+            }
+    
+            const likesArray = review.likes;
+            const dislikesArray = review.dislikes;
+    
+            if (likesArray.includes(userId)) {
+                likesArray.pull(userId);
+                await review.save()
+                conLikePrevio = true;
+            } 
+            if (dislikesArray.includes(userId)) {
+                dislikesArray.pull(userId);
+                await review.save()
+                res.status(202).json({ message: 'Quitaste dislike', conLikePrevio: conLikePrevio });
+            } else {
+                dislikesArray.push(userId);
+                await review.save()
+                res.status(200).json({ message: 'Dislike registrado exitosamente', conLikePrevio: conLikePrevio });
+            }
+
+        } catch (err) {
+            res.status(500).json({ error: 'Error al registrar dislike'+err });
+        }
+    }
+    
+    async likeRev(req, res) {
+        const reviewId = req.params.reviewId.slice(1);
+        const userId = req.user._id;
+        let conDislikePrevio = false;
+
+        try {
+            const review = await AlbumReview.findOne({ _id: reviewId });
+            if (!review) {
+                return res.status(404).json({ error: 'Review no encontrada' });
+            }
+    
+            const likesArray = review.likes;
+            const dislikesArray = review.dislikes;
+    
+            if (dislikesArray.includes(userId)) {
+                dislikesArray.pull(userId);
+                await review.save()
+                conDislikePrevio = true;
+            } 
+            if (likesArray.includes(userId)) {
+                likesArray.pull(userId);
+                await review.save()
+                res.status(202).json({ message: 'Quitaste like', conDislikePrevio: conDislikePrevio });
+            } else {
+                likesArray.push(userId);
+                await review.save()
+                res.status(200).json({ message: 'Like registrado exitosamente', conDislikePrevio: conDislikePrevio });
+            }
+
+        } catch (err) {
+            res.status(500).json({ error: 'Error al registrar like' });
+        }
+    }
 
     async registeralbum(req, res){ 
         try{
@@ -99,6 +296,44 @@ class ArtistController {
             fs.unlinkSync(uri);
             console.log(err);
             res.status(500).json({ error: 'Error al agregar el álbum.' });
+        }
+    }
+
+    async reviewAlbum(req, res) {
+        const timestamp = Date.now();
+        req.body.timestamp = timestamp;
+        req.body.author = req.user._id;
+        if (req.file) {
+            req.body.img = req.file.filename;
+        } else {
+            req.body.img = '';
+        }
+        req.body.author = req.user.username
+        const comment = new AlbumReview(req.body);
+        try {
+            await comment.save();
+            res.status(201).send("Comentario creado exitosamente");
+        } catch (err) {
+            const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+            fs.unlinkSync(uri);
+            res.status(400).send('Hubo un error al publicar. Inténtalo de nuevo.');
+        }
+    }
+
+    async listReviews(req, res){
+        try{
+            const albumId = req.params.albumId;
+            const allrevs = await AlbumReview.find({ albumId: albumId })
+            const username = allrevs.author;
+
+            for (const rev of allrevs) {
+                const authorInfo = await User.findOne({ username: rev.author }); 
+                rev.albumId = authorInfo.profilePhoto;
+            }
+            res.status(200).send(allrevs);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Error interno del servidor' });
         }
     }
 
@@ -290,6 +525,16 @@ class ArtistController {
         }
     }
 
+}
+
+function countProperties(obj) {
+    let count = 0;
+    for (let prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+            count++;
+        }
+    }
+    return count;
 }
 
 module.exports = new ArtistController();

@@ -83,4 +83,5 @@ function mostrarForo(foroId) {
             console.error("Error al obtener los detalles del foro:", error);
         }
     });
+
 }
