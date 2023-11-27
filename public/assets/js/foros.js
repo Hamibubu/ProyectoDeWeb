@@ -23,15 +23,15 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         reader.readAsDataURL(event.target.files[0]);
     });
-    document.getElementById('image-upload-resena').addEventListener('change', function (event) {
-        var reader = new FileReader();
-        reader.onload = function () {
-            var output = document.getElementById('image-preview-resena');
-            output.src = reader.result;
-            output.style.display = 'block';
-        };
-        reader.readAsDataURL(event.target.files[0]);
-    });
+    // document.getElementById('image-upload-resena').addEventListener('change', function (event) {
+    //     var reader = new FileReader();
+    //     reader.onload = function () {
+    //         var output = document.getElementById('image-preview-resena');
+    //         output.src = reader.result;
+    //         output.style.display = 'block';
+    //     };
+    //     reader.readAsDataURL(event.target.files[0]);
+    // });
 
 
     ClassicEditor
@@ -53,40 +53,40 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error(error);
         });
 
-    ClassicEditor
-        .create(document.querySelector('#NuevoComentarioResena'), {
-            toolbar: {
-                items: [
-                    'selectAll', '|',
-                    'heading', '|',
-                    'bold', 'italic', '|',
-                    'undo', 'redo', '|', 'link', 'blockQuote', 'insertTable'
-                ],
-                shouldNotGroupWhenFull: true
-            },
-        })
-        .catch(error => {
-            console.error(error);
-        });
+    // ClassicEditor
+    //     .create(document.querySelector('#NuevoComentarioResena'), {
+    //         toolbar: {
+    //             items: [
+    //                 'selectAll', '|',
+    //                 'heading', '|',
+    //                 'bold', 'italic', '|',
+    //                 'undo', 'redo', '|', 'link', 'blockQuote', 'insertTable'
+    //             ],
+    //             shouldNotGroupWhenFull: true
+    //         },
+    //     })
+    //     .catch(error => {
+    //         console.error(error);
+    //     });
 
-    ClassicEditor
-        .create(document.querySelector('#resena'), {
-            toolbar: {
-                items: [
-                    'selectAll', '|',
-                    'heading', '|',
-                    'bold', 'italic', '|',
-                    'undo', 'redo', '|', 'link', 'blockQuote', 'insertTable'
-                ],
-                shouldNotGroupWhenFull: true
-            }
-        })
-        .then(editor => {
-            window.resena = editor;
-        })
-        .catch(error => {
-            console.error(error);
-        });
+    // ClassicEditor
+    //     .create(document.querySelector('#resena'), {
+    //         toolbar: {
+    //             items: [
+    //                 'selectAll', '|',
+    //                 'heading', '|',
+    //                 'bold', 'italic', '|',
+    //                 'undo', 'redo', '|', 'link', 'blockQuote', 'insertTable'
+    //             ],
+    //             shouldNotGroupWhenFull: true
+    //         }
+    //     })
+    //     .then(editor => {
+    //         window.resena = editor;
+    //     })
+    //     .catch(error => {
+    //         console.error(error);
+    //     });
 
     // crear post
     postForm.addEventListener('submit', function (e) {
