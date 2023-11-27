@@ -53,12 +53,18 @@
             </div>
         </nav>
     </header>
+		<a href="../suscribete/suscribete.html">
+			<button class="image-button">
+				<img src="../../assets/img/pago/regreso.png" alt="Boton para regresar">
+			</button>
+		</a>
+	</div>
 
 		<div>
 			<div id="banner">
 				<center>
 				<br>
-                <img id="banner" src = "../../assets/img/pago/banner.png">
+                <img id="banner" src = "../../assets/img/suscribete/banner.png" height="80%" width="80%">
 				</center>
             </div>
 		</div>
@@ -111,7 +117,7 @@
 					</div>
 					<div class="inputBox">
 						<span>Mes de Expiración</span>
-						<input type="text" placeholder="Agosto">
+						<input type="number" placeholder="01">
 					</div>
 	
 					<div class="flex">
@@ -126,11 +132,12 @@
 					</div>
 				</div>
 			</div>
-			<input type="submit" value="PAGAR" class="submit-btn">
+			<input id= "pagar" type="submit" value="PAGAR" class="submit-btn">
 		</form>
 	</div>    
 	<script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
 	<script src="../../assets/js/pago.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
