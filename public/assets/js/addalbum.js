@@ -49,7 +49,7 @@ $(document).ready(function() {
 
         // Envío de datos mediante AJAX
         $.ajax({
-            url: 'http://127.0.0.1:3000/api/register/albums',
+            url: '/api/register/albums',
             type: 'POST',
             data: formData,
             contentType: false,

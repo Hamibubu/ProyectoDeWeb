@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('flags', etiquetasSeleccionadas.join(','));
             $.ajax({
                 type: "POST",
-                url: 'http://127.0.0.1:3000/api/foro',
+                url: '/api/foro',
                 data: formData,
                 contentType: false,
                 processData: false,

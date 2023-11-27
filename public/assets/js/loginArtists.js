@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             $.ajax({
                 type: "POST",
-                url: "http://127.0.0.1:3000/api/login/artist",
+                url: "/api/login/artist",
                 data: JSON.stringify(userData),
                 contentType: 'application/json',
                 success: function(datos){

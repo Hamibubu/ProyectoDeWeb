@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmButtonText: 'Regresar al Inicio'
             }).then(function () {
                 // Redirige al inicio
-                window.location.href = 'http://127.0.0.1:3000/views/index/index.html';
+                window.location.href = '/views/index/index.html';
             });
         }, 5000); 
     });

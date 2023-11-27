@@ -50,7 +50,7 @@ $(document).ready(() => {
         }
         $.ajax({
             type: "POST",
-            url: "http://127.0.0.1:3000/api/register/user",
+            url: "/api/register/user",
             data: formData,
             contentType: false,
             processData: false,
