@@ -48,6 +48,8 @@ const MONGO = {
 
 const mongoUrl = `${MONGO.DB_HOST}://${MONGO.DB_USER}:${MONGO.DB_PASS}@${MONGO.DB_NAME}/${MONGO.DB_INST}?retryWrites=true&w=majority`;
 
+const port = process.env.PORT || 30000;
+
 app.set('view engine', 'ejs');
 
 mongoose.connect(mongoUrl).then(() => {
@@ -58,8 +60,8 @@ mongoose.connect(mongoUrl).then(() => {
             .catch(err => {
                 console.error("Error sincronizando índices: ", err);
             });
-    app.listen(process.env.PORT || 30000, () => {
-        console.log('La app esta funcionando...');
+    app.listen(port, () => {
+        console.log(`La app esta funcionando en el puerto ${port}...`);
     });
 }).catch(err => {
     console.log('No se pudo conectar...', err);

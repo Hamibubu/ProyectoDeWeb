@@ -20,6 +20,8 @@ router.get('/albums/show/:artistId',secquery,artistController.showAlbums);
 router.get('/search',secquery,artistController.search);
 router.get('/artist/public/:artistId',secquery,artistController.perfilPublico);
 router.get('/albums/show/spec/:artistId',secquery,lOn,artistController.album);
-router.get('/show/reviews/:albumId',secquery,artistController.listReviews);
+router.get('/show/reviews/:albumId',lOn,secquery,artistController.listReviews);
+
+router.delete('/review/del/:reviewId',auth,secquery,artistController.deleteReview);
 
 module.exports = router;

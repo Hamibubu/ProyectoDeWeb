@@ -207,16 +207,17 @@ function listpubs(){
     $.ajax({
         type: "GET",
         url: `/api/show/reviews/${albumId}`,
-        success: function (allrevs) {
+        success: function (data) {
+            let allrevs = data.allrevs;
+            let userId = data.usuarioActualId;
+            
             allrevs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-            console.log(allrevs)
-            console.log(allrevs)
             const commentsList = document.querySelector('.list-group');
 
             commentsList.innerHTML = '';
 
            allrevs.forEach((rev) => {
-
+            
             const buttonsContainer = document.createElement('div');
             buttonsContainer.classList.add('buttons-container');
 
@@ -245,7 +246,7 @@ function listpubs(){
             authorDiv.classList.add('comment-author');
 
             const userAvatarImg = document.createElement('img');
-            userAvatarImg.src = "/uploads/" + rev.albumId; 
+            userAvatarImg.src = "/uploads/" + rev.profilePhoto; 
             userAvatarImg.alt = 'Avatar del usuario';
             userAvatarImg.classList.add('user-avatar'); 
             userAvatarImg.id = 'user-avatar-circle';
@@ -254,6 +255,14 @@ function listpubs(){
             strong.textContent = rev.author; 
             authorDiv.appendChild(userAvatarImg); 
             authorDiv.appendChild(strong);
+
+            if (userId === rev.idAuthor) {
+                const deleteButton = document.createElement('button');
+                deleteButton.setAttribute('onclick', `deleteComment('${rev._id}')`);
+                deleteButton.classList.add('delete-button');
+                deleteButton.innerHTML = `<i class="fas fa-trash-alt"></i>`;
+                authorDiv.appendChild(deleteButton);
+            }
 
             const timestampDiv = document.createElement('div');
             timestampDiv.classList.add('comment-timestamp');
@@ -418,4 +427,39 @@ function deleteCookie(name) {
 function logout() {
     deleteCookie("authToken");
     window.location.href = "./../../../../views/index/index.html";
+}
+
+function deleteComment(commentId) {
+    Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Una vez eliminado, no podrás recuperar tu comentario.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#dc3545",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar",
+        dangerMode: true
+    }).then((result) => {
+        document.body.classList.add("swal-opened");
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `/api/review/del/:${commentId}`,
+                type: 'DELETE',
+                success: function(response) {
+                    Swal.fire("¡Tu comentario ha sido eliminado!", {
+                        icon: "success",
+                    }).then(() => {
+                        window.location.reload(); 
+                    });
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Error al eliminar el comentario:', errorThrown);
+                    Swal.fire("Error al eliminar el comentario. Por favor, inténtalo de nuevo.", {
+                        icon: "error",
+                    });
+                }
+            });
+        } else {
+        }
+    });
 }

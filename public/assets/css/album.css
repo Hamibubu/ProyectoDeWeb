@@ -14,6 +14,31 @@ body {
     margin: 20px 0;
 }
 
+.delete-button {
+    font-size: 12px; 
+    padding: 3px;
+    width: auto; 
+    background-color: #dc3545;
+    color: #fff; 
+    border: 2px solid #dc3545;
+    border-radius: 5px; 
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.delete-button:hover {
+    background-color: #c82333; 
+    color: #fff;
+    border-color: #c82333; 
+}
+
+.delete-button:active {
+    background-color: #bd2130; 
+    color: #fff; 
+    border-color: #bd2130; 
+}
+
+
 .card img {
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

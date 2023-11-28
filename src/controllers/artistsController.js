@@ -37,6 +37,27 @@ class ArtistController {
             var pfp = "../../../../assets/img/1.gif";
             if (req.user != "not") {
                 const user = await User.findOne({ _id: req.user._id });
+                if (!user){
+                    const artista = await Artist.findOne({ _id: req.user._id });
+                    pfp = "/uploads/"+artista.profilePhoto;
+                    const _id = req.params.artistId;
+                    const albumId = req.query.albumId;
+        
+                    const artist = await Artist.findOne({ _id: _id });
+        
+                    const albumEncontrado = artist.albums.find(album => album._id.equals(albumId));
+        
+                    albumEncontrado.likes = countProperties(albumEncontrado.likes);
+                    albumEncontrado.dislikes = countProperties(albumEncontrado.dislikes);
+        
+                    let artistData = {
+                        name: artist.name,
+                        _id: artist._id,
+                        pfp: pfp
+                    }
+        
+                    return res.render('./../public/views/artistas/album.ejs', { album: albumEncontrado, artist: artistData});
+                }
                 pfp = "/uploads/"+user.profilePhoto;
             }
             const _id = req.params.artistId;
@@ -324,15 +345,56 @@ class ArtistController {
             const albumId = req.params.albumId;
             const allrevs = await AlbumReview.find({ albumId: albumId })
 
-            for (const rev of allrevs) {
-                const authorInfo = await User.findOne({ _id: rev.author }); 
-                rev.author = authorInfo.username;
-                rev.albumId = authorInfo.profilePhoto;
+            const updatedAllRevs = await Promise.all(allrevs.map(async (rev) => {
+                const authorInfo = await User.findOne({ _id: rev.author });
+                const updatedRev = {
+                    ...rev.toObject(),
+                    author: authorInfo.username,
+                    profilePhoto: authorInfo.profilePhoto,
+                    idAuthor: authorInfo._id.toString(),
+                };
+                return updatedRev;
+            }));
+            
+            if (req.user == 'not') {
+                return res.status(200).send({ allrevs: updatedAllRevs, usuarioActualId: 'not' });
             }
-            res.status(200).send(allrevs);
+            res.status(200).send({ allrevs: updatedAllRevs, usuarioActualId: req.user._id });
         } catch (err) {
             console.error(err);
             res.status(500).json({ error: 'Error interno del servidor' });
+        }
+    }
+
+    async deleteReview(req, res){
+        try {
+            const reviewId = req.params.reviewId.slice(1);
+            const review = await AlbumReview.findByIdAndDelete({ _id: reviewId });
+            
+            if (!review) {
+                return res.status(404).send('Review no encontrado');
+            }
+
+            if (review.img) {
+                const rutaActual = path.join(__dirname, '..', '..', 'uploads', review.img);
+                if (fs.existsSync(rutaActual)) {
+                    fs.unlinkSync(rutaActual);
+                } else {
+                    console.log("Archivo no encontrado en: ", rutaActual);
+                }
+            }
+            return res.send({ message: 'Comanratio eliminado correctamente' });
+        } catch (error) {
+            if (review.img) {
+                const rutaActual = path.join(__dirname, '..', '..', 'uploads', review.img);
+                if (fs.existsSync(rutaActual)) {
+                    fs.unlinkSync(rutaActual);
+                } else {
+                    console.log("Archivo no encontrado en: ", rutaActual);
+                }
+            }
+            console.error('Delete error: '+ error);
+            return res.sendStatus(500).send("Error interno");
         }
     }
 

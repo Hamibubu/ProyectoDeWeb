@@ -1,6 +1,7 @@
 const Post = require('./../models/postsModel');
 const Comment = require('./../models/commentsModel');
 const Usuario = require('./../models/usersModel');
+const Artist = require('./../models/artistsModel');
 const jwt = require('jsonwebtoken');
 const { response } = require('express');
 
@@ -10,102 +11,99 @@ class PostsController {
         res.send('Comentario');
     }
 
-    listarPosts(req, res) {
-        const foroId = req.params.foroId.slice(1);
-        const page = req.query.page ? parseInt(req.query.page) : 0; // Paginación
-        Post.find({ foroID: foroId })
-            .sort({ timestamp: -1 }) // Orden descendente
-            .skip(10 * page) // Saltar los comentarios de las páginas anteriores
-            .limit(10) // Limitar a 20 comentarios
-            .select('timestamp author img content likes dislikes foroID')
-            .then(posts => {
-                //crear puntaje para el sorteo de los posts
-                const now = new Date();
-
-                posts.forEach(post => {
-                    const hoursSinceCreation = Math.abs(now - post.timestamp) / 36e5; // Convertir milisegundos a horas
-                    let score = post.likes.length + post.dislikes.length;
-
-                    // Añadir un valor adicional para publicaciones con menos de 1 hora de antigüedad
-                    if (hoursSinceCreation < 1) {
-                        score += 10; // Aumentar puntaje. Ajusta este valor según lo que consideres adecuado
-                    }
-
-                    score -= hoursSinceCreation / 24; // Ponderar antigüedad
-                    post.score = score; // Añadir un campo 'score' al documento de la publicación
-                });
-
-                // Ordenar los posts por el puntaje calculado
-                posts.sort((a, b) => b.score - a.score);
-                const userPromises = posts.map(post =>
-                    Usuario.findById(post.author)
-                        .select('username profilePhoto verified')
-                        .then(user => {
-                            return {
-                                ...post.toObject(), // Convertir el documento de Mongoose a un objeto JS
-                                author: user.username,
-                                authorId: user._id,
-                                profilePhoto: user.profilePhoto,
-                                verified: user.verified
-                            };
-                        })
-                );
-
-                // Esperar a que todas las promesas se resuelvan
-                Promise.all(userPromises)
-                    .then(updatedPosts => {
-                        res.status(200).json({
-                            posts: updatedPosts,
-                            usuarioActualId: req.user._id // Asumiendo que estás usando autenticación
-                        });
-                    })
-                    .catch(err => {
-                        res.status(500).json({ error: 'Error al recoger datos de usuarios' });
-                    });
-            })
-            .catch(err => {
-                res.status(500).json({ error: 'Error al recoger datos de posts' });
+    async listarPosts(req, res) {
+        try {
+            const foroId = req.params.foroId.slice(1);
+            const page = req.query.page ? parseInt(req.query.page) : 0;
+    
+            const posts = await Post.find({ foroID: foroId })
+                .sort({ timestamp: -1 })
+                .skip(10 * page)
+                .limit(10)
+                .select('timestamp author img content likes dislikes foroID');
+    
+            const now = new Date();
+    
+            for (const post of posts) {
+                const hoursSinceCreation = Math.abs(now - post.timestamp) / 36e5;
+                let score = post.likes.length + post.dislikes.length;
+    
+                if (hoursSinceCreation < 1) {
+                    score += 10;
+                }
+    
+                score -= hoursSinceCreation / 24;
+                post.score = score;
+            }
+    
+            posts.sort((a, b) => b.score - a.score);
+    
+            const userPromises = posts.map(async (post) => {
+                let user;
+                user = await Usuario.findById(post.author)
+                    .select('username profilePhoto verified');
+                if (!user){
+                    user = await Artist.findById(post.author)
+                        .select('username profilePhoto');
+                }
+                return {
+                    ...post.toObject(),
+                    author: user.username,
+                    authorId: user._id,
+                    profilePhoto: user.profilePhoto,
+                    verified: user.verified || (user instanceof Artist)
+                };
             });
+
+            const updatedPosts = await Promise.all(userPromises);
+    
+            res.status(200).json({
+                posts: updatedPosts,
+                usuarioActualId: req.user._id 
+            });
+        } catch (err) {
+            res.status(500).json({ error: 'Error al recoger datos de posts o usuarios'+err });
+        }
     }
 
-    mostrarModal(req, res) {
-        const postId = req.params.postId.slice(1);
-        Comment.find({ postId: postId })
-            .sort({ timestamp: -1 }) // Orden descendente
-            .then(comments => {
-                comments.forEach(comment => {
-                    const now = new Date();
-                    const hoursSinceCreation = Math.abs(now - comment.timestamp) / 36e5; // Convertir milisegundos a horas
-                    const score = comment.likes.length - comment.dislikes.length - hoursSinceCreation / 24; // Ponderar interacciones y antigüedad
-                    comment.score = score; // Añadir un campo 'score' al documento del comentario
-                });
+    async mostrarModal(req, res) {
+        try {
+            const postId = req.params.postId.slice(1);
+    
+            const comments = await Comment.find({ postId: postId })
+                .sort({ timestamp: -1 });
+    
+            const now = new Date();
+    
+            for (const comment of comments) {
+                const hoursSinceCreation = Math.abs(now - comment.timestamp) / 36e5;
+                const score = comment.likes.length - comment.dislikes.length - hoursSinceCreation / 24;
+                comment.score = score;
+            }
+    
+            comments.sort((a, b) => b.score - a.score);
 
-                // Ordenar los comentarios por el puntaje calculado
-                comments.sort((a, b) => b.score - a.score);
-                const userPromises = comments.map(comment =>
-                    Usuario.findById(comment.author)
-                        .select('username profilePhoto verified _id')
-                        .then(user => {
-                            return {
-                                ...comment.toObject(),
-                                author: user.username,
-                                profilePhoto: user.profilePhoto,
-                                verified: user.verified,
-                                authorId: user._id
-                            };
-                        })
-                );
-                Promise.all(userPromises)
-                    .then(updatedComments => {
-                        res.status(200).json({ comments: updatedComments, postId: postId, user: req.user });
-                    })
-                    .catch(err => {
-                        res.status(500).json({ error: 'Error al recoger datos de usuarios' });
-                    });
-            })
-            .catch(err => {
-                res.status(500).json({ error: 'Error al recoger datos de posts' });
+            const userPromises = comments.map(async (comment) => {
+                let user;
+                user = await Usuario.findById(comment.author).select('username profilePhoto verified _id');
+                if(!user){
+                    user = await Artist.findById(comment.author).select('username profilePhoto');
+                }
+                return {
+                    ...comment.toObject(),
+                    author: user.username,
+                    profilePhoto: user.profilePhoto,
+                    verified: user.verified || (user instanceof Artist),
+                    authorId: user._id
+                };
             });
+    
+            const updatedComments = await Promise.all(userPromises);
+    
+            res.status(200).json({ comments: updatedComments, postId: postId, user: req.user });
+        } catch (err) {
+            res.status(500).json({ error: 'Error al recoger datos de comentarios o usuarios'+err });
+        }
     }
 
     eliminarPost(req, res) {

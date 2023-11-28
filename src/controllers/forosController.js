@@ -1,5 +1,6 @@
 const Foro = require('./../models/forosModel');
 const Usuario = require('./../models/usersModel');
+const Artist = require('./../models/artistsModel');
 const { response } = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -62,25 +63,25 @@ class ForosController {
         res.send('Editar comantario');
     }
 
-    entrarForo(req, res) {
-        const foroId = req.params.foroId.slice(1);
-        Foro.findById(foroId)
-            .select('timestamp author name description img verified flags')
-            .then(foro => {
-                Usuario.findById(req.user._id)
-                    .select('profilePhoto')
-                    .then(user => {
-                        const usuario = user;
-                        res.render('./../public/views/foros/foroPlantilla.ejs', { foro: foro, user: usuario });
-                        // res.status(200).json(foro);
-                    })
-                    .catch(err => {
-                        res.status(500).json({ error: 'Error al recoger datos de usuario' });
-                    });
-            })
-            .catch(err => {
-                res.status(500).json({ error: 'Error al recoger datos' });
-            });
+    async entrarForo(req, res) {
+        try {
+            const foroId = req.params.foroId.slice(1);
+            const foro = await Foro.findById(foroId)
+                .select('timestamp author name description img verified flags');
+    
+            let usuario;
+            const user = await Usuario.findById(req.user._id).select('profilePhoto');
+            if (!user) {
+                const artist = await Artist.findById(req.user._id).select('profilePhoto');
+                usuario = artist;
+            } else {
+                usuario = user;
+            }
+    
+            res.render('./../public/views/foros/foroPlantilla.ejs', { foro: foro, user: usuario });
+        } catch (err) {
+            res.status(500).json({ error: 'Error al recoger datos' });
+        }
     }
 
 }
