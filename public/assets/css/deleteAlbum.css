@@ -1,0 +1,38 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 75px;
+}
+
+#albumsContainer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 300px;
+    margin: 20px;
+}
+
+.card img {
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+#backButton {
+    position: fixed;
+    top: 150px;
+    left: 10px;
+    z-index: 1000;
+    background-color: #87CEEB; 
+    border-color: #87CEEB;
+    color: white;
+}

@@ -119,9 +119,40 @@ class ArtistController {
         }
     }
 
+    async deleteAlbum(req, res) {
+        try {
+            const artistId = req.user._id;
+            const albumId = req.params.albumId.slice(1);
+
+            const artist = await Artist.findById(artistId);
+
+            if (!artist) {
+                return res.status(404).send('Artista no encontrado');
+            }
+
+            const album = artist.albums.id(albumId);
+
+            if (!album) {
+                return res.status(404).send('Álbum no encontrado');
+            }
+    
+            await album.deleteOne();
+            await artist.save();
+    
+            return res.status(200).send('Álbum eliminado correctamente');
+
+        } catch (error) {
+            console.error('Delete error: '+ error);
+            return res.sendStatus(500).send("Error interno");
+        }
+    }
+
     async showAlbums(req, res){
         try {
-            const _id = req.params.artistId;
+            var _id = req.params.artistId;
+            if (!_id) {
+                _id = req.user._id;
+            }
             const artist = await Artist.findOne({ _id: _id });
 
             if (!artist) {

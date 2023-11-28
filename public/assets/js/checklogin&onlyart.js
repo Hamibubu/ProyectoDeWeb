@@ -12,8 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const cerrarSesionLi = $('<li><button id="logout-button" class="dropdown-item" onclick="logout()">Cerrar Sesión</button></li>');
             perfilDropdown.append(verPerfilLi);
             perfilDropdown.append(cerrarSesionLi);
+            if (!response.includes("(artist)")) {
+                window.location.href = "./../../views/index/index.html"
+            }
         },
         error: function(xhr, textStatus, errorThrown) {
+            window.location.href = "./../../views/index/index.html"
         }
       });
 });
