@@ -135,7 +135,8 @@ class ArtistController {
             if (!album) {
                 return res.status(404).send('Álbum no encontrado');
             }
-    
+            const uri = path.join(__dirname, '..', '..', 'uploads', album.albumPhoto);
+            fs.unlinkSync(uri);
             await album.deleteOne();
             await artist.save();
     
