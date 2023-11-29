@@ -48,7 +48,7 @@ const MONGO = {
 
 const mongoUrl = `${MONGO.DB_HOST}://${MONGO.DB_USER}:${MONGO.DB_PASS}@${MONGO.DB_NAME}/${MONGO.DB_INST}?retryWrites=true&w=majority`;
 
-const port = process.env.PORT || 30000;
+const port = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
 
