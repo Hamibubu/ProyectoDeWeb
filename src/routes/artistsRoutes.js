@@ -22,6 +22,7 @@ router.get('/artist/public/:artistId',secquery,artistController.perfilPublico);
 router.get('/albums/show/spec/:artistId',secquery,lOn,artistController.album);
 router.get('/show/reviews/:albumId',lOn,secquery,artistController.listReviews);
 router.get('/del/show/albums',auth,secquery,artistController.showAlbums);
+router.get('/show/artists',artistController.getTop10Artists);
 
 router.delete('/review/del/:reviewId',auth,secquery,artistController.deleteReview);
 router.delete('/album/del/:albumId',auth,secquery,artistController.deleteAlbum);

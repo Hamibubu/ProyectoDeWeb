@@ -592,6 +592,32 @@ class ArtistController {
         }
     }
 
+    async getTop10Artists (req, res) {
+        try {
+            const topArtists = await Artist.aggregate([
+                {
+                  $project: {
+                    _id: 1,
+                    name: 1,
+                    genre: 1,
+                    profilePhoto: 1
+                  }
+                },
+                {
+                  $sort: {
+                    numberOfAlbums: -1
+                  }
+                },
+                {
+                  $limit: 12
+                }
+              ]);
+            return res.send(topArtists);
+          } catch (error) {
+            res.status(500).send('Error al actualizar el usuario'+error);
+          }
+    }
+
     async iniciarsesion(req,res) {
         try{
             const artist = await Artist.findOne({ email: req.body.email });
