@@ -543,11 +543,16 @@ class ArtistController {
             if (!artistaExistente) {
                 return res.status(404).send('Usuario no encontrado');
             }
-            const existingName = await Artist.findOne({ name: req.body.name }).collation({ locale: 'es', strength: 2 });
+            
+            const existingArtistWithUsername = await Artist.findOne({
+                username: datosActualizacion.username,
+                _id: { $ne: _id }
+            });
 
-            if (existingName) {
-                return res.status(400).send({error: 'Ya existe ese nombre de artista, si necesitas ayuda contáctanos'});
+            if (existingArtistWithUsername) {
+                return res.status(400).send('El nombre de usuario ya está en uso. Por favor, elige otro.');
             }
+
             if (req.body.password && req.body.claveActual){
                 const isMatch = await bcrypt.compare(req.body.claveActual, artistaExistente.password);
                 if (!isMatch) {
@@ -560,7 +565,7 @@ class ArtistController {
 
             if (req.file) {
                 if (artistaExistente.profilePhoto) {
-                    const rutaActual = path.join(__dirname, '..', '..', 'uploads', usuarioExistente.profilePhoto);
+                    const rutaActual = path.join(__dirname, '..', '..', 'uploads', artistaExistente.profilePhoto);
                     if (fs.existsSync(rutaActual)) {
                         fs.unlinkSync(rutaActual);
                     } else {
@@ -582,12 +587,14 @@ class ArtistController {
             }
             res.send("Usuario modificado exitosamente");
         } catch (error) {
-            const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
-            fs.unlinkSync(uri);
+            if (req.file){
+                const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
+                fs.unlinkSync(uri);
+            }
             if (error.code === 11000) {
                 res.status(400).send('El username ya está en uso. Por favor, elige otro.');
             }else{
-                res.status(500).send('Error al actualizar el usuario');
+                res.status(500).send('Error al actualizar el usuario'+error);
             }
         }
     }
