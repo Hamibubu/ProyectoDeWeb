@@ -58,13 +58,14 @@
       </nav>
     </header>
     <button onclick="back()" class="btn btn-primary" id="back"><i class="fas fa-arrow-left"></i></button>
-    <div class="container my-5">
+    
+    <div class="container my-5" id="alb">
         <div class="row justify-content-center align-items-center">
             <div class="col-md-10">
-                <div class="card" id="bg">
+                <div class="card 2" id="bg">
                     <div class="row no-gutters">
                         <div class="col-md-4">
-                            <img src="/uploads/<%= album.albumPhoto %>" alt="Album Cover" class="img-fluid" id="move" style="width: 850px;">
+                            <img src="/uploads/<%= album.albumPhoto %>" alt="Album Cover" class="img-fluid custom-card-img" id="move" style="width: 850px;">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body" id="move">

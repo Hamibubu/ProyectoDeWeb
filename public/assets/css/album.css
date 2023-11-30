@@ -9,6 +9,12 @@ body {
     padding: 10px;
 }
 
+#alb {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 .card {
     margin: 20px 0;
@@ -45,8 +51,17 @@ body {
     max-width: 100% !important;
     max-height: 100% !important;
     width: 600px;
-    object-fit: contain;
 }
+
+.card .custom-card-img {
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 100% !important;
+    max-height: 100% !important;
+    width: 600px; /* Puedes ajustar este valor según tus necesidades */
+    padding-top: 15%;
+}
+
 
 .card h1 {
     font-size: 2em;

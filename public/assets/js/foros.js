@@ -143,12 +143,14 @@ document.addEventListener('DOMContentLoaded', function () {
                                 // window.location.reload();
                                 window.publicar.setData('');
                                 postForm.reset();
+                                $('#image-preview').attr('src', '#');
                                 postsEnTendencia.innerHTML = '';
                                 listarPublicaciones();
                             }
                         })
                     }, 1000);
                     window.publicar.setData('');
+                    $('#image-preview').attr('src', '#');
                     postForm.reset();
                 },
                 error: function (error) {

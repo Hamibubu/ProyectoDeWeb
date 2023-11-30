@@ -1,13 +1,12 @@
 const forosEnTendencia = document.querySelector('#forosEnTendencia');
 const forosQueTePodrianInteresar = document.querySelector('#forosQueTePodrianInteresar');
-
+var logged = false;
 
 document.addEventListener('DOMContentLoaded', function () {
+    welcome();
     //cargar foros
     mostrarForos();
 });
-
-
 
 function mostrarForos() {
     $.ajax({
@@ -47,7 +46,6 @@ function mostrarForos() {
                 titleElement.appendChild(verificadoElement)
                 descriptionElement.appendChild(descriptionNode);
                 forosEnTendencia.appendChild(div);
-
             }
         },
         error: function (error) {
@@ -69,19 +67,31 @@ function alertaPersonalizada(type, msg) {
 }
 
 function mostrarForo(foroId) {
-    // Realizar una solicitud AJAX al servidor
-    $.ajax({
-        type: 'GET',
-        url: `/api/foro/:${foroId}`, // Asegúrate de que esta URL sea correcta
-        success: function (data) {
-            //cargar html a la nueva pagina
-            window.open(`/api/foro/entrar/:${foroId}`, '_self');
-        },
-        error: function (error) {
-            // Manejar errores, como un ID que no existe o problemas de servidor
-            console.error("Error al obtener los detalles del foro:", error);
-        }
-    });
+    console.log(logged)
+    if (logged){
+        // Realizar una solicitud AJAX al servidor
+        $.ajax({
+            type: 'GET',
+            url: `/api/foro/:${foroId}`, // Asegúrate de que esta URL sea correcta
+            success: function (data) {
+                //cargar html a la nueva pagina
+                window.open(`/api/foro/entrar/:${foroId}`, '_self');
+            },
+            error: function (error) {
+                // Manejar errores, como un ID que no existe o problemas de servidor
+                console.error("Error al obtener los detalles del foro:", error);
+            }
+        });
+    } else {
+        Swal.fire({
+            toast: true,
+            position: 'top-right',
+            icon: 'info',
+            title: 'Inicia sesión para entrar a un foro.',
+            showConfirmButton: false,
+            timer: 3000
+        })
+    }
 }
 
 function welcome() {
@@ -98,6 +108,7 @@ function welcome() {
             const cerrarSesionLi = $('<li><button id="logout-button" class="dropdown-item" onclick="logout()">Cerrar Sesión</button></li>');
             perfilDropdown.append(verPerfilLi);
             perfilDropdown.append(cerrarSesionLi);
+            logged=true;
         },
         error: function(xhr, textStatus, errorThrown) {
         }

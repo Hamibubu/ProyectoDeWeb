@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const registroItem = perfilDropdown.find('li:nth-child(2)');
             loginItem.remove();
             registroItem.remove();
-            const verPerfilLi = $('<li><a class="dropdown-item" href="./../../../views/perfil/profile.html">Ver perfil</a></li>');
+            const verPerfilLi = $('<li><a class="dropdown-item" href="./../../../../views/perfil/profile.html">Ver perfil</a></li>');
             const cerrarSesionLi = $('<li><button id="logout-button" class="dropdown-item" onclick="logout()">Cerrar Sesión</button></li>');
             perfilDropdown.append(verPerfilLi);
             perfilDropdown.append(cerrarSesionLi);
@@ -24,5 +24,5 @@ function deleteCookie(name) {
 
 function logout() {
     deleteCookie("authToken");
-    window.location.href = "./../../views/index/index.html";
+    window.location.href = "./../../../../views/index/index.html";
 }
