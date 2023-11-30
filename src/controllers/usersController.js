@@ -10,7 +10,7 @@ class UsersController {
     welcome(req, res) {
         const username = req.user.username;
         const userType = req.user.userType;
-        res.send(`Bienvenidx, ${username} (${userType})`);
+        res.send(`Bienvenido, ${username} (${userType})`);
     }
 
     async profile(req, res){
