@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
 const albumSchema = new mongoose.Schema({
-    name: { type: String, unique: true, required: true },
+    name: { type: String, required: true },
     type: { type: String, required: true },
     description: { type: String, required: true },
     genre: { type: String, required: true },
     albumPhoto: { type: String, required: true },
     release: { type: String, required: true },
-    likes: { type: Array,  unique: true, required: true },
-    dislikes: { type: Array,  unique: true, required: true }
+    likes: { type: Array, required: true },
+    dislikes: { type: Array, required: true }
 });
 
 const artistSchema = new mongoose.Schema({

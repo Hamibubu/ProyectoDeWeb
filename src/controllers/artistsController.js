@@ -39,6 +39,11 @@ class ArtistController {
                 const user = await User.findOne({ _id: req.user._id });
                 if (!user){
                     const artista = await Artist.findOne({ _id: req.user._id });
+
+                    if (!artista) {
+                        res.status(400).send('No existe el user/artista');
+                    }
+
                     pfp = "/uploads/"+artista.profilePhoto;
                     const _id = req.params.artistId;
                     const albumId = req.query.albumId;
@@ -84,6 +89,7 @@ class ArtistController {
             
         } catch (error) {
             console.log(error)
+            return res.status(400).send('Vuelve a intentar');
         }
     }
 
@@ -368,7 +374,7 @@ class ArtistController {
         } catch (err) {
             const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
             fs.unlinkSync(uri);
-            res.status(400).send('Hubo un error al publicar. Inténtalo de nuevo.');
+            res.status(400).send('Hubo un error al publicar. Inténtalo de nuevo.'+err);
         }
     }
 
@@ -377,16 +383,26 @@ class ArtistController {
             const albumId = req.params.albumId;
             const allrevs = await AlbumReview.find({ albumId: albumId })
 
-            const updatedAllRevs = await Promise.all(allrevs.map(async (rev) => {
-                const authorInfo = await User.findOne({ _id: rev.author });
+            var updatedAllRevs = allrevs.map(async (rev) => {
+                let authorInfo;
+        
+                
+                authorInfo = await User.findOne({ _id: rev.author });
+                if (!authorInfo){
+                    authorInfo = await Artist.findOne({ _id: rev.author }); 
+                }
                 const updatedRev = {
                     ...rev.toObject(),
-                    author: authorInfo.username,
-                    profilePhoto: authorInfo.profilePhoto,
-                    idAuthor: authorInfo._id.toString(),
+                    author: authorInfo ? authorInfo.username : 'Usuario fantasma',
+                    profilePhoto: authorInfo ? authorInfo.profilePhoto : '../../../../assets/img/1.gif',
+                    idAuthor: authorInfo ? authorInfo._id.toString() : 'Desconocido',
                 };
+        
                 return updatedRev;
-            }));
+            });
+        
+            // Filtrar las revisiones que pudieron haber resultado en errores
+            updatedAllRevs = (await Promise.all(updatedAllRevs)).filter(rev => rev !== null);
             
             if (req.user == 'not') {
                 return res.status(200).send({ allrevs: updatedAllRevs, usuarioActualId: 'not' });
@@ -483,6 +499,7 @@ class ArtistController {
         } catch (err) {
             const uri = path.join(__dirname, '..', '..', 'uploads', req.file.filename);
             fs.unlinkSync(uri);
+            console.log(err)
             if (err.code === 11000) {
                 return res.status(400).json({ error: "El email o username ya existe en la base" });
             } else {

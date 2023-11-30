@@ -12,7 +12,7 @@ router.post('/register/artist',file.single('profilePhoto'),artistController.crea
 router.post('/register/albums',auth,roles(['artist'],{'none':'none'}),file.single('albumPhoto'),artistController.registeralbum);
 router.post('/album/like/:albumId',secquery,auth,artistController.like);
 router.post('/album/dislike/:albumId',secquery,auth,artistController.dislike);
-router.post('/review',auth,roles(['user'],{'none':'none'}),file.single('img'),artistController.reviewAlbum);
+router.post('/review',auth,file.single('img'),artistController.reviewAlbum);
 router.post('/review/dislike/:reviewId', secquery, auth, artistController.dislikeRev);
 router.post('/review/like/:reviewId', secquery, auth, artistController.likeRev);
 

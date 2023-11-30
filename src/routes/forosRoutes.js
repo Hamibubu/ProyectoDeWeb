@@ -9,7 +9,7 @@ router.get('/foro/:foroId',secquery,foroController.verForo);
 
 // traerforos
 router.get('/hub',secquery,foroController.verForos);
-
+router.get('/index/forums',foroController.verForos);
 router.get('/foro/entrar/:foroId', auth, secquery,foroController.entrarForo);
 
 

@@ -88,29 +88,34 @@ $(document).ready(function() {
     });
 });
 
-function trendArt(){
+function trendArt() {
     $.ajax({
         type: "GET",
         url: `/api/show/artists`,
         success: function (response) {
-            response.forEach(artist => {
+            var cardContent = ''; // Contenedor para todas las cartas
 
-                var cardContent = `
-                <div class="col mb-4">
-                    <div class="card">
-                        <div class="artist-image-container">
-                            <img src="/uploads/${artist.profilePhoto}" class="card-img-top artist-image p-3 mt-4" alt="Artista 1">
-                        </div>
-                        <div class="card-body">
-                            <h2 class="card-title text-center">${$('<div>').text(artist.name).html()}</h2>
-                            <p class="card-text">${$('<div>').text(artist.genre).html()}</p>
-                            <a href="/api/artist/public/${artist._id}" class="btn btn-custom">Ver más</a>
+            response.forEach(artist => {
+                cardContent += `
+                    <div class="col-md-3 mb-4"> <!-- Utilizando col-md-3 para que haya 4 columnas en pantallas medianas y grandes -->
+                        <div class="card h-100">
+                            <div class="artist-image-container">
+                                <img src="/uploads/${artist.profilePhoto}" class="card-img-top artist-image p-3 mt-4 img-fluid" alt="Artista 1">
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <h2 class="card-title text-center">${$('<div>').text(artist.name).html()}</h2>
+                                <p class="card-text">${$('<div>').text(artist.genre).html()}</p>
+                                <a href="/api/artist/public/${artist._id}" class="btn btn-custom mt-auto">Ver más</a>
+                            </div>
                         </div>
                     </div>
-                </div>
                 `;
-                $('#trnd').append(cardContent);
             });
+
+            // Agregando todas las cartas al contenedor con la clase "row"
+            $('#trnd').append('<div class="row">' + cardContent + '</div>');
         }
     });
 }
+
+
