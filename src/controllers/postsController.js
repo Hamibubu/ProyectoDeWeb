@@ -99,7 +99,10 @@ class PostsController {
             });
     
             const updatedComments = await Promise.all(userPromises);
-    
+            if (req.user.userType == "artist") {
+                const artist = await Artist.findOne({ _id: req.user._id  });
+                req.user.profilePhoto = artist.profilePhoto;
+            }
             res.status(200).json({ comments: updatedComments, postId: postId, user: req.user });
         } catch (err) {
             res.status(500).json({ error: 'Error al recoger datos de comentarios o usuarios'+err });
