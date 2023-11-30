@@ -101,3 +101,7 @@ body {
 #q {
     color: #acdfe0;
 }
+
+.form-control:focus{
+    color: #000;
+}

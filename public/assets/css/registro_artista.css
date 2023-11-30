@@ -95,3 +95,8 @@ body {
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
     background-color: #ff4500;
 }
+
+
+.form-control:focus{
+    color: #000;
+}
